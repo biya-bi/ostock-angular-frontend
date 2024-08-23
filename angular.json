@@ -67,6 +67,12 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ]
+            },
+            "local": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": []
             }
           },
           "defaultConfiguration": "production"
@@ -79,9 +85,12 @@
             },
             "development": {
               "buildTarget": "angular-frontend:build:development"
+            },
+            "local": {
+              "buildTarget": "angular-frontend:build:local"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "local"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
