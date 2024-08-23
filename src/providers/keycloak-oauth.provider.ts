@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { AbstractOAuthProvider } from './abstract-oauth.provider';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,13 @@ export class KeycloakOAuthProvider extends AbstractOAuthProvider {
 
   protected override getAuthConfig(): AuthConfig {
     return {
-      issuer: 'http://keycloak.infra:8080/realms/ostock',
+      issuer: environment.keycloakConfig.issuer,
       strictDiscoveryDocumentValidation: false,
       redirectUri: document.location.origin,
       clientId: 'ostock',
       scope: 'openid profile email',
-      requireHttps: false, // TODO: Change this before going live
-      loginUrl: 'http://keycloak.infra:8080/realms/ostock',
+      requireHttps: environment.keycloakConfig.requireHttps,
+      loginUrl: environment.keycloakConfig.issuer,
       logoutUrl: document.location.origin + '/logout'
     };
   }
