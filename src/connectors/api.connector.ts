@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
 })
 export class ApiConnector {
 
-  private readonly url = environment.url;
+  private readonly url = environment.apiConnectorUrl;
   private readonly organizationEndpoint = `${this.url}/v1/organization`;
   private readonly notificationEndpoint = `${this.url}/v1/notification`;
 
