@@ -9,6 +9,11 @@ import { OrganizationListComponent } from '../views/organizations/organization-l
 import { OrganizationAddComponent } from '../views/organizations/organization-write/organization-add.component';
 import { OrganizationEditComponent } from '../views/organizations/organization-write/organization-edit.component';
 import { PageNotFoundComponent } from '../views/page-not-found/page-not-found.component';
+import { LicenseListComponent } from '../views/licenses/license-list/license-list.component';
+import { LicenseContainer } from '../views/licenses/license-container/license.container';
+import { LicenseAddComponent } from '../views/licenses/license-add/license-add.component';
+import { LicenseDetailsComponent } from '../views/licenses/license-details/license-details.component';
+import { LicenseEditComponent } from '../views/licenses/license-edit/license-edit.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -35,6 +40,29 @@ export const routes: Routes = [
             {
                 path: 'edit',
                 component: OrganizationEditComponent
+            },
+        ]
+    },
+    {
+        path: 'licenses',
+        component: LicenseContainer,
+        canActivate: [authenticationGuard],
+        children: [
+            {
+                path: '',
+                component: LicenseListComponent
+            },
+            {
+                path: 'add',
+                component: LicenseAddComponent
+            },
+            {
+                path: 'details',
+                component: LicenseDetailsComponent
+            },
+            {
+                path: 'edit',
+                component: LicenseEditComponent
             },
         ]
     },
