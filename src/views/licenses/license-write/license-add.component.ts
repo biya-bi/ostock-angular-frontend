@@ -12,8 +12,8 @@ import { LicenseWriteComponent } from './license-write.component';
 })
 export class LicenseAddComponent extends LicenseWriteComponent implements OnInit {
 
-  constructor(protected override readonly router: Router, private readonly activatedRoute: ActivatedRoute, private readonly apiConnector: ApiConnector) {
-    super(router);
+  constructor(protected override readonly router: Router, protected override readonly activatedRoute: ActivatedRoute, private readonly apiConnector: ApiConnector) {
+    super(router, activatedRoute);
   }
 
   ngOnInit(): void {

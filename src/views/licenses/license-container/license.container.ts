@@ -28,7 +28,7 @@ export class LicenseContainer {
     } else if (component instanceof LicenseDetailsComponent || component instanceof LicenseWriteComponent) {
       this.activatedRoute.queryParams.pipe(
         take(1),
-        tap(params => component.organizationId = params['organizationId']),
+        tap(params => component.params = params),
         switchMap(params => this.apiConnector.readLicense(params['uri'])),
         tap(license => component.license = license)
       ).subscribe();

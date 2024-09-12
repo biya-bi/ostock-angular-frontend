@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { License } from '../../../models/License';
 
@@ -11,7 +11,7 @@ export abstract class LicenseContentComponent {
 
     private _license: License;
 
-    @Input() organizationId: string
+    @Input() params: Params;
 
     protected title$: Observable<string>;
 

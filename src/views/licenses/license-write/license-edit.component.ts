@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { License } from '../../../models/License';
@@ -12,8 +12,8 @@ import { LicenseWriteComponent } from './license-write.component';
 })
 export class LicenseEditComponent extends LicenseWriteComponent {
 
-  constructor(protected override readonly router: Router, private readonly apiConnector: ApiConnector) {
-    super(router);
+  constructor(protected override readonly router: Router, protected override readonly activatedRoute: ActivatedRoute, private readonly apiConnector: ApiConnector) {
+    super(router, activatedRoute);
   }
 
   ngOnInit(): void {

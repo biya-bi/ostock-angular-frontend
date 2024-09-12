@@ -10,7 +10,7 @@
                 <ul *ngFor="let license of licenses">
                     <li>
                         <a routerLink="/licenses/details"
-                            [queryParams]="{uri:license._links.self.href}">{{license.productName}}</a>
+                            [queryParams]="{uri:license._links.self.href,organizationId:params['organizationId']}">{{license.productName}}</a>
                     </li>
                 </ul>
             </ng-container>
