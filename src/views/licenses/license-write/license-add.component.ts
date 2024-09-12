@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { License } from '../../../models/License';
@@ -12,8 +12,8 @@ import { LicenseWriteComponent } from './license-write.component';
 })
 export class LicenseAddComponent extends LicenseWriteComponent implements OnInit {
 
-  constructor(protected override readonly router: Router, protected override readonly activatedRoute: ActivatedRoute, private readonly apiConnector: ApiConnector) {
-    super(router, activatedRoute);
+  constructor(protected override readonly router: Router, private readonly apiConnector: ApiConnector) {
+    super(router);
   }
 
   ngOnInit(): void {
@@ -23,7 +23,7 @@ export class LicenseAddComponent extends LicenseWriteComponent implements OnInit
   }
 
   protected override onSubmit(license: License): Observable<License> {
-    return this.apiConnector.createLicense(license, this.activatedRoute.snapshot.queryParams['organizationId']);
+    return this.apiConnector.createLicense(license, this.params['organizationId']);
   }
 
 }

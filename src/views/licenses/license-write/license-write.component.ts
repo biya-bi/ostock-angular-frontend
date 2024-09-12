@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, take, tap } from 'rxjs';
 import { License } from '../../../models/License';
 import { LicenseContentComponent } from '../license-content/license-content.component';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     template: '',
 })
 export abstract class LicenseWriteComponent extends LicenseContentComponent {
 
-    constructor(protected override readonly router: Router, protected readonly activatedRoute: ActivatedRoute) {
+    constructor(protected override readonly router: Router) {
         super(router);
     }
 
