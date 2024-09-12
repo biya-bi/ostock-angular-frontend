@@ -4,9 +4,8 @@ import { take, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { ModalResponse } from '../../../models/modal-response';
 import { ViewComponent } from '../../view.component';
-import { OrganizationDetailsComponent } from '../organization-details/organization-details.component';
+import { OrganizationContentComponent } from '../organization-content.component';
 import { OrganizationListComponent } from '../organization-list/organization-list.component';
-import { OrganizationEditComponent } from '../organization-write/organization-edit.component';
 
 @Component({
   selector: 'app-organization-container',
@@ -22,7 +21,7 @@ export class OrganizationContainer {
     component.queryParams = queryParams;
     if (component instanceof OrganizationListComponent) {
       this.apiConnector.readOrganizations().pipe(take(1), tap(organizations => component.organizations = organizations)).subscribe();
-    } else if (component instanceof OrganizationDetailsComponent || component instanceof OrganizationEditComponent) {
+    } else if (component instanceof OrganizationContentComponent) {
       this.apiConnector.readOrganization(queryParams['uri']).pipe(take(1), tap(organization => component.organization = organization)).subscribe();
     }
   }

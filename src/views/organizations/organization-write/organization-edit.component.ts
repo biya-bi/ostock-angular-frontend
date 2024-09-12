@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
@@ -12,8 +12,6 @@ import { OrganizationWriteComponent } from './organization-write.component';
 })
 export class OrganizationEditComponent extends OrganizationWriteComponent {
 
-  private _organization: Organization;
-
   constructor(protected override readonly router: Router, private readonly apiConnector: ApiConnector) {
     super(router);
   }
@@ -25,18 +23,6 @@ export class OrganizationEditComponent extends OrganizationWriteComponent {
 
   protected override onSubmit(organization: Organization): Observable<Organization> {
     return this.apiConnector.updateOrganization(organization);
-  }
-
-  @Input()
-  set organization(value: Organization) {
-    if (this._organization !== value) {
-      this._organization = value;
-      this.initFormGroup(value);
-    }
-  }
-
-  get organization(): Organization {
-    return this._organization;
   }
 
 }

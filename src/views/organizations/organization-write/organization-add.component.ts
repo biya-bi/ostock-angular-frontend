@@ -19,7 +19,6 @@ export class OrganizationAddComponent extends OrganizationWriteComponent impleme
   ngOnInit(): void {
     // TODO: Get title from localized resources
     this.title$ = of('Add an organization');
-    this.initFormGroup();
   }
 
   protected override onSubmit(organization: Organization): Observable<Organization> {
