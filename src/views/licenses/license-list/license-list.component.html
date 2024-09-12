@@ -2,7 +2,7 @@
 <div class="container d-flex justify-content-center">
     <div class="row justify-content-center">
         <div class="col">
-            <a routerLink="/licenses/add" [queryParams]="{organizationId:params['organizationId']}">Add a license</a>
+            <a routerLink="/licenses/add" [queryParams]="{organizationId:queryParams['organizationId']}">Add a license</a>
 
             <ng-container *ngIf="licenses?.length; else emptyLicenseTemplate">
                 <p class="mt-2 fw-bold">Below is the list of available licenses:</p>
@@ -10,7 +10,7 @@
                 <ul *ngFor="let license of licenses">
                     <li>
                         <a routerLink="/licenses/details"
-                            [queryParams]="{uri:license._links.self.href,organizationId:params['organizationId']}">{{license.productName}}</a>
+                            [queryParams]="{uri:license._links.self.href,organizationId:queryParams['organizationId']}">{{license.productName}}</a>
                     </li>
                 </ul>
             </ng-container>

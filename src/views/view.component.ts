@@ -6,6 +6,6 @@ import { Params } from '@angular/router';
 })
 export abstract class ViewComponent {
 
-    @Input() params: Params;
+    @Input() queryParams: Params;
 
 }

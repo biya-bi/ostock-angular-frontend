@@ -19,7 +19,7 @@ export class OrganizationContainer {
 
   onActivate(component: ViewComponent) {
     const queryParams = this.activatedRoute.snapshot.queryParams;
-    component.params = queryParams;
+    component.queryParams = queryParams;
     if (component instanceof OrganizationListComponent) {
       this.apiConnector.readOrganizations().pipe(take(1), tap(organizations => component.organizations = organizations)).subscribe();
     } else if (component instanceof OrganizationDetailsComponent || component instanceof OrganizationEditComponent) {
