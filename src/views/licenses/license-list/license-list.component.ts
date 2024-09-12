@@ -1,14 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { License } from '../../../models/License';
-import { ViewComponent } from '../../view.component';
+import { EntityListViewComponent } from '../../entity-list-view.component';
 
 @Component({
   selector: 'app-license-list',
   templateUrl: './license-list.component.html',
   styleUrl: './license-list.component.css'
 })
-export class LicenseListComponent extends ViewComponent {
-
-  @Input() licenses: License[];
-
+export class LicenseListComponent extends EntityListViewComponent<License> {
 }

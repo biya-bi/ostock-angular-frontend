@@ -20,7 +20,7 @@ export class LicenseContainer {
     const queryParams = this.activatedRoute.snapshot.queryParams;
     component.queryParams = queryParams;
     if (component instanceof LicenseListComponent) {
-      this.apiConnector.readLicenses(queryParams['organizationId']).pipe(take(1), tap(licenses => component.licenses = licenses)).subscribe();
+      this.apiConnector.readLicenses(queryParams['organizationId']).pipe(take(1), tap(licenses => component.entities = licenses)).subscribe();
     } else if (component instanceof LicenseViewComponent) {
       this.apiConnector.readLicense(queryParams['uri']).pipe(take(1), tap(license => component.entity = license)).subscribe();
     }

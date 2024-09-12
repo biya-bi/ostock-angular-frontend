@@ -4,13 +4,13 @@
         <div class="col">
             <a routerLink="/licenses/add" [queryParams]="{organizationId:queryParams['organizationId']}">Add a license</a>
 
-            <ng-container *ngIf="licenses?.length; else emptyLicenseTemplate">
+            <ng-container *ngIf="entities?.length; else emptyLicenseTemplate">
                 <p class="mt-2 fw-bold">Below is the list of available licenses:</p>
 
-                <ul *ngFor="let license of licenses">
+                <ul *ngFor="let entity of entities">
                     <li>
                         <a routerLink="/licenses/details"
-                            [queryParams]="{uri:license._links.self.href,organizationId:queryParams['organizationId']}">{{license.productName}}</a>
+                            [queryParams]="{uri:entity._links.self.href,organizationId:queryParams['organizationId']}">{{entity.productName}}</a>
                     </li>
                 </ul>
             </ng-container>
