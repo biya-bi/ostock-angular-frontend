@@ -11,9 +11,9 @@ import { OrganizationEditComponent } from '../views/organizations/organization-w
 import { PageNotFoundComponent } from '../views/page-not-found/page-not-found.component';
 import { LicenseListComponent } from '../views/licenses/license-list/license-list.component';
 import { LicenseContainer } from '../views/licenses/license-container/license.container';
-import { LicenseAddComponent } from '../views/licenses/license-add/license-add.component';
+import { LicenseAddComponent } from '../views/licenses/license-write/license-add.component';
 import { LicenseDetailsComponent } from '../views/licenses/license-details/license-details.component';
-import { LicenseEditComponent } from '../views/licenses/license-edit/license-edit.component';
+import { LicenseEditComponent } from '../views/licenses/license-write/license-edit.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },

@@ -5,6 +5,8 @@ import { Observable, map, of } from 'rxjs';
 import { OrganizationCollectionModel } from '../models/organization-collection.model';
 import { Organization } from '../models/organization';
 import { environment } from '../environments/environment';
+import { License } from '../models/License';
+import { LicenseCollectionModel } from '../models/license-collection.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ export class ApiConnector {
   private readonly url = environment.apiConnectorUrl;
   private readonly organizationEndpoint = `${this.url}/v1/organization`;
   private readonly notificationEndpoint = `${this.url}/v1/notification`;
+  private readonly licenseEndpoint = `${this.url}/v1/license`;
 
   constructor(private readonly httpClient: HttpClient, private readonly oAuthService: OAuthService) { }
 
@@ -45,8 +48,29 @@ export class ApiConnector {
     return this.httpClient.put<Organization>(organization._links.update.href, organization, this.getOptions());
   }
 
+  delete(url: string): Observable<void> {
+    return this.httpClient.delete<void>(url, this.getOptions());
+  }
+
+  // TODO: Deprecate this method in favor of delete
   deleteOrganization(url: string): Observable<void> {
     return this.httpClient.delete<void>(url, this.getOptions());
+  }
+
+  createLicense(license: License, organizationId: string): Observable<License> {
+    return this.httpClient.post<License>(this.licenseEndpoint + '/' + organizationId, license, this.getOptions());
+  }
+
+  readLicenses(organizationId: string): Observable<License[]> {
+    return this.httpClient.get<LicenseCollectionModel>(this.licenseEndpoint + '/' + organizationId, this.getOptions()).pipe(map(m => m?._embedded?.licenseList));
+  }
+
+  readLicense(uri: string): Observable<License> {
+    return uri ? this.httpClient.get<License>(uri, this.getOptions()) : of(null);
+  }
+
+  updateLicense(license: License): Observable<License> {
+    return this.httpClient.put<License>(license._links.update.href, license, this.getOptions());
   }
 
 }

@@ -1,0 +1,42 @@
+<h2 class="d-flex justify-content-center mb-4">{{title$ | async}}</h2>
+<form *ngIf="formGroup" [formGroup]="formGroup" (ngSubmit)="submit()">
+    <div class="container">
+        <div class="row m-2">
+            <div class="col text-end">
+                <label for="productName" class="fw-bold">Product name:</label>
+            </div>
+            <div class="col">
+                <input type="text" id="productName" placeholder="Product name" formControlName="productName">
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col text-end">
+                <label for="description" class="fw-bold">Description:</label>
+            </div>
+            <div class="col">
+                <input type="text" id="description" placeholder="Description" formControlName="description">
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col text-end">
+                <label for="comment" class="fw-bold">Comment:</label>
+            </div>
+            <div class="col">
+                <input type="email" id="comment" placeholder="Comment" formControlName="comment">
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col text-end">
+                <label for="licenseType" class="fw-bold">License type:</label>
+            </div>
+            <div class="col">
+                <input type="text" id="licenseType" placeholder="License type" formControlName="licenseType">
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <span class="m-2">|</span>
+        <a routerLink="/licenses" class="btn btn-link ps-0">List</a>
+    </div>
+</form>

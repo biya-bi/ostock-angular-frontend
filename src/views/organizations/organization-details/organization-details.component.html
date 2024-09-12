@@ -32,6 +32,11 @@
             <span>{{organization.contactPhone}}</span>
         </div>
     </div>
+    <div class="row">
+        <div class="col d-flex justify-content-center align-items-center">
+            <a routerLink="/licenses" [queryParams]="{organizationId:organization.id}">Licenses</a>
+        </div>
+    </div>
     <div class="mt-4 d-flex justify-content-center">
         <a routerLink="/organizations/edit" [queryParams]="{uri:organization._links.update.href}">Edit</a>
         <span class="ms-2 me-2">|</span>

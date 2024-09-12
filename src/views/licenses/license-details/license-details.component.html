@@ -1,1 +1,42 @@
-<p>license-details works!</p>
+<h2 class="d-flex justify-content-center mb-4">License details</h2>
+<div class="container" *ngIf="license">
+    <div class="row">
+        <div class="col text-end">
+            <span class="fw-bold">Product name:</span>
+        </div>
+        <div class="col">
+            <span>{{license.productName}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-end">
+            <span class="fw-bold">Description:</span>
+        </div>
+        <div class="col">
+            <span>{{license.description}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-end">
+            <span class="fw-bold">Comment:</span>
+        </div>
+        <div class="col">
+            <span>{{license.comment}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-end">
+            <span class="fw-bold">License type:</span>
+        </div>
+        <div class="col">
+            <span>{{license.licenseType}}</span>
+        </div>
+    </div>
+    <div class="mt-4 d-flex justify-content-center">
+        <a routerLink="/licenses/edit" [queryParams]="{uri:license._links.update.href}">Edit</a>
+        <span class="ms-2 me-2">|</span>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal">Delete</a>
+        <span class="ms-2 me-2">|</span>
+        <a routerLink="/licenses">List</a>
+    </div>
+</div>
