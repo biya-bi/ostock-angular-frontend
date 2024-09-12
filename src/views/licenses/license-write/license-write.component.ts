@@ -2,15 +2,20 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, take, tap } from 'rxjs';
 import { License } from '../../../models/License';
-import { LicenseContentComponent } from '../license-content/license-content.component';
+import { FormControl, FormGroup } from '@angular/forms';
+import { LicenseViewComponent } from '../license-view.component';
 
 @Component({
     template: '',
 })
-export abstract class LicenseWriteComponent extends LicenseContentComponent {
+export abstract class LicenseWriteComponent extends LicenseViewComponent {
 
-    constructor(protected override readonly router: Router) {
-        super(router);
+    formGroup: FormGroup;
+
+    protected title$: Observable<string>;
+
+    constructor(protected readonly router: Router) {
+        super();
     }
 
     submit(): void {
@@ -19,5 +24,16 @@ export abstract class LicenseWriteComponent extends LicenseContentComponent {
     }
 
     protected abstract onSubmit(license: License): Observable<License>;
+
+    protected override onEntityChange(license: License): void {
+        this.formGroup = new FormGroup({
+            id: new FormControl(license?.id),
+            productName: new FormControl(license?.productName),
+            description: new FormControl(license?.description),
+            comment: new FormControl(license?.comment),
+            licenseType: new FormControl(license?.licenseType),
+            _links: new FormControl(license?._links),
+        });
+    }
 
 }

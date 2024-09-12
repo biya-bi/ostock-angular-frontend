@@ -3,10 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { take, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { ModalResponse } from '../../../models/modal-response';
-import { LicenseDetailsComponent } from '../license-details/license-details.component';
-import { LicenseListComponent } from '../license-list/license-list.component';
-import { LicenseWriteComponent } from '../license-write/license-write.component';
 import { ViewComponent } from '../../view.component';
+import { LicenseListComponent } from '../license-list/license-list.component';
+import { LicenseViewComponent } from '../license-view.component';
 
 @Component({
   selector: 'app-license-container',
@@ -22,8 +21,8 @@ export class LicenseContainer {
     component.queryParams = queryParams;
     if (component instanceof LicenseListComponent) {
       this.apiConnector.readLicenses(queryParams['organizationId']).pipe(take(1), tap(licenses => component.licenses = licenses)).subscribe();
-    } else if (component instanceof LicenseDetailsComponent || component instanceof LicenseWriteComponent) {
-      this.apiConnector.readLicense(queryParams['uri']).pipe(take(1), tap(license => component.license = license)).subscribe();
+    } else if (component instanceof LicenseViewComponent) {
+      this.apiConnector.readLicense(queryParams['uri']).pipe(take(1), tap(license => component.entity = license)).subscribe();
     }
   }
 

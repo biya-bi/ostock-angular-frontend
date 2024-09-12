@@ -19,7 +19,6 @@ export class LicenseAddComponent extends LicenseWriteComponent implements OnInit
   ngOnInit(): void {
     // TODO: Get title from localized resources
     this.title$ = of('Add a license');
-    this.initFormGroup();
   }
 
   protected override onSubmit(license: License): Observable<License> {
