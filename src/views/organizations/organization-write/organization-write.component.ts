@@ -3,12 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, take, tap } from 'rxjs';
 import { Organization } from '../../../models/organization';
-import { OrganizationContentComponent } from '../organization-content.component';
+import { OrganizationViewComponent } from '../organization-view.component';
 
 @Component({
     template: '',
 })
-export abstract class OrganizationWriteComponent extends OrganizationContentComponent {
+export abstract class OrganizationWriteComponent extends OrganizationViewComponent {
 
     protected title$: Observable<string>;
 
@@ -25,7 +25,7 @@ export abstract class OrganizationWriteComponent extends OrganizationContentComp
 
     protected abstract onSubmit(organization: Organization): Observable<Organization>;
 
-    protected override onOrganizationChange(organization: Organization): void {
+    protected override onEntityChange(organization: Organization): void {
         this.formGroup = new FormGroup({
             id: new FormControl(organization?.id),
             name: new FormControl(organization?.name),

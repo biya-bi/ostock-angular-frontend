@@ -4,7 +4,7 @@ import { take, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { ModalResponse } from '../../../models/modal-response';
 import { ViewComponent } from '../../view.component';
-import { OrganizationContentComponent } from '../organization-content.component';
+import { OrganizationViewComponent } from '../organization-view.component';
 import { OrganizationListComponent } from '../organization-list/organization-list.component';
 
 @Component({
@@ -21,8 +21,8 @@ export class OrganizationContainer {
     component.queryParams = queryParams;
     if (component instanceof OrganizationListComponent) {
       this.apiConnector.readOrganizations().pipe(take(1), tap(organizations => component.organizations = organizations)).subscribe();
-    } else if (component instanceof OrganizationContentComponent) {
-      this.apiConnector.readOrganization(queryParams['uri']).pipe(take(1), tap(organization => component.organization = organization)).subscribe();
+    } else if (component instanceof OrganizationViewComponent) {
+      this.apiConnector.readOrganization(queryParams['uri']).pipe(take(1), tap(organization => component.entity = organization)).subscribe();
     }
   }
 
