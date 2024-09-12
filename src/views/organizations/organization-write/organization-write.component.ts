@@ -16,7 +16,7 @@ export abstract class OrganizationWriteComponent {
     constructor(protected readonly router: Router) { }
 
     submit(): void {
-        const organization = { ...this.formGroup.value, asOf: Math.ceil(new Date(this.formGroup.value.asOf).valueOf() / 1000) };
+        const organization = { ...this.formGroup.value };
         this.onSubmit(organization).pipe(take(1), tap(() => this.router.navigate(['/organizations']))).subscribe();
     }
 
