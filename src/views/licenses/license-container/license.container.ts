@@ -5,7 +5,6 @@ import { ApiConnector } from '../../../connectors/api.connector';
 import { ModalResponse } from '../../../models/modal-response';
 import { LicenseDetailsComponent } from '../license-details/license-details.component';
 import { LicenseListComponent } from '../license-list/license-list.component';
-import { LicenseEditComponent } from '../license-write/license-edit.component';
 import { LicenseWriteComponent } from '../license-write/license-write.component';
 
 @Component({
@@ -41,7 +40,7 @@ export class LicenseContainer {
         switchMap(params => this.apiConnector.delete(params['uri'])),
         tap(() => {
           response.closeElement.click();
-          this.router.navigate(['/licenses']);
+          this.router.navigate(['/licenses'], { queryParams: this.activatedRoute.snapshot.queryParams });
         })).subscribe();
     }
   }
