@@ -15,7 +15,7 @@ export abstract class LicenseWriteComponent extends LicenseContentComponent {
 
     submit(): void {
         const license = { ...this.formGroup.value };
-        this.onSubmit(license).pipe(take(1), tap(() => this.router.navigate(['/licenses'], { queryParams: this.activatedRoute.snapshot.queryParams }))).subscribe();
+        this.onSubmit(license).pipe(take(1), tap(() => this.router.navigate(['/licenses'], { queryParams: { organizationId: this.activatedRoute.snapshot.queryParams['organizationId'] } }))).subscribe();
     }
 
     protected abstract onSubmit(license: License): Observable<License>;

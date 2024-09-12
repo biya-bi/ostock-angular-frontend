@@ -23,7 +23,7 @@ export class LicenseAddComponent extends LicenseWriteComponent implements OnInit
   }
 
   protected override onSubmit(license: License): Observable<License> {
-    return this.apiConnector.createLicense(license, this.activatedRoute.snapshot.queryParamMap.get('organizationId'));
+    return this.apiConnector.createLicense(license, this.activatedRoute.snapshot.queryParams['organizationId']);
   }
 
 }
