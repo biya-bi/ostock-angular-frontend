@@ -3,17 +3,20 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, take, tap } from 'rxjs';
 import { Organization } from '../../../models/organization';
+import { ViewComponent } from '../../view.component';
 
 @Component({
     template: '',
 })
-export abstract class OrganizationWriteComponent {
+export abstract class OrganizationWriteComponent extends ViewComponent {
 
     protected title$: Observable<string>;
 
     formGroup: FormGroup;
 
-    constructor(protected readonly router: Router) { }
+    constructor(protected readonly router: Router) { 
+        super();
+    }
 
     submit(): void {
         const organization = { ...this.formGroup.value };

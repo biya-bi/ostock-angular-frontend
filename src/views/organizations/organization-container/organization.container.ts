@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, switchMap, take, tap } from 'rxjs';
+import { take, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { ModalResponse } from '../../../models/modal-response';
+import { ViewComponent } from '../../view.component';
 import { OrganizationDetailsComponent } from '../organization-details/organization-details.component';
 import { OrganizationListComponent } from '../organization-list/organization-list.component';
 import { OrganizationEditComponent } from '../organization-write/organization-edit.component';
@@ -16,22 +17,20 @@ export class OrganizationContainer {
 
   constructor(private readonly apiConnector: ApiConnector, private readonly router: Router, private readonly activatedRoute: ActivatedRoute) { }
 
-  onActivate(component: any) {
+  onActivate(component: ViewComponent) {
+    const queryParams = this.activatedRoute.snapshot.queryParams;
+    component.params = queryParams;
     if (component instanceof OrganizationListComponent) {
       this.apiConnector.readOrganizations().pipe(take(1), tap(organizations => component.organizations = organizations)).subscribe();
     } else if (component instanceof OrganizationDetailsComponent || component instanceof OrganizationEditComponent) {
-      this.activatedRoute.queryParams.pipe(
-        take(1),
-        switchMap(params => this.apiConnector.readOrganization(params['uri'])),
-        tap(organization => component.organization = organization)
-      ).subscribe();
+      this.apiConnector.readOrganization(queryParams['uri']).pipe(take(1), tap(organization => component.organization = organization)).subscribe();
     }
   }
 
   onResponse(response: ModalResponse) {
     if (response.answer === 'YES') {
-      this.activatedRoute.queryParams.pipe(take(1),
-        switchMap(params => this.apiConnector.deleteOrganization(params['uri'])),
+      const queryParams = this.activatedRoute.snapshot.queryParams;
+      this.apiConnector.deleteOrganization(queryParams['uri']).pipe(take(1),
         tap(() => {
           response.closeElement.click();
           this.router.navigate(['/organizations']);
