@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, take, tap } from 'rxjs';
+import { take, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { ModalResponse } from '../../../models/modal-response';
 import { LicenseDetailsComponent } from '../license-details/license-details.component';
@@ -17,18 +17,14 @@ export class LicenseContainer {
   constructor(private readonly apiConnector: ApiConnector, private readonly router: Router, private readonly activatedRoute: ActivatedRoute) { }
 
   onActivate(component: any) {
+    const params = this.activatedRoute.snapshot.queryParams;
     if (component instanceof LicenseListComponent) {
-      this.activatedRoute.queryParams.pipe(
-        take(1),
-        tap(params => component.params = params),
-        switchMap(params => this.apiConnector.readLicenses(params['organizationId'])),
-        tap(licenses => component.licenses = licenses)
-      ).subscribe();
+      component.params = params;
+      this.apiConnector.readLicenses(params['organizationId']).pipe(take(1), tap(licenses => component.licenses = licenses)).subscribe();
     } else if (component instanceof LicenseDetailsComponent || component instanceof LicenseWriteComponent) {
-      this.activatedRoute.queryParams.pipe(
+      component.params = params;
+      this.apiConnector.readLicense(params['uri']).pipe(
         take(1),
-        tap(params => component.params = params),
-        switchMap(params => this.apiConnector.readLicense(params['uri'])),
         tap(license => component.license = license)
       ).subscribe();
     }
@@ -36,12 +32,11 @@ export class LicenseContainer {
 
   onResponse(response: ModalResponse) {
     if (response.answer === 'YES') {
-      this.activatedRoute.queryParams.pipe(take(1),
-        switchMap(params => this.apiConnector.delete(params['uri'])),
-        tap(() => {
-          response.closeElement.click();
-          this.router.navigate(['/licenses'], { queryParams: this.activatedRoute.snapshot.queryParams });
-        })).subscribe();
+      const params = this.activatedRoute.snapshot.queryParams;
+      this.apiConnector.delete(params['uri']).pipe(take(1), tap(() => {
+        response.closeElement.click();
+        this.router.navigate(['/licenses'], { queryParams: { organizationId: params['organizationId'] } });
+      })).subscribe();
     }
   }
 
