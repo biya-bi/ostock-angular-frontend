@@ -6,6 +6,7 @@ import { ModalResponse } from '../../../models/modal-response';
 import { LicenseDetailsComponent } from '../license-details/license-details.component';
 import { LicenseListComponent } from '../license-list/license-list.component';
 import { LicenseWriteComponent } from '../license-write/license-write.component';
+import { ViewComponent } from '../../view.component';
 
 @Component({
   selector: 'app-license-container',
@@ -16,17 +17,13 @@ export class LicenseContainer {
 
   constructor(private readonly apiConnector: ApiConnector, private readonly router: Router, private readonly activatedRoute: ActivatedRoute) { }
 
-  onActivate(component: any) {
+  onActivate(component: ViewComponent) {
     const params = this.activatedRoute.snapshot.queryParams;
+    component.params = params;
     if (component instanceof LicenseListComponent) {
-      component.params = params;
       this.apiConnector.readLicenses(params['organizationId']).pipe(take(1), tap(licenses => component.licenses = licenses)).subscribe();
     } else if (component instanceof LicenseDetailsComponent || component instanceof LicenseWriteComponent) {
-      component.params = params;
-      this.apiConnector.readLicense(params['uri']).pipe(
-        take(1),
-        tap(license => component.license = license)
-      ).subscribe();
+      this.apiConnector.readLicense(params['uri']).pipe(take(1), tap(license => component.license = license)).subscribe();
     }
   }
 

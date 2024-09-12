@@ -1,23 +1,24 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Params, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { License } from '../../../models/License';
+import { ViewComponent } from '../../view.component';
 
 @Component({
     template: '',
 })
-export abstract class LicenseContentComponent {
+export abstract class LicenseContentComponent extends ViewComponent {
 
     private _license: License;
-
-    @Input() params: Params;
 
     protected title$: Observable<string>;
 
     formGroup: FormGroup;
 
-    constructor(protected readonly router: Router) { }
+    constructor(protected readonly router: Router) { 
+      super();
+    }
 
     protected initFormGroup(license?: License): void {
         this.formGroup = new FormGroup({

@@ -1,15 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { License } from '../../../models/License';
-import { Params } from '@angular/router';
+import { ViewComponent } from '../../view.component';
 
 @Component({
   selector: 'app-license-list',
   templateUrl: './license-list.component.html',
   styleUrl: './license-list.component.css'
 })
-export class LicenseListComponent {
+export class LicenseListComponent extends ViewComponent {
 
   @Input() licenses: License[];
-  @Input() params: Params;
 
 }
