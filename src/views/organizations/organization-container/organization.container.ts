@@ -1,20 +1,23 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take, tap } from 'rxjs';
+import { switchMap, take, takeUntil, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { ModalResponse } from '../../../models/modal-response';
 import { ViewComponent } from '../../view.component';
 import { OrganizationViewComponent } from '../organization-view.component';
 import { OrganizationListComponent } from '../organization-list/organization-list.component';
+import { BaseComponent } from '../../base.component';
 
 @Component({
   selector: 'app-organization-container',
   templateUrl: './organization.container.html',
   styleUrl: './organization.container.css'
 })
-export class OrganizationContainer {
+export class OrganizationContainer extends BaseComponent {
 
-  constructor(private readonly apiConnector: ApiConnector, private readonly router: Router, private readonly activatedRoute: ActivatedRoute) { }
+  constructor(private readonly apiConnector: ApiConnector, private readonly router: Router, private readonly activatedRoute: ActivatedRoute) {
+    super();
+  }
 
   onActivate(component: ViewComponent) {
     const queryParams = this.activatedRoute.snapshot.queryParams;
@@ -23,6 +26,7 @@ export class OrganizationContainer {
       this.apiConnector.readOrganizations().pipe(take(1), tap(organizations => component.entities = organizations)).subscribe();
     } else if (component instanceof OrganizationViewComponent) {
       this.apiConnector.readOrganization(queryParams['uri']).pipe(take(1), tap(organization => component.entity = organization)).subscribe();
+      component.loadLicenses.pipe(takeUntil(this.destroy$), switchMap(uri => this.apiConnector.readLicenses(uri)), tap((licenses) => component.licenses = licenses)).subscribe();
     }
   }
 

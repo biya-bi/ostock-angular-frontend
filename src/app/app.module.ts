@@ -26,6 +26,7 @@ import { LicenseAddComponent } from "../views/licenses/license-write/license-add
 import { LicenseListComponent } from "../views/licenses/license-list/license-list.component";
 import { LicenseEditComponent } from "../views/licenses/license-write/license-edit.component";
 import { LicenseDetailsComponent } from "../views/licenses/license-details/license-details.component";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import { LicenseDetailsComponent } from "../views/licenses/license-details/licen
           // Register the ServiceWorker as soon as the application is stable
           // or after 30 seconds (whichever comes first).
           registrationStrategy: 'registerWhenStable:30000'
-        })
+        }),
+        NgbModule
     ],
     declarations: [
         AppComponent,

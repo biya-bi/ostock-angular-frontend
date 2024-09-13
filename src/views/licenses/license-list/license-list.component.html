@@ -1,8 +1,7 @@
-<h1 class="d-flex justify-content-center mb-4">Licenses</h1>
 <div class="container d-flex justify-content-center">
     <div class="row justify-content-center">
         <div class="col">
-            <a routerLink="/organizations/licenses/add" [queryParams]="{licenses:queryParams['licenses']}">Add a license</a>
+            <a routerLink="/organizations/licenses/add">Add a license</a>
 
             <ng-container *ngIf="entities?.length; else emptyLicenseTemplate">
                 <p class="mt-2 fw-bold">Below is the list of available licenses:</p>
@@ -10,7 +9,7 @@
                 <ul *ngFor="let entity of entities">
                     <li>
                         <a routerLink="/organizations/licenses/details"
-                            [queryParams]="{uri:entity._links.self.href,licenses:queryParams['licenses']}">{{entity.productName}}</a>
+                            [queryParams]="{uri:entity._links.self.href}">{{entity.productName}}</a>
                     </li>
                 </ul>
             </ng-container>

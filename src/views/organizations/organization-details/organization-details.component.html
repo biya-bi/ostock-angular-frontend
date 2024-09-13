@@ -1,47 +1,60 @@
-<h2 class="d-flex justify-content-center mb-4">Organization details</h2>
-<div class="container" *ngIf="entity">
-    <div class="row">
-        <div class="col text-end">
-            <span class="fw-bold">Name:</span>
-        </div>
-        <div class="col">
-            <span>{{entity.name}}</span>
+<div ngbAccordion>
+    <div [collapsed]="false" ngbAccordionItem>
+        <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>Organization details</button>
+        </h2>
+        <div ngbAccordionCollapse>
+            <div class="container" *ngIf="entity" ngbAccordionBody>
+                <div class="row">
+                    <div class="col text-end">
+                        <span class="fw-bold">Name:</span>
+                    </div>
+                    <div class="col">
+                        <span>{{entity.name}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-end">
+                        <span class="fw-bold">Contact name:</span>
+                    </div>
+                    <div class="col">
+                        <span>{{entity.contactName}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-end">
+                        <span class="fw-bold">Contact email:</span>
+                    </div>
+                    <div class="col">
+                        <span>{{entity.contactEmail}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-end">
+                        <span class="fw-bold">Contact phone:</span>
+                    </div>
+                    <div class="col">
+                        <span>{{entity.contactPhone}}</span>
+                    </div>
+                </div>
+                <div class="mt-4 d-flex justify-content-center">
+                    <a routerLink="/organizations/edit" [queryParams]="{uri:entity._links.self.href}">Edit</a>
+                    <span class="ms-2 me-2">|</span>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteOrganizationModal">Delete</a>
+                    <span class="ms-2 me-2">|</span>
+                    <a routerLink="/organizations">List</a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col text-end">
-            <span class="fw-bold">Contact name:</span>
+    <div *ngIf="entity?._links?.licenses?.href" (shown)="loadLicenses.emit(entity._links.licenses.href)" ngbAccordionItem>
+        <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>Licenses</button>
+        </h2>
+        <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+                <app-license-list [entities]="licenses"></app-license-list>
+            </div>
         </div>
-        <div class="col">
-            <span>{{entity.contactName}}</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-end">
-            <span class="fw-bold">Contact email:</span>
-        </div>
-        <div class="col">
-            <span>{{entity.contactEmail}}</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-end">
-            <span class="fw-bold">Contact phone:</span>
-        </div>
-        <div class="col">
-            <span>{{entity.contactPhone}}</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col d-flex justify-content-center align-items-center">
-            <a routerLink="/organizations/licenses" [queryParams]="{licenses:entity._links.licenses.href}">Licenses</a>
-        </div>
-    </div>
-    <div class="mt-4 d-flex justify-content-center">
-        <a routerLink="/organizations/edit" [queryParams]="{uri:entity._links.self.href}">Edit</a>
-        <span class="ms-2 me-2">|</span>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#deleteOrganizationModal">Delete</a>
-        <span class="ms-2 me-2">|</span>
-        <a routerLink="/organizations">List</a>
     </div>
 </div>
