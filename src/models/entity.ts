@@ -1,9 +1,5 @@
-import { Link } from "./link";
+import { EntityLinks } from "./entity-links";
 
-export interface Entity {
-    _links: {
-        self: Link;
-        update: Link;
-        delete: Link
-    }
+export interface Entity<T extends EntityLinks> {
+    _links: T;
 }

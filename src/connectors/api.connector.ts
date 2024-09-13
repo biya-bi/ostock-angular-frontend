@@ -16,7 +16,6 @@ export class ApiConnector {
   private readonly url = environment.apiConnectorUrl;
   private readonly organizationEndpoint = `${this.url}/v1/organization`;
   private readonly notificationEndpoint = `${this.url}/v1/notification`;
-  private readonly licenseEndpoint = `${this.url}/v1/license`;
 
   constructor(private readonly httpClient: HttpClient, private readonly oAuthService: OAuthService) { }
 
@@ -57,12 +56,12 @@ export class ApiConnector {
     return this.httpClient.delete<void>(url, this.getOptions());
   }
 
-  createLicense(license: License, organizationId: string): Observable<License> {
-    return this.httpClient.post<License>(this.licenseEndpoint + '/' + organizationId, license, this.getOptions());
+  createLicense(license: License, uri: string): Observable<License> {
+    return this.httpClient.post<License>(uri, license, this.getOptions());
   }
 
-  readLicenses(organizationId: string): Observable<License[]> {
-    return this.httpClient.get<LicenseCollectionModel>(this.licenseEndpoint + '/' + organizationId, this.getOptions()).pipe(map(m => m?._embedded?.licenseList));
+  readLicenses(uri: string): Observable<License[]> {
+    return this.httpClient.get<LicenseCollectionModel>(uri, this.getOptions()).pipe(map(m => m?._embedded?.licenseList));
   }
 
   readLicense(uri: string): Observable<License> {

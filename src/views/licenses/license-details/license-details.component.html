@@ -33,10 +33,10 @@
         </div>
     </div>
     <div class="mt-4 d-flex justify-content-center">
-        <a routerLink="/licenses/edit" [queryParams]="{uri:entity._links.self.href,organizationId:queryParams['organizationId']}">Edit</a>
+        <a routerLink="/licenses/edit" [queryParams]="{uri:entity._links.self.href,licenses:queryParams['licenses'],organizationId:queryParams['organizationId']}">Edit</a>
         <span class="ms-2 me-2">|</span>
         <a href="#" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal">Delete</a>
         <span class="ms-2 me-2">|</span>
-        <a routerLink="/licenses" [queryParams]="{organizationId:queryParams['organizationId']}">List</a>
+        <a routerLink="/licenses" [queryParams]="{licenses:queryParams['licenses']}">List</a>
     </div>
 </div>

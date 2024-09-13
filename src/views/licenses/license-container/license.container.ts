@@ -20,7 +20,7 @@ export class LicenseContainer {
     const queryParams = this.activatedRoute.snapshot.queryParams;
     component.queryParams = queryParams;
     if (component instanceof LicenseListComponent) {
-      this.apiConnector.readLicenses(queryParams['organizationId']).pipe(take(1), tap(licenses => component.entities = licenses)).subscribe();
+      this.apiConnector.readLicenses(queryParams['licenses']).pipe(take(1), tap(licenses => component.entities = licenses)).subscribe();
     } else if (component instanceof LicenseViewComponent) {
       this.apiConnector.readLicense(queryParams['uri']).pipe(take(1), tap(license => component.entity = license)).subscribe();
     }
@@ -31,7 +31,7 @@ export class LicenseContainer {
       const queryParams = this.activatedRoute.snapshot.queryParams;
       this.apiConnector.delete(queryParams['uri']).pipe(take(1), tap(() => {
         response.closeElement.click();
-        this.router.navigate(['/licenses'], { queryParams: { organizationId: queryParams['organizationId'] } });
+        this.router.navigate(['/licenses'], { queryParams: { licenses: queryParams['licenses'] } });
       })).subscribe();
     }
   }

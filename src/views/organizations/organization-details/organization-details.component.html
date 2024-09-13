@@ -34,7 +34,7 @@
     </div>
     <div class="row">
         <div class="col d-flex justify-content-center align-items-center">
-            <a routerLink="/licenses" [queryParams]="{organizationId:entity.id}">Licenses</a>
+            <a routerLink="/licenses" [queryParams]="{licenses:entity._links.licenses.href}">Licenses</a>
         </div>
     </div>
     <div class="mt-4 d-flex justify-content-center">
