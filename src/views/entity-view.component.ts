@@ -9,10 +9,11 @@ export abstract class EntityViewComponent<E> extends ViewComponent {
   private _entity: E;
 
   @Input()
-  set entity(value: E) {
-    if (this._entity !== value) {
-      this._entity = value;
-      this.onEntityChange(value, this._entity);
+  set entity(newValue: E) {
+    if (this._entity !== newValue) {
+      const oldValue = this._entity;
+      this._entity = newValue;
+      this.onEntityChange(newValue, oldValue);
     }
   }
 
