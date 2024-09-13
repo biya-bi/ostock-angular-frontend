@@ -31,7 +31,7 @@ export class LicenseContainer {
       const queryParams = this.activatedRoute.snapshot.queryParams;
       this.apiConnector.delete(queryParams['uri']).pipe(take(1), tap(() => {
         response.closeElement.click();
-        this.router.navigate(['/licenses'], { queryParams: { licenses: queryParams['licenses'] } });
+        this.router.navigate(['/organizations/licenses'], { queryParams: { licenses: queryParams['licenses'] } });
       })).subscribe();
     }
   }

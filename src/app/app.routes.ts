@@ -41,28 +41,28 @@ export const routes: Routes = [
                 path: 'edit',
                 component: OrganizationEditComponent
             },
-        ]
-    },
-    {
-        path: 'licenses',
-        component: LicenseContainer,
-        canActivate: [authenticationGuard],
-        children: [
             {
-                path: '',
-                component: LicenseListComponent
-            },
-            {
-                path: 'add',
-                component: LicenseAddComponent
-            },
-            {
-                path: 'details',
-                component: LicenseDetailsComponent
-            },
-            {
-                path: 'edit',
-                component: LicenseEditComponent
+                path: 'licenses',
+                component: LicenseContainer,
+                canActivate: [authenticationGuard],
+                children: [
+                    {
+                        path: '',
+                        component: LicenseListComponent
+                    },
+                    {
+                        path: 'add',
+                        component: LicenseAddComponent
+                    },
+                    {
+                        path: 'details',
+                        component: LicenseDetailsComponent
+                    },
+                    {
+                        path: 'edit',
+                        component: LicenseEditComponent
+                    },
+                ]
             },
         ]
     },
