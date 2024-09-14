@@ -53,7 +53,7 @@
         </h2>
         <div ngbAccordionCollapse>
             <div ngbAccordionBody>
-                <app-license-list [entities]="licenses"></app-license-list>
+                <app-license-list [entities]="licenses" [organization]="entity" (save)="writeLicense.emit($event)"></app-license-list>
             </div>
         </div>
     </div>

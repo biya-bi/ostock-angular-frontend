@@ -1,15 +1,15 @@
 <div class="container d-flex justify-content-center">
     <div class="row justify-content-center">
         <div class="col">
-            <a routerLink="/organizations/licenses/add">Add a license</a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal" (click)="selectedLicense=null;mode=WriteMode.Create;crudTitle='Add a license'">Add a license</a>
 
             <ng-container *ngIf="entities?.length; else emptyLicenseTemplate">
                 <p class="mt-2 fw-bold">Below is the list of available licenses:</p>
 
                 <ul *ngFor="let entity of entities">
                     <li>
-                        <a routerLink="/organizations/licenses/details"
-                            [queryParams]="{uri:entity._links.self.href}">{{entity.productName}}</a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal"
+                            (click)="selectedLicense=entity;mode=WriteMode.Update;crudTitle='Edit license'">{{entity.productName}}</a>
                     </li>
                 </ul>
             </ng-container>
@@ -20,3 +20,4 @@
         </div>
     </div>
 </div>
+<app-license-add [entity]="selectedLicense" (save)="save.emit($event)" [organization]="organization" [mode]="mode" [title]="crudTitle"></app-license-add>

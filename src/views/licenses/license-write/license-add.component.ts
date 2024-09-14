@@ -16,7 +16,8 @@ export class LicenseAddComponent extends LicenseWriteComponent implements OnInit
     super(router);
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    super.ngOnInit();
     // TODO: Get title from localized resources
     this.title$ = of('Add a license');
   }

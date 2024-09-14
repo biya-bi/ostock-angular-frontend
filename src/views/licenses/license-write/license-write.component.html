@@ -1,42 +1,58 @@
-<h2 class="d-flex justify-content-center mb-4">{{title$ | async}}</h2>
-<form *ngIf="formGroup" [formGroup]="formGroup" (ngSubmit)="submit()">
-    <div class="container">
-        <div class="row m-2">
-            <div class="col text-end">
-                <label for="productName" class="fw-bold">Product name:</label>
+<div class="modal fade" id="writeLicenseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="title">{{title}}</h1>
+                <button #closeButton type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
-            <div class="col">
-                <input type="text" id="productName" placeholder="Product name" formControlName="productName">
+            <div class="modal-body">
+                <form *ngIf="formGroup" [formGroup]="formGroup" (ngSubmit)="submit()">
+                    <div class="container">
+                        <div class="row m-2">
+                            <div class="col text-end">
+                                <label for="productName" class="fw-bold">Product name:</label>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="productName" placeholder="Product name"
+                                    formControlName="productName">
+                            </div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col text-end">
+                                <label for="description" class="fw-bold">Description:</label>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="description" placeholder="Description"
+                                    formControlName="description">
+                            </div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col text-end">
+                                <label for="comment" class="fw-bold">Comment:</label>
+                            </div>
+                            <div class="col">
+                                <input type="email" id="comment" placeholder="Comment" formControlName="comment">
+                            </div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col text-end">
+                                <label for="licenseType" class="fw-bold">License type:</label>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="licenseType" placeholder="License type"
+                                    formControlName="licenseType">
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
-        <div class="row m-2">
-            <div class="col text-end">
-                <label for="description" class="fw-bold">Description:</label>
-            </div>
-            <div class="col">
-                <input type="text" id="description" placeholder="Description" formControlName="description">
-            </div>
-        </div>
-        <div class="row m-2">
-            <div class="col text-end">
-                <label for="comment" class="fw-bold">Comment:</label>
-            </div>
-            <div class="col">
-                <input type="email" id="comment" placeholder="Comment" formControlName="comment">
-            </div>
-        </div>
-        <div class="row m-2">
-            <div class="col text-end">
-                <label for="licenseType" class="fw-bold">License type:</label>
-            </div>
-            <div class="col">
-                <input type="text" id="licenseType" placeholder="License type" formControlName="licenseType">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary"
+                    (click)="save.emit({license:formGroup.value, organization:organization, mode:mode, closeElement:closeButton})">Save</button>
             </div>
         </div>
     </div>
-    <div class="mt-4 d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <span class="m-2">|</span>
-        <a routerLink="/organizations/licenses" class="btn btn-link ps-0" [queryParams]="{licenses:queryParams['licenses']}">List</a>
-    </div>
-</form>
+</div>

@@ -16,7 +16,8 @@ export class LicenseEditComponent extends LicenseWriteComponent {
     super(router);
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    super.ngOnInit();
     // TODO: Get title from localized resources
     this.title$ = of('Edit license');
   }

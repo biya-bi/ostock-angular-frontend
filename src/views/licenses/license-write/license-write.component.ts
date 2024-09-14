@@ -1,14 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, take, tap } from 'rxjs';
 import { License } from '../../../models/License';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LicenseViewComponent } from '../license-view.component';
+import { LicenseWriteEvent } from '../../../models/license-write-event';
+import { Organization } from '../../../models/organization';
+import { WriteMode } from '../../../models/write-mode';
 
 @Component({
     template: '',
 })
-export abstract class LicenseWriteComponent extends LicenseViewComponent {
+export abstract class LicenseWriteComponent extends LicenseViewComponent implements OnInit {
+
+    @Input() title: string;
+    @Input() organization: Organization;
+    @Input() mode: WriteMode;
+    @Output() save = new EventEmitter<LicenseWriteEvent>();
 
     formGroup: FormGroup;
 
@@ -16,6 +24,10 @@ export abstract class LicenseWriteComponent extends LicenseViewComponent {
 
     constructor(protected readonly router: Router) {
         super();
+    }
+
+    ngOnInit(): void {
+        this.initFormGroup();
     }
 
     submit(): void {
@@ -26,6 +38,10 @@ export abstract class LicenseWriteComponent extends LicenseViewComponent {
     protected abstract onSubmit(license: License): Observable<License>;
 
     protected override onEntityChange(license: License): void {
+        this.initFormGroup(license);
+    }
+
+    private initFormGroup(license?: License): void {
         this.formGroup = new FormGroup({
             id: new FormControl(license?.id),
             productName: new FormControl(license?.productName),
@@ -35,5 +51,4 @@ export abstract class LicenseWriteComponent extends LicenseViewComponent {
             _links: new FormControl(license?._links),
         });
     }
-
 }
