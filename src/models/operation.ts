@@ -1,4 +1,4 @@
-export enum WriteMode {
+export enum Operation {
     Create = "create",
     Read = "read",
     Update = "update",

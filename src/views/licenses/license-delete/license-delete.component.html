@@ -13,7 +13,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-danger"
-                    (click)="delete.emit({license:license,organization:organization,closeElement:closeButton,mode:WriteMode.Delete})">Delete</button>
+                    (click)="delete.emit({entity:entity,organization:organization,closeElement:closeButton,operation:Operation.Delete})">Delete</button>
             </div>
         </div>
     </div>

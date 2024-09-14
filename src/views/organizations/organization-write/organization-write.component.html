@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="mt-4 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary" (click)="write.emit({organization:formGroup.value,mode:mode})">Save</button>
+                        <button type="submit" class="btn btn-primary" (click)="write.emit({entity:formGroup.value,operation:operation})">Save</button>
                         <span class="m-2">|</span>
                         <a routerLink="/organizations" class="btn btn-link ps-0">List</a>
                     </div>

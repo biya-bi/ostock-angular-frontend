@@ -1,11 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { ViewComponent } from './view.component';
+import { Operation } from '../models/operation';
 
 @Component({
   template: '',
 })
 export abstract class EntityViewComponent<E> extends ViewComponent {
 
+  Operation = Operation;
+  
   private _entity: E;
 
   @Input()

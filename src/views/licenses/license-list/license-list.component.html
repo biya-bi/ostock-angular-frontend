@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col">
             <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal"
-                (click)="selectedLicense=null;mode=WriteMode.Create;crudTitle='Add a license'">Add a license</a>
+                (click)="selectedLicense=null;operation=WriteMode.Create;crudTitle='Add a license'">Add a license</a>
 
             <ng-container *ngIf="entities?.length; else emptyLicenseTemplate">
                 <p class="mt-2 fw-bold">Below is the list of available licenses:</p>
@@ -10,15 +10,15 @@
                     <div class="row mt-1 mb-1" *ngFor="let entity of entities">
                         <div class="col">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#viewLicenseModal"
-                                (click)="selectedLicense=entity;mode=WriteMode.Update;crudTitle='Edit license'">{{entity.productName}}</a>
+                                (click)="selectedLicense=entity;operation=WriteMode.Update;crudTitle='Edit license'">{{entity.productName}}</a>
                         </div>
                         <div class="col-auto">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal"
-                                (click)="selectedLicense=entity;mode=WriteMode.Update;crudTitle='Edit license'">Edit</a>
+                                (click)="selectedLicense=entity;operation=WriteMode.Update;crudTitle='Edit license'">Edit</a>
                         </div>
                         <div class="col-auto">
                             <a href="#" class="link-danger" data-bs-toggle="modal"
-                                data-bs-target="#deleteLicenseModal" (click)="selectedLicense=entity;mode=WriteMode.Delete">Delete</a>
+                                data-bs-target="#deleteLicenseModal" (click)="selectedLicense=entity;operation=WriteMode.Delete">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -30,8 +30,8 @@
         </div>
     </div>
 </div>
-<app-license-write [entity]="selectedLicense" (save)="write.emit($event)" [organization]="organization" [mode]="mode"
+<app-license-write [entity]="selectedLicense" (save)="write.emit($event)" [organization]="organization" [operation]="operation"
     [title]="crudTitle"></app-license-write>
-<app-license-delete [license]="selectedLicense" [organization]="organization"
+<app-license-delete [entity]="selectedLicense" [organization]="organization"
     (delete)="write.emit($event)"></app-license-delete>
-<app-license-details [entity]="selectedLicense" [organization]="organization" [mode]="mode"></app-license-details>
+<app-license-details [entity]="selectedLicense" [organization]="organization" [operation]="operation"></app-license-details>

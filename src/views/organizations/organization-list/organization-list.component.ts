@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from "@angular/core";
 import { Organization } from "../../../models/organization";
 import { EntityListViewComponent } from "../../entity-list-view.component";
-import { OrganizationWriteEvent } from "../../../models/organization-write-event";
-import { WriteMode } from "../../../models/write-mode";
+import { OrganizationEvent } from "../../../models/organization-event";
+import { Operation } from "../../../models/operation";
 
 @Component({
     selector: 'app-organization-list',
@@ -10,7 +10,7 @@ import { WriteMode } from "../../../models/write-mode";
     styleUrl: './organization-list.component.css'
 })
 export class OrganizationListComponent extends EntityListViewComponent<Organization> {
-    @Output() write = new EventEmitter<OrganizationWriteEvent>();
+    @Output() write = new EventEmitter<OrganizationEvent>();
 
-    WriteMode = WriteMode
+    Operation = Operation
 }

@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap, take, takeUntil, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { License } from '../../../models/License';
-import { LicenseWriteEvent } from '../../../models/license-write-event';
-import { OrganizationWriteEvent } from '../../../models/organization-write-event';
-import { WriteMode } from '../../../models/write-mode';
+import { LicenseEvent } from '../../../models/license-event';
+import { Operation } from '../../../models/operation';
+import { OrganizationEvent } from '../../../models/organization-event';
 import { BaseComponent } from '../../base.component';
 import { ViewComponent } from '../../view.component';
 import { OrganizationListComponent } from '../organization-list/organization-list.component';
@@ -23,14 +23,16 @@ export class OrganizationContainer extends BaseComponent {
   }
 
   onActivate(component: ViewComponent) {
-    const queryParams = this.activatedRoute.snapshot.queryParams;
-    component.queryParams = queryParams;
     if (component instanceof OrganizationListComponent) {
-      this.apiConnector.readOrganizations().pipe(take(1), tap(organizations => component.entities = organizations)).subscribe();
+      this.readOrganizations(component);
     } else if (component instanceof OrganizationViewComponent) {
       this.readOrganization(component);
       this.subscribeToEvents(component);
     }
+  }
+
+  private readOrganizations(component: OrganizationListComponent): void {
+    this.apiConnector.readOrganizations().pipe(take(1), tap(organizations => component.entities = organizations)).subscribe();
   }
 
   private readOrganization(component: OrganizationViewComponent): void {
@@ -39,21 +41,21 @@ export class OrganizationContainer extends BaseComponent {
       take(1),
       tap(organization => {
         component.entity = organization;
-        component.mode = queryParams['mode'];
+        component.operation = queryParams['operation'];
       })).subscribe();
   }
 
-  private writeOrganization(event: OrganizationWriteEvent): Observable<void> {
+  private writeOrganization(event: OrganizationEvent): Observable<void> {
     let obs$: Observable<any>;
-    switch (event.mode) {
-      case WriteMode.Create:
-        obs$ = this.apiConnector.createOrganization(event.organization);
+    switch (event.operation) {
+      case Operation.Create:
+        obs$ = this.apiConnector.createOrganization(event.entity);
         break;
-      case WriteMode.Update:
-        obs$ = this.apiConnector.updateOrganization(event.organization);
+      case Operation.Update:
+        obs$ = this.apiConnector.updateOrganization(event.entity);
         break;
-      case WriteMode.Delete:
-        obs$ = this.apiConnector.deleteOrganization(event.organization._links.delete.href);
+      case Operation.Delete:
+        obs$ = this.apiConnector.deleteOrganization(event.entity._links.delete.href);
         break;
     }
     return obs$.pipe(take(1),
@@ -73,14 +75,18 @@ export class OrganizationContainer extends BaseComponent {
     return this.apiConnector.readLicenses(uri).pipe(take(1), tap(licenses => component.licenses = licenses));
   }
 
-  private writeLicense(event: LicenseWriteEvent, component: OrganizationViewComponent): Observable<License[]> {
+  private writeLicense(event: LicenseEvent, component: OrganizationViewComponent): Observable<License[]> {
     let obs$: Observable<any>;
-    if (event.mode === WriteMode.Update) {
-      obs$ = this.apiConnector.updateLicense(event.license);
-    } else if (event.mode === WriteMode.Delete) {
-      obs$ = this.apiConnector.delete(event.license._links.delete.href);
-    } else {
-      obs$ = this.apiConnector.createLicense(event.license, event.organization._links.licenses.href)
+    switch (event.operation) {
+      case Operation.Create:
+        obs$ = this.apiConnector.createLicense(event.entity, event.organization._links.licenses.href);
+        break;
+      case Operation.Update:
+        obs$ = this.apiConnector.updateLicense(event.entity);
+        break;
+      case Operation.Delete:
+        obs$ = this.apiConnector.delete(event.entity._links.delete.href);
+        break;
     }
     return obs$.pipe(take(1), switchMap(() => this.readLicenses(event.organization._links.licenses.href, component)), tap(() => event.closeElement.click()));
   }

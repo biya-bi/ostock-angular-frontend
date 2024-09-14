@@ -1,21 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Organization } from '../../models/organization';
-import { EntityViewComponent } from '../entity-view.component';
 import { License } from '../../models/License';
-import { LicenseWriteEvent } from '../../models/license-write-event';
-import { OrganizationWriteEvent } from '../../models/organization-write-event';
-import { WriteMode } from '../../models/write-mode';
+import { LicenseEvent } from '../../models/license-event';
+import { Operation } from '../../models/operation';
+import { Organization } from '../../models/organization';
+import { OrganizationEvent } from '../../models/organization-event';
+import { EntityViewComponent } from '../entity-view.component';
 
 @Component({
   template: '',
 })
 export abstract class OrganizationViewComponent extends EntityViewComponent<Organization> {
   @Input() licenses: License[];
-  @Input() mode: WriteMode;
+  @Input() operation: Operation;
 
-  @Output() write = new EventEmitter<OrganizationWriteEvent>();
-  @Output() writeLicense = new EventEmitter<LicenseWriteEvent>();
+  @Output() write = new EventEmitter<OrganizationEvent>();
+  @Output() writeLicense = new EventEmitter<LicenseEvent>();
   @Output() loadLicenses = new EventEmitter<string>();
-
-  WriteMode = WriteMode;
 }

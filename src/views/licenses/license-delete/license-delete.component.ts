@@ -1,24 +1,14 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ModalResponse } from '../../../models/modal-response';
-import { License } from '../../../models/License';
-import { LicenseWriteEvent } from '../../../models/license-write-event';
-import { Organization } from '../../../models/organization';
-import { WriteMode } from '../../../models/write-mode';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { LicenseEvent } from '../../../models/license-event';
+import { LicenseViewComponent } from '../license-view.component';
 
 @Component({
   selector: 'app-license-delete',
   templateUrl: './license-delete.component.html',
   styleUrl: './license-delete.component.css'
 })
-export class LicenseDeleteComponent {
+export class LicenseDeleteComponent extends LicenseViewComponent {
 
-  @ViewChild('closeButton') closeButton: ElementRef<HTMLElement>;
-
-  @Input() license: License;
-  @Input() organization: Organization;
-
-  @Output() delete = new EventEmitter<LicenseWriteEvent>();
-
-  WriteMode = WriteMode;
+  @Output() delete = new EventEmitter<LicenseEvent>();
 
 }

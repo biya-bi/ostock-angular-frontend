@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { License } from '../../../models/License';
 import { Organization } from '../../../models/organization';
 import { EntityListViewComponent } from '../../entity-list-view.component';
-import { LicenseWriteEvent } from '../../../models/license-write-event';
-import { WriteMode } from '../../../models/write-mode';
+import { LicenseEvent } from '../../../models/license-event';
+import { Operation } from '../../../models/operation';
 
 @Component({
   selector: 'app-license-list',
@@ -12,11 +12,11 @@ import { WriteMode } from '../../../models/write-mode';
 })
 export class LicenseListComponent extends EntityListViewComponent<License> {
   @Input() organization: Organization;
-  @Output() write = new EventEmitter<LicenseWriteEvent>();
+  @Output() write = new EventEmitter<LicenseEvent>();
 
-  WriteMode = WriteMode;
+  WriteMode = Operation;
 
   selectedLicense: License;
-  mode: WriteMode;
+  operation: Operation;
   crudTitle: string;
 }
