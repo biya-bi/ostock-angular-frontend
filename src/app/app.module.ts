@@ -21,8 +21,7 @@ import { OrganizationContainer } from "../views/organizations/organization-conta
 import { OrganizationDeleteComponent } from "../views/organizations/organization-delete/organization-delete.component";
 import { OrganizationDetailsComponent } from "../views/organizations/organization-details/organization-details.component";
 import { OrganizationListComponent } from "../views/organizations/organization-list/organization-list.component";
-import { OrganizationAddComponent } from "../views/organizations/organization-write/organization-add.component";
-import { OrganizationEditComponent } from "../views/organizations/organization-write/organization-edit.component";
+import { OrganizationWriteComponent } from "../views/organizations/organization-write/organization-write.component";
 import { AppComponent } from "./app.component";
 import { routes } from "./app.routes";
 
@@ -49,12 +48,11 @@ import { routes } from "./app.routes";
         BannerComponent,
         HomeComponent,
         LoginComponent,
-        OrganizationAddComponent,
         OrganizationContainer,
         OrganizationDeleteComponent,
         OrganizationDetailsComponent,
-        OrganizationEditComponent,
         OrganizationListComponent,
+        OrganizationWriteComponent,
         NotificationContainer,
         LicenseDeleteComponent,
         LicenseDetailsComponent,

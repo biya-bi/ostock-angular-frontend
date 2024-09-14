@@ -6,9 +6,11 @@ import { Organization } from '../../../models/organization';
 import { OrganizationViewComponent } from '../organization-view.component';
 
 @Component({
-    template: '',
+    selector: 'app-organization-write',
+    templateUrl: './organization-write.component.html',
+    styleUrl: './organization-write.component.css'
 })
-export abstract class OrganizationWriteComponent extends OrganizationViewComponent {
+export class OrganizationWriteComponent extends OrganizationViewComponent {
 
     protected title$: Observable<string>;
 

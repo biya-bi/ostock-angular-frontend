@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { License } from '../../../models/License';
 import { LicenseViewComponent } from '../license-view.component';
@@ -9,9 +9,6 @@ import { LicenseViewComponent } from '../license-view.component';
     styleUrl: './license-write.component.css'
 })
 export class LicenseWriteComponent extends LicenseViewComponent implements OnInit {
-
-    @Input() title: string;
-
     formGroup: FormGroup;
 
     ngOnInit(): void {

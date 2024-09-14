@@ -26,6 +26,7 @@ export class OrganizationContainer extends BaseComponent {
     if (component instanceof OrganizationListComponent) {
       this.readOrganizations(component);
     } else if (component instanceof OrganizationViewComponent) {
+      this.setTitle(component);
       this.readOrganization(component);
       this.subscribeToEvents(component);
     }
@@ -33,6 +34,23 @@ export class OrganizationContainer extends BaseComponent {
 
   private readOrganizations(component: OrganizationListComponent): void {
     this.apiConnector.readOrganizations().pipe(take(1), tap(organizations => component.entities = organizations)).subscribe();
+  }
+
+  private setTitle(component: OrganizationViewComponent): void {
+    // TODO: Get title from localized resources
+    const queryParams = this.activatedRoute.snapshot.queryParams;
+    const operation = queryParams['operation'];
+    switch (operation) {
+      case Operation.Create:
+        component.title = "Add an organization"
+        break;
+      case Operation.Update:
+        component.title = "Edit organization"
+        break;
+      case Operation.Read:
+        component.title = "Organization details"
+        break;
+    }
   }
 
   private readOrganization(component: OrganizationViewComponent): void {

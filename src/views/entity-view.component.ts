@@ -7,6 +7,7 @@ import { EntityComponent } from './entity.component';
   template: '',
 })
 export abstract class EntityViewComponent<T, U extends EntityEvent<T>> extends EntityComponent<T, U> {
+  @Input() title: string;
   @Input() operation: Operation;
 
   private _entity: T;
