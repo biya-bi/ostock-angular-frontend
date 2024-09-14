@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { authenticationGuard } from '../guards/authentication.guard';
 import { HomeComponent } from '../views/home/home.component';
+import { LicenseContainer } from '../views/licenses/license-container/license.container';
+import { LicenseDetailsComponent } from '../views/licenses/license-details/license-details.component';
+import { LicenseListComponent } from '../views/licenses/license-list/license-list.component';
 import { LoginComponent } from '../views/login/login.component';
 import { LogOutComponent } from '../views/logout/logout.component';
 import { OrganizationContainer } from '../views/organizations/organization-container/organization.container';
@@ -9,11 +12,6 @@ import { OrganizationListComponent } from '../views/organizations/organization-l
 import { OrganizationAddComponent } from '../views/organizations/organization-write/organization-add.component';
 import { OrganizationEditComponent } from '../views/organizations/organization-write/organization-edit.component';
 import { PageNotFoundComponent } from '../views/page-not-found/page-not-found.component';
-import { LicenseListComponent } from '../views/licenses/license-list/license-list.component';
-import { LicenseContainer } from '../views/licenses/license-container/license.container';
-import { LicenseAddComponent } from '../views/licenses/license-write/license-add.component';
-import { LicenseDetailsComponent } from '../views/licenses/license-details/license-details.component';
-import { LicenseEditComponent } from '../views/licenses/license-write/license-edit.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -51,16 +49,8 @@ export const routes: Routes = [
                         component: LicenseListComponent
                     },
                     {
-                        path: 'add',
-                        component: LicenseAddComponent
-                    },
-                    {
                         path: 'details',
                         component: LicenseDetailsComponent
-                    },
-                    {
-                        path: 'edit',
-                        component: LicenseEditComponent
                     },
                 ]
             },

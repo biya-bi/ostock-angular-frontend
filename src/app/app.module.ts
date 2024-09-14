@@ -5,12 +5,17 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, RouterOutlet } from "@angular/router";
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OAuthModule } from "angular-oauth2-oidc";
 import { environment } from "../environments/environment";
 import { AuthenticationComponent } from "../views/authentication/authentication.component";
 import { BannerComponent } from "../views/banner/banner.component";
 import { HomeComponent } from "../views/home/home.component";
 import { LicenseContainer } from "../views/licenses/license-container/license.container";
+import { LicenseDeleteComponent } from "../views/licenses/license-delete/license-delete.component";
+import { LicenseDetailsComponent } from "../views/licenses/license-details/license-details.component";
+import { LicenseListComponent } from "../views/licenses/license-list/license-list.component";
+import { LicenseWriteComponent } from "../views/licenses/license-write/license-write.component";
 import { LoginComponent } from "../views/login/login.component";
 import { NotificationContainer } from "../views/notification/notification.container";
 import { OrganizationContainer } from "../views/organizations/organization-container/organization.container";
@@ -21,12 +26,6 @@ import { OrganizationAddComponent } from "../views/organizations/organization-wr
 import { OrganizationEditComponent } from "../views/organizations/organization-write/organization-edit.component";
 import { AppComponent } from "./app.component";
 import { routes } from "./app.routes";
-import { LicenseDeleteComponent } from "../views/licenses/license-delete/license-delete.component";
-import { LicenseAddComponent } from "../views/licenses/license-write/license-add.component";
-import { LicenseListComponent } from "../views/licenses/license-list/license-list.component";
-import { LicenseEditComponent } from "../views/licenses/license-write/license-edit.component";
-import { LicenseDetailsComponent } from "../views/licenses/license-details/license-details.component";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
@@ -58,12 +57,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         OrganizationEditComponent,
         OrganizationListComponent,
         NotificationContainer,
-        LicenseAddComponent,
         LicenseContainer,
         LicenseDeleteComponent,
         LicenseDetailsComponent,
-        LicenseEditComponent,
-        LicenseListComponent
+        LicenseListComponent,
+        LicenseWriteComponent,
     ],
     bootstrap: [
         AppComponent

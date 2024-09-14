@@ -9,9 +9,11 @@ import { Organization } from '../../../models/organization';
 import { WriteMode } from '../../../models/write-mode';
 
 @Component({
-    template: '',
+    selector: 'app-license-write',
+    templateUrl: './license-write.component.html',
+    styleUrl: './license-write.component.css'
 })
-export abstract class LicenseWriteComponent extends LicenseViewComponent implements OnInit {
+export class LicenseWriteComponent extends LicenseViewComponent implements OnInit {
 
     @Input() title: string;
     @Input() organization: Organization;
@@ -29,13 +31,6 @@ export abstract class LicenseWriteComponent extends LicenseViewComponent impleme
     ngOnInit(): void {
         this.initFormGroup();
     }
-
-    submit(): void {
-        const license = { ...this.formGroup.value };
-        this.onSubmit(license).pipe(take(1), tap(() => this.router.navigate(['/organizations/licenses'], { queryParams: { licenses: this.queryParams['licenses'] } }))).subscribe();
-    }
-
-    protected abstract onSubmit(license: License): Observable<License>;
 
     protected override onEntityChange(license: License): void {
         this.initFormGroup(license);
