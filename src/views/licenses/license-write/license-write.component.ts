@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { License } from '../../../models/License';
 import { LicenseWriteEvent } from '../../../models/license-write-event';
 import { LicenseViewComponent } from '../license-view.component';
@@ -17,12 +15,6 @@ export class LicenseWriteComponent extends LicenseViewComponent implements OnIni
     @Output() save = new EventEmitter<LicenseWriteEvent>();
 
     formGroup: FormGroup;
-
-    protected title$: Observable<string>;
-
-    constructor(protected readonly router: Router) {
-        super();
-    }
 
     ngOnInit(): void {
         this.initFormGroup();
