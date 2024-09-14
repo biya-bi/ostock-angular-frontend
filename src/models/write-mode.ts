@@ -1,5 +1,6 @@
 export enum WriteMode {
-    Create,
-    Update,
-    Delete
+    Create = "create",
+    Read = "read",
+    Update = "update",
+    Delete = "delete"
 }

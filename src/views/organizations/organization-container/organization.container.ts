@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap, take, takeUntil, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
-import { ModalResponse } from '../../../models/modal-response';
-import { ViewComponent } from '../../view.component';
-import { OrganizationViewComponent } from '../organization-view.component';
-import { OrganizationListComponent } from '../organization-list/organization-list.component';
-import { BaseComponent } from '../../base.component';
-import { WriteMode } from '../../../models/write-mode';
 import { License } from '../../../models/License';
 import { LicenseWriteEvent } from '../../../models/license-write-event';
+import { OrganizationWriteEvent } from '../../../models/organization-write-event';
+import { WriteMode } from '../../../models/write-mode';
+import { BaseComponent } from '../../base.component';
+import { ViewComponent } from '../../view.component';
+import { OrganizationListComponent } from '../organization-list/organization-list.component';
+import { OrganizationViewComponent } from '../organization-view.component';
 
 @Component({
   selector: 'app-organization-container',
@@ -28,23 +28,43 @@ export class OrganizationContainer extends BaseComponent {
     if (component instanceof OrganizationListComponent) {
       this.apiConnector.readOrganizations().pipe(take(1), tap(organizations => component.entities = organizations)).subscribe();
     } else if (component instanceof OrganizationViewComponent) {
-      this.apiConnector.readOrganization(queryParams['uri']).pipe(take(1), tap(organization => component.entity = organization)).subscribe();
+      this.readOrganization(component);
       this.subscribeToEvents(component);
     }
   }
 
-  onResponse(response: ModalResponse) {
-    if (response.answer === 'YES') {
-      const queryParams = this.activatedRoute.snapshot.queryParams;
-      this.apiConnector.deleteOrganization(queryParams['uri']).pipe(take(1),
-        tap(() => {
-          response.closeElement.click();
-          this.router.navigate(['/organizations']);
-        })).subscribe();
+  private readOrganization(component: OrganizationViewComponent): void {
+    const queryParams = this.activatedRoute.snapshot.queryParams;
+    this.apiConnector.readOrganization(queryParams['uri']).pipe(
+      take(1),
+      tap(organization => {
+        component.entity = organization;
+        component.mode = queryParams['mode'];
+      })).subscribe();
+  }
+
+  private writeOrganization(event: OrganizationWriteEvent): Observable<void> {
+    let obs$: Observable<any>;
+    switch (event.mode) {
+      case WriteMode.Create:
+        obs$ = this.apiConnector.createOrganization(event.organization);
+        break;
+      case WriteMode.Update:
+        obs$ = this.apiConnector.updateOrganization(event.organization);
+        break;
+      case WriteMode.Delete:
+        obs$ = this.apiConnector.deleteOrganization(event.organization._links.delete.href);
+        break;
     }
+    return obs$.pipe(take(1),
+      tap(() => {
+        event.closeElement?.click();
+        this.router.navigate(['/organizations']);
+      }));
   }
 
   private subscribeToEvents(component: OrganizationViewComponent) {
+    component.write.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event))).subscribe();
     component.loadLicenses.pipe(takeUntil(this.destroy$), switchMap(uri => this.readLicenses(uri, component))).subscribe();
     component.writeLicense.pipe(takeUntil(this.destroy$), switchMap(event => this.writeLicense(event, component))).subscribe();
   }
