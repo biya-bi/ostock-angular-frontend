@@ -4,7 +4,7 @@ import { WriteMode } from "./write-mode";
 
 export interface LicenseWriteEvent {
     license: License;
-    organization?: Organization;
+    organization: Organization;
     mode: WriteMode
     closeElement?: HTMLElement;
 }

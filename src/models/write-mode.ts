@@ -1,4 +1,5 @@
 export enum WriteMode {
     Create,
-    Update
+    Update,
+    Delete
 }

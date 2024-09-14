@@ -54,7 +54,14 @@ export class OrganizationContainer extends BaseComponent {
   }
 
   private writeLicense(event: LicenseWriteEvent, component: OrganizationViewComponent): Observable<License[]> {
-    const obs$ = event.mode == WriteMode.Update ? this.apiConnector.updateLicense(event.license) : this.apiConnector.createLicense(event.license, event.organization?._links.licenses.href);
+    let obs$: Observable<any>;
+    if (event.mode === WriteMode.Update) {
+      obs$ = this.apiConnector.updateLicense(event.license);
+    } else if (event.mode === WriteMode.Delete) {
+      obs$ = this.apiConnector.delete(event.license._links.delete.href);
+    } else {
+      obs$ = this.apiConnector.createLicense(event.license, event.organization._links.licenses.href)
+    }
     return obs$.pipe(take(1), switchMap(() => this.readLicenses(event.organization._links.licenses.href, component)), tap(() => event.closeElement.click()));
   }
 }
