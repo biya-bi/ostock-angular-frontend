@@ -9,12 +9,16 @@
                 <div class="container">
                     <div class="row mt-1 mb-1" *ngFor="let entity of entities">
                         <div class="col">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal"
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#viewLicenseModal"
                                 (click)="selectedLicense=entity;mode=WriteMode.Update;crudTitle='Edit license'">{{entity.productName}}</a>
                         </div>
-                        <div class="col">
+                        <div class="col-auto">
                             <a href="#" class="link-danger" data-bs-toggle="modal"
-                                data-bs-target="#deleteLicenseModal" (click)="selectedLicense=entity">Delete</a>
+                                data-bs-target="#deleteLicenseModal" (click)="selectedLicense=entity;mode=WriteMode.Delete">Delete</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal"
+                                (click)="selectedLicense=entity;mode=WriteMode.Update;crudTitle='Edit license'">Edit</a>
                         </div>
                     </div>
                 </div>
@@ -30,3 +34,4 @@
     [title]="crudTitle"></app-license-write>
 <app-license-delete [license]="selectedLicense" [organization]="organization"
     (delete)="write.emit($event)"></app-license-delete>
+<app-license-details [entity]="selectedLicense" [organization]="organization" [mode]="mode"></app-license-details>

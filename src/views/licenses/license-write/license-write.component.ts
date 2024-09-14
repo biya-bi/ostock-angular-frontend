@@ -1,12 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, take, tap } from 'rxjs';
-import { License } from '../../../models/License';
 import { FormControl, FormGroup } from '@angular/forms';
-import { LicenseViewComponent } from '../license-view.component';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { License } from '../../../models/License';
 import { LicenseWriteEvent } from '../../../models/license-write-event';
-import { Organization } from '../../../models/organization';
-import { WriteMode } from '../../../models/write-mode';
+import { LicenseViewComponent } from '../license-view.component';
 
 @Component({
     selector: 'app-license-write',
@@ -16,8 +14,6 @@ import { WriteMode } from '../../../models/write-mode';
 export class LicenseWriteComponent extends LicenseViewComponent implements OnInit {
 
     @Input() title: string;
-    @Input() organization: Organization;
-    @Input() mode: WriteMode;
     @Output() save = new EventEmitter<LicenseWriteEvent>();
 
     formGroup: FormGroup;

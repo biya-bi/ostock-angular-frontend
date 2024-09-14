@@ -1,42 +1,53 @@
-<h2 class="d-flex justify-content-center mb-4">License details</h2>
-<div class="container" *ngIf="entity">
-    <div class="row">
-        <div class="col text-end">
-            <span class="fw-bold">Product name:</span>
+<div class="modal fade" id="viewLicenseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="title">License details</h1>
+                <button #closeButton type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container" *ngIf="entity">
+                    <div class="row">
+                        <div class="col text-end">
+                            <span class="fw-bold">Product name:</span>
+                        </div>
+                        <div class="col">
+                            <span>{{entity.productName}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-end">
+                            <span class="fw-bold">Description:</span>
+                        </div>
+                        <div class="col">
+                            <span>{{entity.description}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-end">
+                            <span class="fw-bold">Comment:</span>
+                        </div>
+                        <div class="col">
+                            <span>{{entity.comment}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-end">
+                            <span class="fw-bold">License type:</span>
+                        </div>
+                        <div class="col">
+                            <span>{{entity.licenseType}}</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 d-flex justify-content-center">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal">Edit</a>
+                        <span class="ms-2 me-2">|</span>
+                        <a href="#" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal">Delete</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <span>{{entity.productName}}</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-end">
-            <span class="fw-bold">Description:</span>
-        </div>
-        <div class="col">
-            <span>{{entity.description}}</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-end">
-            <span class="fw-bold">Comment:</span>
-        </div>
-        <div class="col">
-            <span>{{entity.comment}}</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-end">
-            <span class="fw-bold">License type:</span>
-        </div>
-        <div class="col">
-            <span>{{entity.licenseType}}</span>
-        </div>
-    </div>
-    <div class="mt-4 d-flex justify-content-center">
-        <a routerLink="/organizations/licenses/edit" [queryParams]="{uri:entity._links.self.href,licenses:queryParams['licenses'],organizationId:queryParams['organizationId']}">Edit</a>
-        <span class="ms-2 me-2">|</span>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal">Delete</a>
-        <span class="ms-2 me-2">|</span>
-        <a routerLink="/organizations/licenses" [queryParams]="{licenses:queryParams['licenses']}">List</a>
     </div>
 </div>
