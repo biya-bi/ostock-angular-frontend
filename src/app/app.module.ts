@@ -11,7 +11,6 @@ import { environment } from "../environments/environment";
 import { AuthenticationComponent } from "../views/authentication/authentication.component";
 import { BannerComponent } from "../views/banner/banner.component";
 import { HomeComponent } from "../views/home/home.component";
-import { LicenseContainer } from "../views/licenses/license-container/license.container";
 import { LicenseDeleteComponent } from "../views/licenses/license-delete/license-delete.component";
 import { LicenseDetailsComponent } from "../views/licenses/license-details/license-details.component";
 import { LicenseListComponent } from "../views/licenses/license-list/license-list.component";
@@ -57,7 +56,6 @@ import { routes } from "./app.routes";
         OrganizationEditComponent,
         OrganizationListComponent,
         NotificationContainer,
-        LicenseContainer,
         LicenseDeleteComponent,
         LicenseDetailsComponent,
         LicenseListComponent,
