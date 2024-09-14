@@ -26,7 +26,7 @@
         </div>
     </div>
 </div>
-<app-license-write [entity]="selectedLicense" (save)="save.emit($event)" [organization]="organization" [mode]="mode"
+<app-license-write [entity]="selectedLicense" (save)="write.emit($event)" [organization]="organization" [mode]="mode"
     [title]="crudTitle"></app-license-write>
 <app-license-delete [license]="selectedLicense" [organization]="organization"
-    (delete)="save.emit($event)"></app-license-delete>
+    (delete)="write.emit($event)"></app-license-delete>

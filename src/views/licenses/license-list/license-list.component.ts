@@ -12,7 +12,7 @@ import { WriteMode } from '../../../models/write-mode';
 })
 export class LicenseListComponent extends EntityListViewComponent<License> {
   @Input() organization: Organization;
-  @Output() save = new EventEmitter<LicenseWriteEvent>();
+  @Output() write = new EventEmitter<LicenseWriteEvent>();
 
   WriteMode = WriteMode;
 
