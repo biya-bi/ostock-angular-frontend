@@ -13,12 +13,12 @@
                                 (click)="selectedLicense=entity;mode=WriteMode.Update;crudTitle='Edit license'">{{entity.productName}}</a>
                         </div>
                         <div class="col-auto">
-                            <a href="#" class="link-danger" data-bs-toggle="modal"
-                                data-bs-target="#deleteLicenseModal" (click)="selectedLicense=entity;mode=WriteMode.Delete">Delete</a>
-                        </div>
-                        <div class="col-auto">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal"
                                 (click)="selectedLicense=entity;mode=WriteMode.Update;crudTitle='Edit license'">Edit</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#" class="link-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteLicenseModal" (click)="selectedLicense=entity;mode=WriteMode.Delete">Delete</a>
                         </div>
                     </div>
                 </div>
