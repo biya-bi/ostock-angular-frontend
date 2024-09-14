@@ -14,17 +14,6 @@ export abstract class OrganizationWriteComponent extends OrganizationViewCompone
 
     formGroup: FormGroup;
 
-    constructor(protected readonly router: Router) {
-        super();
-    }
-
-    submit(): void {
-        const organization = { ...this.formGroup.value };
-        this.onSubmit(organization).pipe(take(1), tap(() => this.router.navigate(['/organizations']))).subscribe();
-    }
-
-    protected abstract onSubmit(organization: Organization): Observable<Organization>;
-
     protected override onEntityChange(organization: Organization): void {
         this.formGroup = new FormGroup({
             id: new FormControl(organization?.id),

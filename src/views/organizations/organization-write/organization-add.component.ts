@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { ApiConnector } from '../../../connectors/api.connector';
-import { Organization } from '../../../models/organization';
+import { of } from 'rxjs';
 import { OrganizationWriteComponent } from './organization-write.component';
 
 @Component({
@@ -12,17 +9,10 @@ import { OrganizationWriteComponent } from './organization-write.component';
 })
 export class OrganizationAddComponent extends OrganizationWriteComponent implements OnInit {
 
-  constructor(protected override readonly router: Router, private readonly apiConnector: ApiConnector) {
-    super(router);
-  }
-
   ngOnInit(): void {
     // TODO: Get title from localized resources
     this.title$ = of('Add an organization');
   }
 
-  protected override onSubmit(organization: Organization): Observable<Organization> {
-    return this.apiConnector.createOrganization(organization);
-  }
 
 }
