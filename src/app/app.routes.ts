@@ -1,9 +1,6 @@
 import { Routes } from '@angular/router';
 import { authenticationGuard } from '../guards/authentication.guard';
 import { HomeComponent } from '../views/home/home.component';
-import { LicenseContainer } from '../views/licenses/license-container/license.container';
-import { LicenseDetailsComponent } from '../views/licenses/license-details/license-details.component';
-import { LicenseListComponent } from '../views/licenses/license-list/license-list.component';
 import { LoginComponent } from '../views/login/login.component';
 import { LogOutComponent } from '../views/logout/logout.component';
 import { OrganizationContainer } from '../views/organizations/organization-container/organization.container';
@@ -38,21 +35,6 @@ export const routes: Routes = [
             {
                 path: 'edit',
                 component: OrganizationEditComponent
-            },
-            {
-                path: 'licenses',
-                component: LicenseContainer,
-                canActivate: [authenticationGuard],
-                children: [
-                    {
-                        path: '',
-                        component: LicenseListComponent
-                    },
-                    {
-                        path: 'details',
-                        component: LicenseDetailsComponent
-                    },
-                ]
             },
         ]
     },
