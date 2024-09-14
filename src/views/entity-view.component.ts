@@ -1,18 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { ViewComponent } from './view.component';
+import { EntityEvent } from '../models/entity-event';
 import { Operation } from '../models/operation';
+import { EntityComponent } from './entity.component';
 
 @Component({
   template: '',
 })
-export abstract class EntityViewComponent<E> extends ViewComponent {
+export abstract class EntityViewComponent<T, U extends EntityEvent<T>> extends EntityComponent<T, U> {
+  @Input() operation: Operation;
 
-  Operation = Operation;
-  
-  private _entity: E;
+  private _entity: T;
 
   @Input()
-  set entity(newValue: E) {
+  set entity(newValue: T) {
     if (this._entity !== newValue) {
       const oldValue = this._entity;
       this._entity = newValue;
@@ -20,10 +20,10 @@ export abstract class EntityViewComponent<E> extends ViewComponent {
     }
   }
 
-  get entity(): E {
+  get entity(): T {
     return this._entity;
   }
 
-  protected onEntityChange(newValue: E, oldValue?: E) {
+  protected onEntityChange(newValue: T, oldValue?: T) {
   }
 }

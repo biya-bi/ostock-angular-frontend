@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { License } from '../../../models/License';
-import { LicenseEvent } from '../../../models/license-event';
 import { LicenseViewComponent } from '../license-view.component';
 
 @Component({
@@ -12,7 +11,6 @@ import { LicenseViewComponent } from '../license-view.component';
 export class LicenseWriteComponent extends LicenseViewComponent implements OnInit {
 
     @Input() title: string;
-    @Output() save = new EventEmitter<LicenseEvent>();
 
     formGroup: FormGroup;
 

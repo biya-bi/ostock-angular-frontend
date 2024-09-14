@@ -53,9 +53,9 @@
         </h2>
         <div ngbAccordionCollapse>
             <div ngbAccordionBody>
-                <app-license-list [entities]="licenses" [organization]="entity" (write)="writeLicense.emit($event)"></app-license-list>
+                <app-license-list [entities]="licenses" [organization]="entity" (manage)="writeLicense.emit($event)"></app-license-list>
             </div>
         </div>
     </div>
 </div>
-<app-organization-delete (write)="write.emit($event)" [entity]="entity"></app-organization-delete>
+<app-organization-delete (manage)="manage.emit($event)" [entity]="entity"></app-organization-delete>

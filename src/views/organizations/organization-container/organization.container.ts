@@ -66,7 +66,7 @@ export class OrganizationContainer extends BaseComponent {
   }
 
   private subscribeToEvents(component: OrganizationViewComponent) {
-    component.write.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event))).subscribe();
+    component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event))).subscribe();
     component.loadLicenses.pipe(takeUntil(this.destroy$), switchMap(uri => this.readLicenses(uri, component))).subscribe();
     component.writeLicense.pipe(takeUntil(this.destroy$), switchMap(event => this.writeLicense(event, component))).subscribe();
   }

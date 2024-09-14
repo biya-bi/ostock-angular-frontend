@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { LicenseEvent } from '../../../models/license-event';
+import { Component } from '@angular/core';
 import { LicenseViewComponent } from '../license-view.component';
 
 @Component({
@@ -8,7 +7,4 @@ import { LicenseViewComponent } from '../license-view.component';
   styleUrl: './license-delete.component.css'
 })
 export class LicenseDeleteComponent extends LicenseViewComponent {
-
-  @Output() delete = new EventEmitter<LicenseEvent>();
-
 }

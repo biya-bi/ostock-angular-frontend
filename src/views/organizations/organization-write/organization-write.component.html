@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="mt-4 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary" (click)="write.emit({entity:formGroup.value,operation:operation})">Save</button>
+                        <button type="submit" class="btn btn-primary" (click)="manage.emit({entity:formGroup.value,operation:operation})">Save</button>
                         <span class="m-2">|</span>
                         <a routerLink="/organizations" class="btn btn-link ps-0">List</a>
                     </div>
@@ -57,7 +57,7 @@
             </h2>
             <div ngbAccordionCollapse>
                 <div ngbAccordionBody>
-                    <app-license-list [entities]="licenses" [organization]="entity" (write)="writeLicense.emit($event)"></app-license-list>
+                    <app-license-list [entities]="licenses" [organization]="entity" (manage)="writeLicense.emit($event)"></app-license-list>
                 </div>
             </div>
         </div>
