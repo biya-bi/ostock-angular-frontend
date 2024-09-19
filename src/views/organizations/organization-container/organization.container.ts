@@ -106,6 +106,11 @@ export class OrganizationContainer extends BaseComponent {
         obs$ = this.apiConnector.delete(event.entity._links.delete.href);
         break;
     }
-    return obs$.pipe(take(1), switchMap(() => this.readLicenses(event.organization._links.licenses.href, component)), tap(() => event.closeElement.click()));
+    return obs$.pipe(take(1),
+      switchMap(() => this.readLicenses(event.organization._links.licenses.href, component)),
+      tap(() => {
+        event.closeElement.click();
+        component.licenseListComponent.selectedLicense = undefined;
+      }));
   }
 }
