@@ -21,7 +21,6 @@ export class LicenseWriteComponent extends LicenseViewComponent implements OnIni
 
     private initFormGroup(license?: License): void {
         this.formGroup = new FormGroup({
-            id: new FormControl(license?.id),
             productName: new FormControl(license?.productName),
             description: new FormControl(license?.description),
             comment: new FormControl(license?.comment),
