@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap, take, takeUntil, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
-import { License } from '../../../models/License';
+import { License } from '../../../models/license';
 import { LicenseEvent } from '../../../models/license-event';
 import { Operation } from '../../../models/operation';
 import { OrganizationEvent } from '../../../models/organization-event';

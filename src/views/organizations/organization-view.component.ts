@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { License } from '../../models/License';
+import { License } from '../../models/license';
 import { LicenseEvent } from '../../models/license-event';
 import { Organization } from '../../models/organization';
 import { OrganizationEvent } from '../../models/organization-event';

@@ -5,7 +5,7 @@ import { Observable, map, of } from 'rxjs';
 import { OrganizationCollectionModel } from '../models/organization-collection.model';
 import { Organization } from '../models/organization';
 import { environment } from '../environments/environment';
-import { License } from '../models/License';
+import { License } from '../models/license';
 import { LicenseCollectionModel } from '../models/license-collection.model';
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { License } from '../../../models/License';
+import { License } from '../../../models/license';
 import { LicenseViewComponent } from '../license-view.component';
 
 @Component({

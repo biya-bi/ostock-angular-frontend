@@ -1,4 +1,4 @@
-import { License } from "./License"
+import { License } from "./license"
 
 export interface LicenseCollectionModel {
     _embedded: {

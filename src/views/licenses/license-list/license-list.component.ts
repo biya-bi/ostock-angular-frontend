@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { License } from '../../../models/License';
+import { License } from '../../../models/license';
 import { LicenseEvent } from '../../../models/license-event';
 import { Operation } from '../../../models/operation';
 import { Organization } from '../../../models/organization';
