@@ -18,7 +18,6 @@ export class OrganizationWriteComponent extends OrganizationViewComponent {
 
     protected override onEntityChange(organization: Organization): void {
         this.formGroup = new FormGroup({
-            id: new FormControl(organization?.id),
             name: new FormControl(organization?.name),
             contactName: new FormControl(organization?.contactName),
             contactEmail: new FormControl(organization?.contactEmail),

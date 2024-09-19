@@ -36,7 +36,7 @@ export class ApiConnector {
   }
 
   readOrganizations(): Observable<Organization[]> {
-    return this.httpClient.get<OrganizationCollectionModel>(this.organizationEndpoint, this.getOptions()).pipe(map(m => m?._embedded?.organizationList));
+    return this.httpClient.get<OrganizationCollectionModel>(this.organizationEndpoint, this.getOptions()).pipe(map(m => m?._embedded?.organizationDtoList));
   }
 
   readOrganization(uri: string): Observable<Organization> {
