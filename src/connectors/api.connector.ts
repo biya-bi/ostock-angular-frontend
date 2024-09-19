@@ -61,7 +61,7 @@ export class ApiConnector {
   }
 
   readLicenses(uri: string): Observable<License[]> {
-    return this.httpClient.get<LicenseCollectionModel>(uri, this.getOptions()).pipe(map(m => m?._embedded?.licenseList));
+    return this.httpClient.get<LicenseCollectionModel>(uri, this.getOptions()).pipe(map(m => m?._embedded?.licenseDtoList));
   }
 
   readLicense(uri: string): Observable<License> {
