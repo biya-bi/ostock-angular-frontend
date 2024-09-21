@@ -35,7 +35,7 @@
             "serviceWorker": "ngsw-config.json"
           },
           "configurations": {
-            "production": {
+            "prod": {
               "budgets": [
                 {
                   "type": "initial",
@@ -53,18 +53,18 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.production.ts"
+                  "with": "src/environments/environment.prod.ts"
                 }
               ]
             },
-            "development": {
+            "dev": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
+                  "with": "src/environments/environment.dev.ts"
                 }
               ]
             },
@@ -75,16 +75,16 @@
               "fileReplacements": []
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "local"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "angular-frontend:build:production"
+            "prod": {
+              "buildTarget": "angular-frontend:build:prod"
             },
-            "development": {
-              "buildTarget": "angular-frontend:build:development"
+            "dev": {
+              "buildTarget": "angular-frontend:build:dev"
             },
             "local": {
               "buildTarget": "angular-frontend:build:local"

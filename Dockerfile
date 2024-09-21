@@ -4,11 +4,11 @@ WORKDIR /opt/app
 
 COPY yarn.lock package.json ./
 
-RUN yarn install --configuration development
+RUN yarn install --configuration local
 
 COPY . .
 
-RUN yarn run build --configuration development
+RUN yarn run build --configuration local
 
 FROM nginx:1.27.0
 
