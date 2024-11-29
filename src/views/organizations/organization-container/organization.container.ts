@@ -24,9 +24,9 @@ export class OrganizationContainer extends BaseComponent {
 
   onActivate(component: ViewComponent) {
     if (component instanceof OrganizationListComponent) {
+      component.searchCriteria = {};
       this.readOrganizations(component);
       this.subscribeToEvents(component);
-      component.searchCriteria = {};
     } else if (component instanceof OrganizationViewComponent) {
       this.setTitle(component);
       this.readOrganization(component);
