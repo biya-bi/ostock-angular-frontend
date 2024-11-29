@@ -7,14 +7,29 @@
             <table class="table table-striped" *ngIf="entities?.length; else emptyOrganizationTemplate">
                 <thead>
                     <tr>
-                        <th scope="col" sortable="name">Name<input class="form-control" type="text" name="name"
-                                [(ngModel)]="searchCriteria.name" /></th>
-                        <th scope="col" sortable="contactName">Contact Name<input class="form-control" type="text"
-                                name="contactName" [(ngModel)]="searchCriteria.contactName" /></th>
-                        <th scope="col" sortable="contactEmail">Contact Email<input class="form-control" type="text"
-                                name="contactEmail" [(ngModel)]="searchCriteria.contactEmail" /></th>
-                        <th scope="col" sortable="contactPhone">Contact Phone<input class="form-control" type="text"
-                                name="contactPhone" [(ngModel)]="searchCriteria.contactPhone" /></th>
+                        <th scope="col" sortable="name">
+                            Name
+                            <input class="form-control" type="text" name="name" [(ngModel)]="searchCriteria.name"
+                                (keyup)="search.emit(searchCriteria)" />
+                        </th>
+                        <th scope="col" sortable="contactName">
+                            Contact Name
+                            <input class="form-control" type="text" name="contactName"
+                                [(ngModel)]="searchCriteria.contactName"
+                                (keyup)="search.emit(searchCriteria)" />
+                        </th>
+                        <th scope="col" sortable="contactEmail">
+                            Contact Email
+                            <input class="form-control" type="text" name="contactEmail"
+                                [(ngModel)]="searchCriteria.contactEmail"
+                                (keyup)="search.emit(searchCriteria)" />
+                        </th>
+                        <th scope="col" sortable="contactPhone">
+                            Contact Phone
+                            <input class="form-control" type="text" name="contactPhone"
+                                [(ngModel)]="searchCriteria.contactPhone"
+                                (keyup)="search.emit(searchCriteria)" />
+                        </th>
                         <th></th>
                         <th></th>
                         <th></th>

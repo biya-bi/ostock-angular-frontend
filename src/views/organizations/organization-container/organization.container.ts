@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, switchMap, take, takeUntil, tap } from 'rxjs';
+import { debounceTime, Observable, switchMap, take, takeUntil, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { License } from '../../../models/license';
 import { LicenseEvent } from '../../../models/license-event';
@@ -35,7 +35,7 @@ export class OrganizationContainer extends BaseComponent {
   }
 
   private readOrganizations(component: OrganizationListComponent): void {
-    this.apiConnector.readOrganizations().pipe(take(1), tap(organizations => component.entities = organizations)).subscribe();
+    this.apiConnector.readOrganizations(component.searchCriteria).pipe(take(1), tap(organizations => component.entities = organizations)).subscribe();
   }
 
   private setTitle(component: OrganizationViewComponent): void {
@@ -88,6 +88,7 @@ export class OrganizationContainer extends BaseComponent {
   private subscribeToEvents(component: ViewComponent) {
     if (component instanceof OrganizationListComponent) {
       component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event)), tap(() => this.readOrganizations(component))).subscribe();
+      component.search.pipe(takeUntil(this.destroy$), debounceTime(1000), tap(_ => this.readOrganizations(component))).subscribe();
     } else if (component instanceof OrganizationViewComponent) {
       component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event))).subscribe();
       component.loadLicenses.pipe(takeUntil(this.destroy$), switchMap(uri => this.readLicenses(uri, component))).subscribe();

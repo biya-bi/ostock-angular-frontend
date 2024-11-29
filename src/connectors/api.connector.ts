@@ -7,6 +7,7 @@ import { Organization } from '../models/organization';
 import { environment } from '../environments/environment';
 import { License } from '../models/license';
 import { LicenseCollectionModel } from '../models/license-collection.model';
+import { OrganizationSearchCriteria } from '../models/organization-search-criteria';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +36,8 @@ export class ApiConnector {
     return this.httpClient.post<Organization>(this.organizationEndpoint, organization, this.getOptions());
   }
 
-  readOrganizations(): Observable<Organization[]> {
-    return this.httpClient.get<OrganizationCollectionModel>(this.organizationEndpoint, this.getOptions()).pipe(map(m => m?._embedded?.organizationDtoList));
+  readOrganizations(searchCriteria: OrganizationSearchCriteria): Observable<Organization[]> {
+    return this.httpClient.post<OrganizationCollectionModel>(`${this.organizationEndpoint}/search`, searchCriteria, this.getOptions()).pipe(map(m => m?._embedded?.organizationDtoList));
   }
 
   readOrganization(uri: string): Observable<Organization> {

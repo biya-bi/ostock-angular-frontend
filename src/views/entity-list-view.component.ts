@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { EntityEvent } from '../models/entity-event';
 import { SearchCriteria } from '../models/search-criteria';
 import { EntityComponent } from './entity.component';
@@ -11,6 +11,7 @@ export abstract class EntityListViewComponent<T, U extends EntityEvent<T>, V ext
   private _entities: T[];
   selectedEntity: T;
   searchCriteria: V;
+  search: EventEmitter<V> = new EventEmitter<V>();
 
   @Input()
   set entities(newValue: T[]) {
