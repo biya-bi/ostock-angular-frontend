@@ -25,6 +25,8 @@ export class OrganizationContainer extends BaseComponent {
   onActivate(component: ViewComponent) {
     if (component instanceof OrganizationListComponent) {
       this.readOrganizations(component);
+      this.subscribeToEvents(component);
+      component.searchCriteria = {};
     } else if (component instanceof OrganizationViewComponent) {
       this.setTitle(component);
       this.readOrganization(component);
@@ -83,10 +85,14 @@ export class OrganizationContainer extends BaseComponent {
       }));
   }
 
-  private subscribeToEvents(component: OrganizationViewComponent) {
-    component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event))).subscribe();
-    component.loadLicenses.pipe(takeUntil(this.destroy$), switchMap(uri => this.readLicenses(uri, component))).subscribe();
-    component.writeLicense.pipe(takeUntil(this.destroy$), switchMap(event => this.writeLicense(event, component))).subscribe();
+  private subscribeToEvents(component: ViewComponent) {
+    if (component instanceof OrganizationListComponent) {
+      component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event)), tap(() => this.readOrganizations(component))).subscribe();
+    } else if (component instanceof OrganizationViewComponent) {
+      component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event))).subscribe();
+      component.loadLicenses.pipe(takeUntil(this.destroy$), switchMap(uri => this.readLicenses(uri, component))).subscribe();
+      component.writeLicense.pipe(takeUntil(this.destroy$), switchMap(event => this.writeLicense(event, component))).subscribe();
+    }
   }
 
   private readLicenses(uri: string, component: OrganizationViewComponent): Observable<License[]> {

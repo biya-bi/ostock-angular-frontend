@@ -1,13 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { EntityEvent } from '../models/entity-event';
+import { SearchCriteria } from '../models/search-criteria';
 import { EntityComponent } from './entity.component';
 
 @Component({
   template: '',
 })
-export abstract class EntityListViewComponent<T, U extends EntityEvent<T>> extends EntityComponent<T, U> {
+export abstract class EntityListViewComponent<T, U extends EntityEvent<T>, V extends SearchCriteria> extends EntityComponent<T, U> {
 
   private _entities: T[];
+  selectedEntity: T;
+  searchCriteria: V;
 
   @Input()
   set entities(newValue: T[]) {

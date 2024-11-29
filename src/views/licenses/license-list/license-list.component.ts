@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { License } from '../../../models/license';
 import { LicenseEvent } from '../../../models/license-event';
+import { LicenseSearchCriteria } from '../../../models/license-search-criteria';
 import { Operation } from '../../../models/operation';
 import { Organization } from '../../../models/organization';
 import { EntityListViewComponent } from '../../entity-list-view.component';
@@ -10,7 +11,7 @@ import { EntityListViewComponent } from '../../entity-list-view.component';
   templateUrl: './license-list.component.html',
   styleUrl: './license-list.component.css'
 })
-export class LicenseListComponent extends EntityListViewComponent<License, LicenseEvent> {
+export class LicenseListComponent extends EntityListViewComponent<License, LicenseEvent, LicenseSearchCriteria> {
   @Input() organization: Organization;
 
   selectedLicense: License;

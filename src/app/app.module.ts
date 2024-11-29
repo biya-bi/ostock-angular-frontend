@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, RouterOutlet } from "@angular/router";
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -40,6 +40,7 @@ import { routes } from "./app.routes";
           // or after 30 seconds (whichever comes first).
           registrationStrategy: 'registerWhenStable:30000'
         }),
+        FormsModule,
         NgbModule
     ],
     declarations: [

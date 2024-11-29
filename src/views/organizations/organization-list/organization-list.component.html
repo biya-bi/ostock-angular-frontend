@@ -4,16 +4,49 @@
         <div class="col">
             <a routerLink="/organizations/add" [queryParams]="{operation:Operation.Create}">Add an organization</a>
 
-            <ng-container *ngIf="entities?.length; else emptyOrganizationTemplate">
-                <p class="mt-2 fw-bold">Below is the list of available organizations:</p>
+            <table class="table table-striped" *ngIf="entities?.length; else emptyOrganizationTemplate">
+                <thead>
+                    <tr>
+                        <th scope="col" sortable="name">Name<input class="form-control" type="text" name="name"
+                                [(ngModel)]="searchCriteria.name" /></th>
+                        <th scope="col" sortable="contactName">Contact Name<input class="form-control" type="text"
+                                name="contactName" [(ngModel)]="searchCriteria.contactName" /></th>
+                        <th scope="col" sortable="contactEmail">Contact Email<input class="form-control" type="text"
+                                name="contactEmail" [(ngModel)]="searchCriteria.contactEmail" /></th>
+                        <th scope="col" sortable="contactPhone">Contact Phone<input class="form-control" type="text"
+                                name="contactPhone" [(ngModel)]="searchCriteria.contactPhone" /></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let entity of entities">
+                        <td><ngb-highlight [result]="entity.name" [term]="searchCriteria.name"></ngb-highlight></td>
+                        <td><ngb-highlight [result]="entity.contactName"
+                                [term]="searchCriteria.contactName"></ngb-highlight></td>
+                        <td><ngb-highlight [result]="entity.contactEmail"
+                                [term]="searchCriteria.contactEmail"></ngb-highlight></td>
+                        <td><ngb-highlight [result]="entity.contactPhone"
+                                [term]="searchCriteria.contactPhone"></ngb-highlight></td>
+                        <td>
+                            <a routerLink="/organizations/details"
+                                [queryParams]="{uri:entity._links.self.href,operation:Operation.Read}">Details
+                            </a>
+                        </td>
+                        <td><a routerLink="/organizations/edit"
+                                [queryParams]="{uri:entity._links.self.href,operation:Operation.Update}">Edit</a>
+                        </td>
+                        <td>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#deleteOrganizationModal"
+                                class="link-danger" (click)="selectedEntity=entity">Delete
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-                <ul *ngFor="let entity of entities">
-                    <li>
-                        <a routerLink="/organizations/details"
-                            [queryParams]="{uri:entity._links.self.href,operation:Operation.Read}">{{entity.name}}</a>
-                    </li>
-                </ul>
-            </ng-container>
+            <app-organization-delete (manage)="manage.emit($event)" [entity]="selectedEntity"></app-organization-delete>
 
             <ng-template #emptyOrganizationTemplate>
                 <p>You haven't added any organization yet.</p>
