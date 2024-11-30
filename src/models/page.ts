@@ -2,5 +2,7 @@ import { PageRequest } from "./page-request";
 
 export interface Page {
     request: PageRequest;
-    total?: number;
+    totalPages?: number;
+    numberOfElements?: number;
+    totalElements?: number;
 }

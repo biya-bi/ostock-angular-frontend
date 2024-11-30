@@ -135,6 +135,8 @@ export class OrganizationContainer extends BaseComponent {
     component.entities = pageDto?._embedded?.organizationDtoList;
     component.page.request.pageNumber = pageDto.number + 1;
     component.page.request.pageSize = pageDto.size;
-    component.page.total = pageDto.totalPages;
+    component.page.totalPages = pageDto.totalPages;
+    component.page.numberOfElements = pageDto.numberOfElements;
+    component.page.totalElements = pageDto.totalElements;
   }
 }
