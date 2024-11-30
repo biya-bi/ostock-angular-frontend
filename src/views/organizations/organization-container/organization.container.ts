@@ -6,6 +6,7 @@ import { License } from '../../../models/license';
 import { LicenseEvent } from '../../../models/license-event';
 import { Operation } from '../../../models/operation';
 import { OrganizationEvent } from '../../../models/organization-event';
+import { SearchCriteriaService } from '../../../services/search-criteria.service';
 import { BaseComponent } from '../../base.component';
 import { ViewComponent } from '../../view.component';
 import { OrganizationListComponent } from '../organization-list/organization-list.component';
@@ -18,7 +19,10 @@ import { OrganizationViewComponent } from '../organization-view.component';
 })
 export class OrganizationContainer extends BaseComponent {
 
-  constructor(private readonly apiConnector: ApiConnector, private readonly router: Router, private readonly activatedRoute: ActivatedRoute) {
+  constructor(private readonly apiConnector: ApiConnector,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly searchCriteriaService: SearchCriteriaService) {
     super();
   }
 
@@ -35,7 +39,8 @@ export class OrganizationContainer extends BaseComponent {
   }
 
   private readOrganizations(component: OrganizationListComponent): void {
-    this.apiConnector.readOrganizations(component.searchCriteria).pipe(take(1), tap(organizations => component.entities = organizations)).subscribe();
+    const searchCriteria = this.searchCriteriaService.parse(component.searchCriteria);
+    this.apiConnector.readOrganizations(searchCriteria).pipe(take(1), tap(organizations => component.entities = organizations)).subscribe();
   }
 
   private setTitle(component: OrganizationViewComponent): void {
