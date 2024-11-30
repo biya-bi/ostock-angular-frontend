@@ -6,8 +6,8 @@ import { Page } from '../models/page';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchCriteriaService {
-  parse(searchCriteria: SearchCriteria): SearchCriteria {
+export class SearchService {
+  parseCriteria(searchCriteria: SearchCriteria): SearchCriteria {
     if (!searchCriteria) {
       searchCriteria = {};
     }

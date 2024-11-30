@@ -8,7 +8,7 @@ import { Operation } from '../../../models/operation';
 import { OrganizationDtoListWrapper } from '../../../models/organization-dto-list-wrapper';
 import { OrganizationEvent } from '../../../models/organization-event';
 import { PageDto } from '../../../models/page-dto';
-import { SearchCriteriaService } from '../../../services/search-criteria.service';
+import { SearchService } from '../../../services/search.service';
 import { BaseComponent } from '../../base.component';
 import { ViewComponent } from '../../view.component';
 import { OrganizationListComponent } from '../organization-list/organization-list.component';
@@ -24,7 +24,7 @@ export class OrganizationContainer extends BaseComponent {
   constructor(private readonly apiConnector: ApiConnector,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly searchCriteriaService: SearchCriteriaService) {
+    private readonly searchService: SearchService) {
     super();
   }
 
@@ -42,8 +42,8 @@ export class OrganizationContainer extends BaseComponent {
   }
 
   private readOrganizations(component: OrganizationListComponent): void {
-    const searchCriteria = this.searchCriteriaService.parse(component.searchCriteria);
-    const pageRequest = this.searchCriteriaService.parsePage(component.page);
+    const searchCriteria = this.searchService.parseCriteria(component.searchCriteria);
+    const pageRequest = this.searchService.parsePage(component.page);
     this.apiConnector.readOrganizations(searchCriteria, pageRequest).pipe(take(1), tap(pageDto => this.onRead(component, pageDto))).subscribe();
   }
 
