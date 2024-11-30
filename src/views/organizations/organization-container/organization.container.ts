@@ -40,7 +40,7 @@ export class OrganizationContainer extends BaseComponent {
 
   private readOrganizations(component: OrganizationListComponent): void {
     const searchCriteria = this.searchCriteriaService.parse(component.searchCriteria);
-    this.apiConnector.readOrganizations(searchCriteria).pipe(take(1), tap(organizations => component.entities = organizations)).subscribe();
+    this.apiConnector.readOrganizations(searchCriteria).pipe(take(1), tap(pageDto => component.entities = pageDto?._embedded?.organizationDtoList)).subscribe();
   }
 
   private setTitle(component: OrganizationViewComponent): void {

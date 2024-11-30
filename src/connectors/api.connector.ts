@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 import { License } from '../models/license';
 import { LicenseCollectionModel } from '../models/license-collection.model';
 import { OrganizationSearchCriteria } from '../models/organization-search-criteria';
+import { PageDto } from '../models/page-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,8 @@ export class ApiConnector {
     return this.httpClient.post<Organization>(this.organizationEndpoint, organization, this.getOptions());
   }
 
-  readOrganizations(searchCriteria: OrganizationSearchCriteria): Observable<Organization[]> {
-    return this.httpClient.post<OrganizationCollectionModel>(`${this.organizationEndpoint}/search`, searchCriteria, this.getOptions()).pipe(map(m => m?._embedded?.organizationDtoList));
+  readOrganizations(searchCriteria: OrganizationSearchCriteria): Observable<PageDto<OrganizationCollectionModel>> {
+    return this.httpClient.post<PageDto<OrganizationCollectionModel>>(`${this.organizationEndpoint}/search`, searchCriteria, this.getOptions());
   }
 
   readOrganization(uri: string): Observable<Organization> {
