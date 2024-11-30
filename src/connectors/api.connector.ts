@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable, map, of } from 'rxjs';
@@ -9,6 +9,8 @@ import { License } from '../models/license';
 import { LicenseCollectionModel } from '../models/license-collection.model';
 import { OrganizationSearchCriteria } from '../models/organization-search-criteria';
 import { PageDto } from '../models/page-dto';
+import { Page } from '../models/page';
+import { PageRequest } from '../models/page-request';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +23,12 @@ export class ApiConnector {
 
   constructor(private readonly httpClient: HttpClient, private readonly oAuthService: OAuthService) { }
 
-  private getOptions() {
+  private getOptions(params?: any) {
     return {
       headers: {
         Authorization: `Bearer ${this.oAuthService.getAccessToken()}`
-      }
+      },
+      params
     }
   }
 
@@ -37,8 +40,8 @@ export class ApiConnector {
     return this.httpClient.post<Organization>(this.organizationEndpoint, organization, this.getOptions());
   }
 
-  readOrganizations(searchCriteria: OrganizationSearchCriteria): Observable<PageDto<OrganizationDtoListWrapper>> {
-    return this.httpClient.post<PageDto<OrganizationDtoListWrapper>>(`${this.organizationEndpoint}/search`, searchCriteria, this.getOptions());
+  readOrganizations(searchCriteria: OrganizationSearchCriteria, pageRequest: PageRequest): Observable<PageDto<OrganizationDtoListWrapper>> {
+    return this.httpClient.post<PageDto<OrganizationDtoListWrapper>>(`${this.organizationEndpoint}/search`, searchCriteria, this.getOptions(pageRequest));
   }
 
   readOrganization(uri: string): Observable<Organization> {

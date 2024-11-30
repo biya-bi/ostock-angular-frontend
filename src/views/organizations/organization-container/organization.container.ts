@@ -5,7 +5,9 @@ import { ApiConnector } from '../../../connectors/api.connector';
 import { License } from '../../../models/license';
 import { LicenseEvent } from '../../../models/license-event';
 import { Operation } from '../../../models/operation';
+import { OrganizationDtoListWrapper } from '../../../models/organization-dto-list-wrapper';
 import { OrganizationEvent } from '../../../models/organization-event';
+import { PageDto } from '../../../models/page-dto';
 import { SearchCriteriaService } from '../../../services/search-criteria.service';
 import { BaseComponent } from '../../base.component';
 import { ViewComponent } from '../../view.component';
@@ -29,6 +31,7 @@ export class OrganizationContainer extends BaseComponent {
   onActivate(component: ViewComponent) {
     if (component instanceof OrganizationListComponent) {
       component.searchCriteria = {};
+      component.page = { request: {} };
       this.readOrganizations(component);
       this.subscribeToEvents(component);
     } else if (component instanceof OrganizationViewComponent) {
@@ -40,7 +43,8 @@ export class OrganizationContainer extends BaseComponent {
 
   private readOrganizations(component: OrganizationListComponent): void {
     const searchCriteria = this.searchCriteriaService.parse(component.searchCriteria);
-    this.apiConnector.readOrganizations(searchCriteria).pipe(take(1), tap(pageDto => component.entities = pageDto?._embedded?.organizationDtoList)).subscribe();
+    const pageRequest = this.searchCriteriaService.parsePage(component.page);
+    this.apiConnector.readOrganizations(searchCriteria, pageRequest).pipe(take(1), tap(pageDto => this.onRead(component, pageDto))).subscribe();
   }
 
   private setTitle(component: OrganizationViewComponent): void {
@@ -94,6 +98,7 @@ export class OrganizationContainer extends BaseComponent {
     if (component instanceof OrganizationListComponent) {
       component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event)), tap(() => this.readOrganizations(component))).subscribe();
       component.search.pipe(takeUntil(this.destroy$), debounceTime(1000), tap(_ => this.readOrganizations(component))).subscribe();
+      component.pageChange.pipe(takeUntil(this.destroy$), debounceTime(1000), tap(_ => this.readOrganizations(component))).subscribe();
     } else if (component instanceof OrganizationViewComponent) {
       component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event))).subscribe();
       component.loadLicenses.pipe(takeUntil(this.destroy$), switchMap(uri => this.readLicenses(uri, component))).subscribe();
@@ -124,5 +129,12 @@ export class OrganizationContainer extends BaseComponent {
         event.closeElement.click();
         component.licenseListComponent.selectedLicense = undefined;
       }));
+  }
+
+  private onRead(component: OrganizationListComponent, pageDto: PageDto<OrganizationDtoListWrapper>): void {
+    component.entities = pageDto?._embedded?.organizationDtoList;
+    component.page.request.pageNumber = pageDto.number + 1;
+    component.page.request.pageSize = pageDto.size;
+    component.page.total = pageDto.totalPages;
   }
 }
