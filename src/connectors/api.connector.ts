@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable, map, of } from 'rxjs';
-import { OrganizationCollectionModel } from '../models/organization-collection.model';
+import { OrganizationDtoListWrapper } from '../models/organization-dto-list-wrapper';
 import { Organization } from '../models/organization';
 import { environment } from '../environments/environment';
 import { License } from '../models/license';
@@ -37,8 +37,8 @@ export class ApiConnector {
     return this.httpClient.post<Organization>(this.organizationEndpoint, organization, this.getOptions());
   }
 
-  readOrganizations(searchCriteria: OrganizationSearchCriteria): Observable<PageDto<OrganizationCollectionModel>> {
-    return this.httpClient.post<PageDto<OrganizationCollectionModel>>(`${this.organizationEndpoint}/search`, searchCriteria, this.getOptions());
+  readOrganizations(searchCriteria: OrganizationSearchCriteria): Observable<PageDto<OrganizationDtoListWrapper>> {
+    return this.httpClient.post<PageDto<OrganizationDtoListWrapper>>(`${this.organizationEndpoint}/search`, searchCriteria, this.getOptions());
   }
 
   readOrganization(uri: string): Observable<Organization> {

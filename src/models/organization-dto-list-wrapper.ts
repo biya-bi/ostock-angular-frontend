@@ -1,5 +1,5 @@
 import { Organization } from "./organization"
 
-export interface OrganizationCollectionModel {
+export interface OrganizationDtoListWrapper {
     organizationDtoList: Organization[]
 }
