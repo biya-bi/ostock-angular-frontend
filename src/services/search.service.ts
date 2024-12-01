@@ -7,11 +7,12 @@ import { PageRequest } from '../models/page-request';
   providedIn: 'root'
 })
 export class SearchService {
-  parseCriteria(searchCriteria: SearchCriteria): SearchCriteria {
-    if (!searchCriteria) {
-      searchCriteria = {};
+  parseCriteria<T extends SearchCriteria>(searchCriteria: T): T {
+    let criteria: SearchCriteria = searchCriteria;
+    if (!criteria) {
+      criteria = {};
     }
-    const clone = JSON.parse(JSON.stringify(searchCriteria));
+    const clone = JSON.parse(JSON.stringify(criteria));
     for (let key in clone) {
       let value = clone[key];
       if (typeof value === 'string' && value.trim().length === 0) {
