@@ -50,8 +50,10 @@ export class OrganizationContainer extends BaseComponent {
   private readOrganizations(component: OrganizationListComponent): void {
     const searchCriteria = this.searchService.parseCriteria(component.searchCriteria);
     const pageRequest = this.searchService.parsePage(component.page);
-    this.busySubject.next(true);
-    this.apiConnector.readOrganizations(searchCriteria, pageRequest).pipe(take(1), tap(page => this.onRead(component, page)), finalize(() => this.busySubject.next(false))).subscribe();
+
+    const obs$ = this.apiConnector.readOrganizations(searchCriteria, pageRequest);
+
+    this.executeLongRunningTask(obs$).pipe(take(1), tap(page => this.onRead(component, page))).subscribe();
   }
 
   private setTitle(component: OrganizationViewComponent): void {
@@ -73,7 +75,10 @@ export class OrganizationContainer extends BaseComponent {
 
   private readOrganization(component: OrganizationViewComponent): void {
     const queryParams = this.activatedRoute.snapshot.queryParams;
-    this.apiConnector.readOrganization(queryParams['uri']).pipe(
+
+    const obs$ = this.apiConnector.readOrganization(queryParams['uri']);
+
+    this.executeLongRunningTask(obs$).pipe(
       take(1),
       tap(organization => {
         component.entity = organization;
@@ -94,13 +99,11 @@ export class OrganizationContainer extends BaseComponent {
         obs$ = this.apiConnector.deleteOrganization(event.entity._links.delete.href);
         break;
     }
-    this.busySubject.next(true);
-    return obs$.pipe(take(1),
+    return this.executeLongRunningTask(obs$).pipe(take(1),
       tap(() => {
         event.closeElement?.click();
         this.router.navigate(['/organizations']);
-      }),
-      finalize(() => this.busySubject.next(false)));
+      }));
   }
 
   private subscribeToEvents(component: ViewComponent) {
@@ -120,8 +123,8 @@ export class OrganizationContainer extends BaseComponent {
   }
 
   private readLicenses(uri: string, component: OrganizationViewComponent): Observable<License[]> {
-    this.busySubject.next(true);
-    return this.apiConnector.readLicenses(uri).pipe(take(1), tap(licenses => component.licenses = licenses), finalize(() => this.busySubject.next(false)));
+    const obs$ = this.apiConnector.readLicenses(uri);
+    return this.executeLongRunningTask(obs$).pipe(take(1), tap(licenses => component.licenses = licenses));
   }
 
   private writeLicense(event: LicenseEvent, component: OrganizationViewComponent): Observable<License[]> {
@@ -137,13 +140,12 @@ export class OrganizationContainer extends BaseComponent {
         obs$ = this.apiConnector.delete(event.entity._links.delete.href);
         break;
     }
-    this.busySubject.next(true);
-    return obs$.pipe(take(1),
+    return this.executeLongRunningTask(obs$).pipe(take(1),
       switchMap(() => this.readLicenses(event.organization._links.licenses.href, component)),
       tap(() => {
         event.closeElement.click();
         component.licenseListComponent.selectedLicense = undefined;
-      }), finalize(() => this.busySubject.next(false)));
+      }));
   }
 
   private onRead(component: OrganizationListComponent, page: Page<OrganizationListWrapper>): void {
@@ -183,5 +185,10 @@ export class OrganizationContainer extends BaseComponent {
       }
     }
     return null;
+  }
+
+  private executeLongRunningTask<T>(obs$: Observable<T>): Observable<T> {
+    this.busySubject.next(true);
+    return obs$.pipe(finalize(() => this.busySubject.next(false)));
   }
 }
