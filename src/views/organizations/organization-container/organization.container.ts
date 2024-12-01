@@ -48,7 +48,7 @@ export class OrganizationContainer extends BaseComponent {
   private readOrganizations(component: OrganizationListComponent): void {
     const searchCriteria = this.searchService.parseCriteria(component.searchCriteria);
     const pageRequest = this.searchService.parsePage(component.page);
-    this.apiConnector.readOrganizations(searchCriteria, pageRequest).pipe(take(1), tap(pageDto => this.onRead(component, pageDto))).subscribe();
+    this.apiConnector.readOrganizations(searchCriteria, pageRequest).pipe(take(1), tap(page => this.onRead(component, page))).subscribe();
   }
 
   private setTitle(component: OrganizationViewComponent): void {
@@ -136,13 +136,13 @@ export class OrganizationContainer extends BaseComponent {
       }));
   }
 
-  private onRead(component: OrganizationListComponent, pageDto: Page<OrganizationListWrapper>): void {
-    component.entities = pageDto?._embedded?.organizationDtoList;
-    component.page.request.pageNumber = pageDto.number + 1;
-    component.page.request.pageSize = pageDto.size;
-    component.page.totalPages = pageDto.totalPages;
-    component.page.numberOfElements = pageDto.numberOfElements;
-    component.page.totalElements = pageDto.totalElements;
+  private onRead(component: OrganizationListComponent, page: Page<OrganizationListWrapper>): void {
+    component.entities = page?._embedded?.organizationDtoList;
+    component.page.request.pageNumber = page.number + 1;
+    component.page.request.pageSize = page.size;
+    component.page.totalPages = page.totalPages;
+    component.page.numberOfElements = page.numberOfElements;
+    component.page.totalElements = page.totalElements;
 
     const sortEvent = this.getSortEvent(component);
     if (sortEvent) {
