@@ -143,14 +143,35 @@ export class OrganizationContainer extends BaseComponent {
     component.page.totalPages = pageDto.totalPages;
     component.page.numberOfElements = pageDto.numberOfElements;
     component.page.totalElements = pageDto.totalElements;
+
+    const sortEvent = this.getSortEvent(component);
+    if (sortEvent) {
+      this.onSort(component, sortEvent);
+    }
   }
 
-  private onSort(component: OrganizationListComponent, { attribute, direction }: SortEvent) {
+  private onSort(component: OrganizationListComponent, event: SortEvent): void {
+    if (!event) {
+      return;
+    }
+
+    const { attribute, direction } = event;
+
     component.headers.forEach(header => {
       if (header.sortable !== attribute) {
         header.direction = '';
       }
     });
     component.entities = this.sortingService.sort(component.entities, attribute, direction);
+  }
+
+  private getSortEvent(component: OrganizationListComponent): SortEvent {
+    for (let i = 0; i < component.headers.length; i++) {
+      const header = component.headers.get(i);
+      if (header.direction !== '') {
+        return { attribute: header.sortable, direction: header.direction };
+      }
+    }
+    return null;
   }
 }

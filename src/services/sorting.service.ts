@@ -6,7 +6,7 @@ import { SortDirection } from "../models/sort-direction";
 })
 export class SortingService<T> {
     sort(entities: T[], attribute: string, direction: SortDirection): T[] {
-        if (direction === '') {
+        if (direction === '' || !entities?.length) {
             return entities;
         }
         return [...entities].sort((x, y) => {
