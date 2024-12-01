@@ -1,5 +1,5 @@
 
-export interface PageDto<T> {
+export interface Page<T> {
     _embedded: T;
     number: number;
     size: number;

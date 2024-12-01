@@ -4,9 +4,9 @@ import { debounceTime, Observable, switchMap, take, takeUntil, tap } from 'rxjs'
 import { ApiConnector } from '../../../connectors/api.connector';
 import { License } from '../../../dtos/license';
 import { Operation } from '../../../models/operation';
-import { OrganizationDtoListWrapper } from '../../../dtos/organization-dto-list-wrapper';
+import { OrganizationListWrapper } from '../../../dtos/organization-list-wrapper';
 import { OrganizationEvent } from '../../../events/organization-event';
-import { PageDto } from '../../../dtos/page-dto';
+import { Page } from '../../../dtos/page';
 import { SearchService } from '../../../services/search.service';
 import { BaseComponent } from '../../base.component';
 import { ViewComponent } from '../../view.component';
@@ -131,7 +131,7 @@ export class OrganizationContainer extends BaseComponent {
       }));
   }
 
-  private onRead(component: OrganizationListComponent, pageDto: PageDto<OrganizationDtoListWrapper>): void {
+  private onRead(component: OrganizationListComponent, pageDto: Page<OrganizationListWrapper>): void {
     component.entities = pageDto?._embedded?.organizationDtoList;
     component.page.request.pageNumber = pageDto.number + 1;
     component.page.request.pageSize = pageDto.size;
