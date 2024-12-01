@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, QueryList, ViewChildren } from '@angular/core';
-import { EntityEvent } from '../events/entity-event';
+import { EntityEvent } from '../events/entity.event';
 import { SearchCriteria } from '../criteria/search-criteria';
 import { EntityComponent } from './entity.component';
 import { Page } from '../models/page';
 import { NgbdSortableHeader } from '../directives/sortable.directive';
-import { SortEvent } from '../events/sort-event';
+import { SortEvent } from '../events/sort.event';
 
 @Component({
   template: '',
