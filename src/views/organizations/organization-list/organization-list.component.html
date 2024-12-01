@@ -7,22 +7,22 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col" sortable="name">
+                        <th scope="col" sortable="name" (sort)="sort.emit($event)">
                             Name
                             <input class="form-control" type="text" name="name" [(ngModel)]="searchCriteria.name"
                                 (keyup)="search.emit(searchCriteria)" />
                         </th>
-                        <th scope="col" sortable="contactName">
+                        <th scope="col" sortable="contactName" (sort)="sort.emit($event)">
                             Contact Name
                             <input class="form-control" type="text" name="contactName"
                                 [(ngModel)]="searchCriteria.contactName" (keyup)="search.emit(searchCriteria)" />
                         </th>
-                        <th scope="col" sortable="contactEmail">
+                        <th scope="col" sortable="contactEmail" (sort)="sort.emit($event)">
                             Contact Email
                             <input class="form-control" type="text" name="contactEmail"
                                 [(ngModel)]="searchCriteria.contactEmail" (keyup)="search.emit(searchCriteria)" />
                         </th>
-                        <th scope="col" sortable="contactPhone">
+                        <th scope="col" sortable="contactPhone" (sort)="sort.emit($event)">
                             Contact Phone
                             <input class="form-control" type="text" name="contactPhone"
                                 [(ngModel)]="searchCriteria.contactPhone" (keyup)="search.emit(searchCriteria)" />

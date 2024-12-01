@@ -3,16 +3,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, Observable, switchMap, take, takeUntil, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { License } from '../../../dtos/license';
-import { Operation } from '../../../models/operation';
 import { OrganizationListWrapper } from '../../../dtos/organization-list-wrapper';
-import { OrganizationEvent } from '../../../events/organization-event';
 import { Page } from '../../../dtos/page';
+import { LicenseEvent } from '../../../events/license-event';
+import { OrganizationEvent } from '../../../events/organization-event';
+import { SortEvent } from '../../../events/sort-event';
+import { Operation } from '../../../models/operation';
 import { SearchService } from '../../../services/search.service';
 import { BaseComponent } from '../../base.component';
 import { ViewComponent } from '../../view.component';
 import { OrganizationListComponent } from '../organization-list/organization-list.component';
 import { OrganizationViewComponent } from '../organization-view.component';
-import { LicenseEvent } from '../../../events/license-event';
+import { SortingService } from '../../../services/sorting.service';
+import { Organization } from '../../../dtos/organization';
 
 @Component({
   selector: 'app-organization-container',
@@ -24,7 +27,8 @@ export class OrganizationContainer extends BaseComponent {
   constructor(private readonly apiConnector: ApiConnector,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly searchService: SearchService) {
+    private readonly searchService: SearchService,
+    private readonly sortingService: SortingService<Organization>) {
     super();
   }
 
@@ -99,6 +103,7 @@ export class OrganizationContainer extends BaseComponent {
       component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event)), tap(() => this.readOrganizations(component))).subscribe();
       component.search.pipe(takeUntil(this.destroy$), debounceTime(1000), tap(_ => this.readOrganizations(component))).subscribe();
       component.pageChange.pipe(takeUntil(this.destroy$), debounceTime(1000), tap(_ => this.readOrganizations(component))).subscribe();
+      component.sort.pipe(takeUntil(this.destroy$), tap(event => this.onSort(component, event))).subscribe();
     } else if (component instanceof OrganizationViewComponent) {
       component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event))).subscribe();
       component.loadLicenses.pipe(takeUntil(this.destroy$), switchMap(uri => this.readLicenses(uri, component))).subscribe();
@@ -138,5 +143,14 @@ export class OrganizationContainer extends BaseComponent {
     component.page.totalPages = pageDto.totalPages;
     component.page.numberOfElements = pageDto.numberOfElements;
     component.page.totalElements = pageDto.totalElements;
+  }
+
+  private onSort(component: OrganizationListComponent, { attribute, direction }: SortEvent) {
+    component.headers.forEach(header => {
+      if (header.sortable !== attribute) {
+        header.direction = '';
+      }
+    });
+    component.entities = this.sortingService.sort(component.entities, attribute, direction);
   }
 }
