@@ -59,11 +59,12 @@
             </table>
 
             <div class="d-flex justify-content-between p-2" *ngIf="entities?.length">
-                <ngb-pagination [collectionSize]="page.totalElements" [(page)]="page.request.pageNumber" [pageSize]="page.request.pageSize"
-                    (pageChange)="pageChange.emit($event)">
+                <ngb-pagination [collectionSize]="page.totalElements" [(page)]="page.request.pageNumber"
+                    [pageSize]="page.request.pageSize" (pageChange)="pageChange.emit($event)">
                 </ngb-pagination>
 
-                <select class="form-select form-select-sm w-auto" name="pageSize" [(ngModel)]="page.request.pageSize" (change)="search.emit(searchCriteria)">
+                <select class="form-select form-select-sm w-auto" name="pageSize" [(ngModel)]="page.request.pageSize"
+                    (change)="search.emit(searchCriteria)">
                     <option [ngValue]="20">20 items per page</option>
                     <option [ngValue]="40">40 items per page</option>
                     <option [ngValue]="60">60 items per page</option>
