@@ -58,7 +58,7 @@
                 </tbody>
             </table>
 
-            <div class="d-flex justify-content-between p-2">
+            <div class="d-flex justify-content-between p-2" *ngIf="entities?.length">
                 <ngb-pagination [collectionSize]="page.totalElements" [(page)]="page.request.pageNumber" [pageSize]="page.request.pageSize"
                     (pageChange)="pageChange.emit($event)">
                 </ngb-pagination>
