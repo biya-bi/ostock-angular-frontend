@@ -4,7 +4,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable, map, of } from 'rxjs';
 import { OrganizationSearchCriteria } from '../criteria/organization-search-criteria';
 import { License } from '../dtos/license';
-import { LicenseCollectionModel } from '../dtos/license-collection.model';
+import { LicenseListWrapper } from '../dtos/license-list-wrapper';
 import { Organization } from '../dtos/organization';
 import { OrganizationListWrapper } from '../dtos/organization-list-wrapper';
 import { Page } from '../dtos/page';
@@ -65,7 +65,7 @@ export class ApiConnector {
   }
 
   readLicenses(uri: string): Observable<License[]> {
-    return this.httpClient.get<LicenseCollectionModel>(uri, this.getOptions()).pipe(map(m => m?._embedded?.licenseDtoList));
+    return this.httpClient.get<LicenseListWrapper>(uri, this.getOptions()).pipe(map(m => m?._embedded?.licenseDtoList));
   }
 
   readLicense(uri: string): Observable<License> {
