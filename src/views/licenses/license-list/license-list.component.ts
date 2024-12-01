@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { License } from '../../../models/license';
-import { LicenseEvent } from '../../../models/license-event';
-import { LicenseSearchCriteria } from '../../../models/license-search-criteria';
+import { License } from '../../../dtos/license';
 import { Operation } from '../../../models/operation';
-import { Organization } from '../../../models/organization';
+import { Organization } from '../../../dtos/organization';
 import { EntityListViewComponent } from '../../entity-list-view.component';
+import { LicenseEvent } from '../../../events/license-event';
+import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
 
 @Component({
   selector: 'app-license-list',

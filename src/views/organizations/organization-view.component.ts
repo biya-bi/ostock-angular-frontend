@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { License } from '../../models/license';
-import { LicenseEvent } from '../../models/license-event';
-import { Organization } from '../../models/organization';
-import { OrganizationEvent } from '../../models/organization-event';
+import { License } from '../../dtos/license';
+import { Organization } from '../../dtos/organization';
+import { OrganizationEvent } from '../../events/organization-event';
 import { EntityViewComponent } from '../entity-view.component';
 import { LicenseListComponent } from '../licenses/license-list/license-list.component';
+import { LicenseEvent } from '../../events/license-event';
 
 @Component({
   template: '',

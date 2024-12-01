@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { Organization } from "../../../models/organization";
-import { OrganizationEvent } from "../../../models/organization-event";
-import { OrganizationSearchCriteria } from "../../../models/organization-search-criteria";
+import { Organization } from "../../../dtos/organization";
+import { OrganizationEvent } from "../../../events/organization-event";
+import { OrganizationSearchCriteria } from "../../../criteria/organization-search-criteria";
 import { EntityListViewComponent } from "../../entity-list-view.component";
 
 @Component({

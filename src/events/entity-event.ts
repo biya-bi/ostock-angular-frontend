@@ -1,4 +1,4 @@
-import { Operation } from "./operation";
+import { Operation } from "../models/operation";
 
 export interface EntityEvent<E> {
     entity: E;

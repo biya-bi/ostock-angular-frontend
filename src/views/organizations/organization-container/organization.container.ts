@@ -2,17 +2,17 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, Observable, switchMap, take, takeUntil, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
-import { License } from '../../../models/license';
-import { LicenseEvent } from '../../../models/license-event';
+import { License } from '../../../dtos/license';
 import { Operation } from '../../../models/operation';
-import { OrganizationDtoListWrapper } from '../../../models/organization-dto-list-wrapper';
-import { OrganizationEvent } from '../../../models/organization-event';
-import { PageDto } from '../../../models/page-dto';
+import { OrganizationDtoListWrapper } from '../../../dtos/organization-dto-list-wrapper';
+import { OrganizationEvent } from '../../../events/organization-event';
+import { PageDto } from '../../../dtos/page-dto';
 import { SearchService } from '../../../services/search.service';
 import { BaseComponent } from '../../base.component';
 import { ViewComponent } from '../../view.component';
 import { OrganizationListComponent } from '../organization-list/organization-list.component';
 import { OrganizationViewComponent } from '../organization-view.component';
+import { LicenseEvent } from '../../../events/license-event';
 
 @Component({
   selector: 'app-organization-container',

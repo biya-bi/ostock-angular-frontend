@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { EntityEvent } from '../models/entity-event';
+import { EntityEvent } from '../events/entity-event';
 import { Operation } from '../models/operation';
 import { EntityComponent } from './entity.component';
 

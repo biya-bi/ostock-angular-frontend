@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { EntityEvent } from '../models/entity-event';
+import { EntityEvent } from '../events/entity-event';
 import { ViewComponent } from './view.component';
 import { Operation } from '../models/operation';
 

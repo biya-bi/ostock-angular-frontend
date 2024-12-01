@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, take, tap } from 'rxjs';
-import { Organization } from '../../../models/organization';
+import { Organization } from '../../../dtos/organization';
 import { OrganizationViewComponent } from '../organization-view.component';
 
 @Component({

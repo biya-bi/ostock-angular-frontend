@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { SearchCriteria } from '../models/search-criteria';
-import { PageRequest } from '../models/page-request';
+import { SearchCriteria } from '../criteria/search-criteria';
 import { Page } from '../models/page';
+import { PageRequest } from '../models/page-request';
 
 @Injectable({
   providedIn: 'root'

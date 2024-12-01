@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input } from '@angular/core';
-import { EntityEvent } from '../models/entity-event';
-import { SearchCriteria } from '../models/search-criteria';
+import { EntityEvent } from '../events/entity-event';
+import { SearchCriteria } from '../criteria/search-criteria';
 import { EntityComponent } from './entity.component';
 import { Page } from '../models/page';
 

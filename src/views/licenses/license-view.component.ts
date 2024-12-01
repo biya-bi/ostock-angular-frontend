@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { License } from '../../models/license';
-import { LicenseEvent } from '../../models/license-event';
-import { Organization } from '../../models/organization';
+import { License } from '../../dtos/license';
+import { Organization } from '../../dtos/organization';
 import { EntityViewComponent } from '../entity-view.component';
+import { LicenseEvent } from '../../events/license-event';
 
 @Component({
   template: '',
