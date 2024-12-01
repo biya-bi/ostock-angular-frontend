@@ -10,4 +10,6 @@ export abstract class EntityComponent<T, U extends EntityEvent<T>> extends ViewC
   @Output() manage = new EventEmitter<U>();
 
   Operation = Operation;
+
+  busy: boolean;
 }

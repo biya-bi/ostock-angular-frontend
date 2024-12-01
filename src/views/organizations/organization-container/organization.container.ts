@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, Observable, switchMap, take, takeUntil, tap } from 'rxjs';
+import { debounceTime, finalize, Observable, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { License } from '../../../dtos/license';
+import { Organization } from '../../../dtos/organization';
 import { OrganizationListWrapper } from '../../../dtos/organization-list-wrapper';
 import { Page } from '../../../dtos/page';
 import { LicenseEvent } from '../../../events/license.event';
@@ -10,12 +11,11 @@ import { OrganizationEvent } from '../../../events/organization.event';
 import { SortEvent } from '../../../events/sort.event';
 import { Operation } from '../../../models/operation';
 import { SearchService } from '../../../services/search.service';
+import { SortingService } from '../../../services/sorting.service';
 import { BaseComponent } from '../../base.component';
 import { ViewComponent } from '../../view.component';
 import { OrganizationListComponent } from '../organization-list/organization-list.component';
 import { OrganizationViewComponent } from '../organization-view.component';
-import { SortingService } from '../../../services/sorting.service';
-import { Organization } from '../../../dtos/organization';
 
 @Component({
   selector: 'app-organization-container',
@@ -23,6 +23,8 @@ import { Organization } from '../../../dtos/organization';
   styleUrl: './organization.container.css'
 })
 export class OrganizationContainer extends BaseComponent {
+
+  private readonly busySubject = new Subject<boolean>();
 
   constructor(private readonly apiConnector: ApiConnector,
     private readonly router: Router,
@@ -48,7 +50,8 @@ export class OrganizationContainer extends BaseComponent {
   private readOrganizations(component: OrganizationListComponent): void {
     const searchCriteria = this.searchService.parseCriteria(component.searchCriteria);
     const pageRequest = this.searchService.parsePage(component.page);
-    this.apiConnector.readOrganizations(searchCriteria, pageRequest).pipe(take(1), tap(page => this.onRead(component, page))).subscribe();
+    this.busySubject.next(true);
+    this.apiConnector.readOrganizations(searchCriteria, pageRequest).pipe(take(1), tap(page => this.onRead(component, page)), finalize(() => this.busySubject.next(false))).subscribe();
   }
 
   private setTitle(component: OrganizationViewComponent): void {
@@ -91,14 +94,19 @@ export class OrganizationContainer extends BaseComponent {
         obs$ = this.apiConnector.deleteOrganization(event.entity._links.delete.href);
         break;
     }
+    this.busySubject.next(true);
     return obs$.pipe(take(1),
       tap(() => {
         event.closeElement?.click();
         this.router.navigate(['/organizations']);
-      }));
+      }),
+      finalize(() => this.busySubject.next(false)));
   }
 
   private subscribeToEvents(component: ViewComponent) {
+    if (component instanceof OrganizationListComponent || component instanceof OrganizationViewComponent) {
+      this.busySubject.pipe(takeUntil(this.destroy$), tap(busy => component.busy = busy)).subscribe();
+    }
     if (component instanceof OrganizationListComponent) {
       component.manage.pipe(takeUntil(this.destroy$), switchMap(event => this.writeOrganization(event)), tap(() => this.readOrganizations(component))).subscribe();
       component.search.pipe(takeUntil(this.destroy$), debounceTime(1000), tap(_ => this.readOrganizations(component))).subscribe();
@@ -112,7 +120,8 @@ export class OrganizationContainer extends BaseComponent {
   }
 
   private readLicenses(uri: string, component: OrganizationViewComponent): Observable<License[]> {
-    return this.apiConnector.readLicenses(uri).pipe(take(1), tap(licenses => component.licenses = licenses));
+    this.busySubject.next(true);
+    return this.apiConnector.readLicenses(uri).pipe(take(1), tap(licenses => component.licenses = licenses), finalize(() => this.busySubject.next(false)));
   }
 
   private writeLicense(event: LicenseEvent, component: OrganizationViewComponent): Observable<License[]> {
@@ -128,12 +137,13 @@ export class OrganizationContainer extends BaseComponent {
         obs$ = this.apiConnector.delete(event.entity._links.delete.href);
         break;
     }
+    this.busySubject.next(true);
     return obs$.pipe(take(1),
       switchMap(() => this.readLicenses(event.organization._links.licenses.href, component)),
       tap(() => {
         event.closeElement.click();
         component.licenseListComponent.selectedLicense = undefined;
-      }));
+      }), finalize(() => this.busySubject.next(false)));
   }
 
   private onRead(component: OrganizationListComponent, page: Page<OrganizationListWrapper>): void {
