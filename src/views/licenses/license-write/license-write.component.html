@@ -12,45 +12,47 @@
                     <div class="container">
                         <div class="row m-2">
                             <div class="col text-end">
-                                <label for="productName" class="fw-bold">Product name:</label>
+                                <label for="productName" class="fw-bold" i18n>Product name:</label>
                             </div>
                             <div class="col">
                                 <input type="text" id="productName" placeholder="Product name"
-                                    formControlName="productName">
+                                    formControlName="productName" i18n-placeholder>
                             </div>
                         </div>
                         <div class="row m-2">
                             <div class="col text-end">
-                                <label for="description" class="fw-bold">Description:</label>
+                                <label for="description" class="fw-bold" i18n>Description:</label>
                             </div>
                             <div class="col">
                                 <input type="text" id="description" placeholder="Description"
-                                    formControlName="description">
+                                    formControlName="description" i18n-placeholder>
                             </div>
                         </div>
                         <div class="row m-2">
                             <div class="col text-end">
-                                <label for="comment" class="fw-bold">Comment:</label>
+                                <label for="comment" class="fw-bold" i18n>Comment:</label>
                             </div>
                             <div class="col">
-                                <input type="email" id="comment" placeholder="Comment" formControlName="comment">
+                                <input type="email" id="comment" placeholder="Comment" formControlName="comment" i18n-placeholder>
                             </div>
                         </div>
                         <div class="row m-2">
                             <div class="col text-end">
-                                <label for="licenseType" class="fw-bold">License type:</label>
+                                <label for="licenseType" class="fw-bold" i18n>License type:</label>
                             </div>
                             <div class="col">
                                 <input type="text" id="licenseType" placeholder="License type"
-                                    formControlName="licenseType">
+                                    formControlName="licenseType" i18n-placeholder>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" (click)="manage.emit({entity:formGroup.value, organization:organization, operation:operation, closeElement:closeButton})">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" i18n>Cancel</button>
+                <button type="submit" class="btn btn-primary"
+                    (click)="manage.emit({entity:formGroup.value, organization:organization, operation:operation, closeElement:closeButton})"
+                    i18n>Save</button>
             </div>
         </div>
     </div>

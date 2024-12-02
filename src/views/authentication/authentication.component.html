@@ -1,5 +1,5 @@
 <ng-container *ngIf="userProfile; else loginTemplate">
-    <span class="fw-bold me-2">Welcome {{ userProfile.info.name }}</span>
+    <span class="fw-bold me-2" i18n>Welcome {{ userProfile.info.name }}</span>
     <a routerLink="/logout" class="btn btn-secondary btn-sm">
         <em class="material-icons">logout</em>
     </a>
@@ -7,6 +7,6 @@
 <ng-template #loginTemplate>
     <a routerLink="/login" class="btn btn-secondary d-flex btn-sm">
         <em class="material-icons">login</em>
-        <span class="ms-2">Login</span>
+        <span class="ms-2" i18n>Login</span>
     </a>
 </ng-template>

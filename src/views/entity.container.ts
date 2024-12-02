@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, finalize, Observable, of, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
+import { debounceTime, finalize, Observable, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { SearchCriteria } from '../criteria/search-criteria';
 import { Entity } from '../dtos/entity';
 import { EntityLinks } from '../dtos/entity-links';
@@ -72,8 +72,8 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         return obs$.pipe(finalize(() => this.busySubject.next(false)));
     }
 
-    protected getTitle(_: Operation): Observable<string> {
-        return of("Default tile");
+    protected getTitle(_: Operation): string {
+        return $localize`Title not set`;
     }
 
     private readEntities(component: EntityListViewComponent<T, U, V>): void {
@@ -88,7 +88,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
     private setTitle(component: EntityViewComponent<T, U>): void {
         const queryParams = this.activatedRoute.snapshot.queryParams;
         const operation = queryParams[this.getOperationParamName()];
-        this.getTitle(operation).pipe(take(1), tap(title => component.title = title)).subscribe();
+        component.title = this.getTitle(operation);
     }
 
     private readEntity(component: EntityViewComponent<T, U>): void {

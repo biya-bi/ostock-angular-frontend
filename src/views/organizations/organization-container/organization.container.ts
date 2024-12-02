@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of, switchMap, take, takeUntil, tap } from 'rxjs';
+import { Observable, switchMap, take, takeUntil, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { OrganizationSearchCriteria } from '../../../criteria/organization-search-criteria';
 import { License } from '../../../dtos/license';
@@ -67,15 +67,14 @@ export class OrganizationContainer extends EntityContainer<OrganizationLinks, Or
         component.writeLicense.pipe(takeUntil(this.destroy$), switchMap(event => this.writeLicense(event, component))).subscribe();
     }
 
-    protected override getTitle(operation: Operation): Observable<string> {
-        // TODO: Get title from localized resources
+    protected override getTitle(operation: Operation): string {
         switch (operation) {
             case Operation.Create:
-                return of("Add an organization");
+                return $localize`Add an organization`;
             case Operation.Update:
-                return of("Edit organization");
+                return $localize`Edit organization`;
             case Operation.Read:
-                return of("Organization details");
+                return $localize`Organization details`;
             default:
                 return super.getTitle(operation);
         }

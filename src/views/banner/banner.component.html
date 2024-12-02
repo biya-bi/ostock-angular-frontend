@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md" *ngIf="{userProfile: userProfile$ | async, 
         isLoginPage: isLoginPage$ | async} as data">
     <div class="container-xxl">
-        <span class="fw-bold text-secondary">O-Stock</span>
+        <span class="fw-bold text-secondary" i18n>O-Stock</span>
         <!-- Toggle button for mobile nav -->
         <button class="navba-toggler d-md-none items-align-center" type="button" data-bs-toggle="collapse"
             data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation"
@@ -17,11 +17,11 @@
                 <li class="nav-item">
                     <a routerLink="/home" class="nav-link d-flex">
                         <em class="material-icons">home</em>
-                        <span class="">Home</span>
+                        <span class="" i18n>Home</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a routerLink="/organizations" class="nav-link">Organizations</a>
+                    <a routerLink="/organizations" class="nav-link" i18n>Organizations</a>
                 </li>
                 <li class="nav-item ms-2 d-none d-md-inline">
                     <app-authentication [userProfile]="data.userProfile"></app-authentication>

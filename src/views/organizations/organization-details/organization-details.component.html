@@ -7,7 +7,7 @@
             <div class="container" *ngIf="entity" ngbAccordionBody>
                 <div class="row">
                     <div class="col text-end">
-                        <span class="fw-bold">Name:</span>
+                        <span class="fw-bold" i18n>Name:</span>
                     </div>
                     <div class="col">
                         <span>{{entity.name}}</span>
@@ -15,7 +15,7 @@
                 </div>
                 <div class="row">
                     <div class="col text-end">
-                        <span class="fw-bold">Contact name:</span>
+                        <span class="fw-bold" i18n>Contact name:</span>
                     </div>
                     <div class="col">
                         <span>{{entity.contactName}}</span>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="row">
                     <div class="col text-end">
-                        <span class="fw-bold">Contact email:</span>
+                        <span class="fw-bold" i18n>Contact email:</span>
                     </div>
                     <div class="col">
                         <span>{{entity.contactEmail}}</span>
@@ -31,25 +31,25 @@
                 </div>
                 <div class="row">
                     <div class="col text-end">
-                        <span class="fw-bold">Contact phone:</span>
+                        <span class="fw-bold" i18n>Contact phone:</span>
                     </div>
                     <div class="col">
                         <span>{{entity.contactPhone}}</span>
                     </div>
                 </div>
                 <div class="mt-4 d-flex justify-content-center">
-                    <a routerLink="/organizations/edit" [queryParams]="{uri:entity._links.self.href,operation:Operation.Update}">Edit</a>
+                    <a routerLink="/organizations/edit" [queryParams]="{uri:entity._links.self.href,operation:Operation.Update}" i18n>Edit</a>
                     <span class="ms-2 me-2">|</span>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteOrganizationModal" class="link-danger">Delete</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteOrganizationModal" class="link-danger" i18n>Delete</a>
                     <span class="ms-2 me-2">|</span>
-                    <a routerLink="/organizations">List</a>
+                    <a routerLink="/organizations" i18n>List</a>
                 </div>
             </div>
         </div>
     </div>
     <div *ngIf="entity?._links?.licenses?.href" (shown)="loadLicenses.emit(entity._links.licenses.href)" ngbAccordionItem>
         <h2 ngbAccordionHeader>
-            <button ngbAccordionButton>Licenses</button>
+            <button ngbAccordionButton i18n>Licenses</button>
         </h2>
         <div ngbAccordionCollapse>
             <div ngbAccordionBody>
