@@ -2,7 +2,11 @@
     <div ngbAccordion>
         <div [collapsed]="false" ngbAccordionItem>
             <h2 ngbAccordionHeader>
-                <button ngbAccordionButton>{{title}}</button>
+                <button ngbAccordionButton [ngSwitch]="operation">
+                    <ng-container *ngSwitchCase="Operation.Create" i18n>Add an organization</ng-container>
+                    <ng-container *ngSwitchCase="Operation.Update" i18n>Edit organization</ng-container>
+                    <ng-container *ngSwitchCase="Operation.Read" i18n>Organization details</ng-container>
+                </button>
             </h2>
             <div ngbAccordionCollapse>
                 <div ngbAccordionBody>

@@ -34,7 +34,6 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
             this.readEntities(component);
             this.subscribeToEvents(component);
         } else if (component instanceof EntityViewComponent) {
-            this.setTitle(component);
             this.readEntity(component);
             this.subscribeToEvents(component);
         }
@@ -72,10 +71,6 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         return obs$.pipe(finalize(() => this.busySubject.next(false)));
     }
 
-    protected getTitle(_: Operation): string {
-        return $localize`Title not set`;
-    }
-
     private readEntities(component: EntityListViewComponent<T, U, V>): void {
         const searchCriteria = this.searchService.parseCriteria(component.searchCriteria);
         const pageRequest = this.searchService.parsePage(component.page);
@@ -83,12 +78,6 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         const obs$ = this.getEntities(searchCriteria, pageRequest);
 
         this.run(obs$).pipe(take(1), tap(page => this.onRead(component, page))).subscribe();
-    }
-
-    private setTitle(component: EntityViewComponent<T, U>): void {
-        const queryParams = this.activatedRoute.snapshot.queryParams;
-        const operation = queryParams[this.getOperationParamName()];
-        component.title = this.getTitle(operation);
     }
 
     private readEntity(component: EntityViewComponent<T, U>): void {

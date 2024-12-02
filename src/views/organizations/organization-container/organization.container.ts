@@ -67,19 +67,6 @@ export class OrganizationContainer extends EntityContainer<OrganizationLinks, Or
         component.writeLicense.pipe(takeUntil(this.destroy$), switchMap(event => this.writeLicense(event, component))).subscribe();
     }
 
-    protected override getTitle(operation: Operation): string {
-        switch (operation) {
-            case Operation.Create:
-                return $localize`Add an organization`;
-            case Operation.Update:
-                return $localize`Edit organization`;
-            case Operation.Read:
-                return $localize`Organization details`;
-            default:
-                return super.getTitle(operation);
-        }
-    }
-
     private readLicenses(uri: string, component: OrganizationViewComponent): Observable<License[]> {
         const obs$ = this.apiConnector.readLicenses(uri);
         return this.run(obs$).pipe(take(1), tap(licenses => component.licenses = licenses));

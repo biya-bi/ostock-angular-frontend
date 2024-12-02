@@ -16,5 +16,4 @@ export class LicenseListComponent extends EntityListViewComponent<License, Licen
 
   selectedLicense: License;
   operation: Operation;
-  crudTitle: string;
 }

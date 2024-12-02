@@ -3,7 +3,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="title">{{title}}</h1>
+                <h1 class="modal-title fs-5" id="title" [ngSwitch]="operation">
+                    <ng-container *ngSwitchCase="Operation.Create" i18n>Add a license</ng-container>
+                    <ng-container *ngSwitchCase="Operation.Update" i18n>Edit license</ng-container>
+                </h1>
                 <button #closeButton type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
@@ -33,7 +36,8 @@
                                 <label for="comment" class="fw-bold" i18n>Comment:</label>
                             </div>
                             <div class="col">
-                                <input type="email" id="comment" placeholder="Comment" formControlName="comment" i18n-placeholder>
+                                <input type="email" id="comment" placeholder="Comment" formControlName="comment"
+                                    i18n-placeholder>
                             </div>
                         </div>
                         <div class="row m-2">

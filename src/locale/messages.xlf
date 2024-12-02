@@ -277,13 +277,6 @@
           <context context-type="linenumber">1,2</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5012315679555473807" datatype="html">
-        <source>Title not set</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/entity.container.ts</context>
-          <context context-type="linenumber">76</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="4010757268312517488" datatype="html">
         <source>Welcome on O-Stock</source>
         <context-group purpose="location">
@@ -324,7 +317,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
-          <context context-type="linenumber">52,53</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-delete/organization-delete.component.html</context>
@@ -356,6 +349,10 @@
           <context context-type="sourcefile">src/views/licenses/license-list/license-list.component.html</context>
           <context context-type="linenumber">5,7</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="8040303203775143889" datatype="html">
         <source>Below is the list of available licenses:</source>
@@ -386,71 +383,78 @@
           <context context-type="linenumber">28,29</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="8495182908220661367" datatype="html">
+        <source>Edit license</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8139947697437738478" datatype="html">
         <source>Product name:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
-          <context context-type="linenumber">15,16</context>
+          <context context-type="linenumber">18,19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="588284100849805066" datatype="html">
         <source>Product name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
-          <context context-type="linenumber">18,19</context>
+          <context context-type="linenumber">21,22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6996799422725544865" datatype="html">
         <source>Description:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
-          <context context-type="linenumber">24,25</context>
+          <context context-type="linenumber">27,28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4902817035128594900" datatype="html">
         <source>Description</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
-          <context context-type="linenumber">27,28</context>
+          <context context-type="linenumber">30,31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="872792317034860453" datatype="html">
         <source>Comment:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
-          <context context-type="linenumber">33,34</context>
+          <context context-type="linenumber">36,37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2662644497259948010" datatype="html">
         <source>Comment</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="993516006773161281" datatype="html">
         <source>License type:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
-          <context context-type="linenumber">41,42</context>
+          <context context-type="linenumber">45,46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8766134649158093132" datatype="html">
         <source>License type</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
-          <context context-type="linenumber">44,45</context>
+          <context context-type="linenumber">48,49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3768927257183755959" datatype="html">
         <source>Save</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/licenses/license-write/license-write.component.html</context>
-          <context context-type="linenumber">55,56</context>
+          <context context-type="linenumber">59,60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">47,48</context>
+          <context context-type="linenumber">51,52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3714759945937388497" datatype="html">
@@ -488,31 +492,6 @@
           <context context-type="linenumber">1,2</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7742615708502973946" datatype="html">
-        <source>Add an organization</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/organizations/organization-container/organization.container.ts</context>
-          <context context-type="linenumber">73</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/organizations/organization-list/organization-list.component.html</context>
-          <context context-type="linenumber">6,7</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8988442916883693325" datatype="html">
-        <source>Edit organization</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/organizations/organization-container/organization.container.ts</context>
-          <context context-type="linenumber">75</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3881160045896045135" datatype="html">
-        <source>Organization details</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/organizations/organization-container/organization.container.ts</context>
-          <context context-type="linenumber">77</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="7093928105617239602" datatype="html">
         <source>Delete organization</source>
         <context-group purpose="location">
@@ -527,6 +506,17 @@
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3881160045896045135" datatype="html">
+        <source>Organization details</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/organizations/organization-details/organization-details.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7658402240953727096" datatype="html">
         <source>Name:</source>
         <context-group purpose="location">
@@ -535,7 +525,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">12,13</context>
+          <context context-type="linenumber">16,17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3366564143232547329" datatype="html">
@@ -546,7 +536,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">20,21</context>
+          <context context-type="linenumber">24,25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7249351302346625465" datatype="html">
@@ -557,7 +547,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">29,30</context>
+          <context context-type="linenumber">33,34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5456504229673734954" datatype="html">
@@ -568,7 +558,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">38,39</context>
+          <context context-type="linenumber">42,43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7906458871395232033" datatype="html">
@@ -579,7 +569,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3906086328287885567" datatype="html">
@@ -590,7 +580,18 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">56,57</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7742615708502973946" datatype="html">
+        <source>Add an organization</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/organizations/organization-list/organization-list.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3894950702316166331" datatype="html">
@@ -670,32 +671,39 @@
           <context context-type="linenumber">83,85</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="8988442916883693325" datatype="html">
+        <source>Edit organization</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5243233792859835904" datatype="html">
         <source>Organization name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8473393321795065193" datatype="html">
         <source>Contact name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">23,24</context>
+          <context context-type="linenumber">27,28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8757962954958495112" datatype="html">
         <source>Contact email</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">32,33</context>
+          <context context-type="linenumber">36,37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6550607946154692993" datatype="html">
         <source>Contact phone</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/organizations/organization-write/organization-write.component.html</context>
-          <context context-type="linenumber">41,42</context>
+          <context context-type="linenumber">45,46</context>
         </context-group>
       </trans-unit>
     </body>
