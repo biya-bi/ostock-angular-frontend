@@ -89,7 +89,7 @@
                 </ngb-pagination>
             </div>
 
-            <p *ngIf="!entities?.length">{{ 'data.noRecord' | translate }}</p>
+            <p *ngIf="!busy && !entities?.length">{{ 'data.noRecord' | translate }}</p>
 
             <app-organization-delete (manage)="manage.emit($event)" [entity]="selectedEntity"></app-organization-delete>
         </div>

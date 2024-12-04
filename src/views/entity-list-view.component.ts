@@ -22,6 +22,10 @@ export abstract class EntityListViewComponent<T, U extends EntityEvent<T>, V ext
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
+  ngOnInit(): void {
+    this.busy = true;
+  }
+
   @Input()
   set entities(newValue: T[]) {
     if (this._entities !== newValue) {
