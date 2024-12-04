@@ -1,0 +1,13 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+@Component({
+	selector: 'app-locale-list',
+	templateUrl: './locale-list.component.html',
+	styleUrl: './locale-list.component.css'
+})
+export class localeListComponent {
+	@Input() selectedLocale: string;
+	@Input() supportedLocales: string[];
+
+	@Output() localeChange = new EventEmitter<string>();
+}

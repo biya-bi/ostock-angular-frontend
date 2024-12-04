@@ -1,13 +1,17 @@
 import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, RouterOutlet } from "@angular/router";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { OAuthModule } from "angular-oauth2-oidc";
+import { NgbdSortableHeader } from "../directives/sortable.directive";
 import { environment } from "../environments/environment";
+import { LocaleModule } from "../modules/locales/locale.module";
 import { AuthenticationComponent } from "../views/authentication/authentication.component";
 import { BannerComponent } from "../views/banner/banner.component";
 import { HomeComponent } from "../views/home/home.component";
@@ -16,6 +20,7 @@ import { LicenseDetailsComponent } from "../views/licenses/license-details/licen
 import { LicenseListComponent } from "../views/licenses/license-list/license-list.component";
 import { LicenseWriteComponent } from "../views/licenses/license-write/license-write.component";
 import { LoginComponent } from "../views/login/login.component";
+import { LogOutComponent } from "../views/logout/logout.component";
 import { NotificationContainer } from "../views/notification/notification.container";
 import { OrganizationContainer } from "../views/organizations/organization-container/organization.container";
 import { OrganizationDeleteComponent } from "../views/organizations/organization-delete/organization-delete.component";
@@ -24,7 +29,6 @@ import { OrganizationListComponent } from "../views/organizations/organization-l
 import { OrganizationWriteComponent } from "../views/organizations/organization-write/organization-write.component";
 import { AppComponent } from "./app.component";
 import { routes } from "./app.routes";
-import { NgbdSortableHeader } from "../directives/sortable.directive";
 
 @NgModule({
     imports: [
@@ -36,13 +40,21 @@ import { NgbdSortableHeader } from "../directives/sortable.directive";
         RouterOutlet,
         RouterModule.forRoot(routes),
         ServiceWorkerModule.register('ngsw-worker.js', {
-          enabled: environment.production,
-          // Register the ServiceWorker as soon as the application is stable
-          // or after 30 seconds (whichever comes first).
-          registrationStrategy: 'registerWhenStable:30000'
+            enabled: environment.production,
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
         }),
         FormsModule,
-        NgbModule
+        NgbModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (httpClient: HttpClient) => new TranslateHttpLoader(httpClient),
+                deps: [HttpClient]
+            }
+        }),
+        LocaleModule
     ],
     declarations: [
         AppComponent,
@@ -50,6 +62,7 @@ import { NgbdSortableHeader } from "../directives/sortable.directive";
         BannerComponent,
         HomeComponent,
         LoginComponent,
+        LogOutComponent,
         OrganizationContainer,
         OrganizationDeleteComponent,
         OrganizationDetailsComponent,

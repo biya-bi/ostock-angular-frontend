@@ -4,59 +4,69 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="title" [ngSwitch]="operation">
-                    <ng-container *ngSwitchCase="Operation.Create" i18n>Add a license</ng-container>
-                    <ng-container *ngSwitchCase="Operation.Update" i18n>Edit license</ng-container>
+                    <ng-container *ngSwitchCase="Operation.Create">{{ 'license.operations.add' | translate
+                        }}</ng-container>
+                    <ng-container *ngSwitchCase="Operation.Update">{{ 'license.operations.edit' | translate
+                        }}</ng-container>
                 </h1>
                 <button #closeButton type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                    attr.aria-label="{{'operations.close' | translate }}"></button>
             </div>
             <div class="modal-body">
                 <form *ngIf="formGroup" [formGroup]="formGroup">
                     <div class="container">
                         <div class="row m-2">
                             <div class="col text-end">
-                                <label for="productName" class="fw-bold" i18n>Product name:</label>
+                                <label for="productName" class="fw-bold">{{ 'license.labels.productName' | translate
+                                    }}</label>
                             </div>
                             <div class="col">
-                                <input type="text" id="productName" placeholder="Product name"
-                                    formControlName="productName" i18n-placeholder>
+                                <input type="text" id="productName"
+                                    placeholder="{{'license.attributes.productName' | translate }}"
+                                    formControlName="productName">
                             </div>
                         </div>
                         <div class="row m-2">
                             <div class="col text-end">
-                                <label for="description" class="fw-bold" i18n>Description:</label>
+                                <label for="description" class="fw-bold">{{ 'license.labels.description' | translate
+                                    }}</label>
                             </div>
                             <div class="col">
-                                <input type="text" id="description" placeholder="Description"
-                                    formControlName="description" i18n-placeholder>
+                                <input type="text" id="description"
+                                    placeholder="{{'license.attributes.description' | translate }}"
+                                    formControlName="description">
                             </div>
                         </div>
                         <div class="row m-2">
                             <div class="col text-end">
-                                <label for="comment" class="fw-bold" i18n>Comment:</label>
+                                <label for="comment" class="fw-bold">{{ 'license.labels.comment' | translate }}</label>
                             </div>
                             <div class="col">
-                                <input type="email" id="comment" placeholder="Comment" formControlName="comment"
-                                    i18n-placeholder>
+                                <input type="email" id="comment"
+                                    placeholder="{{'license.attributes.comment' | translate }}"
+                                    formControlName="comment">
                             </div>
                         </div>
                         <div class="row m-2">
                             <div class="col text-end">
-                                <label for="licenseType" class="fw-bold" i18n>License type:</label>
+                                <label for="licenseType" class="fw-bold">{{ 'license.labels.licenseType' | translate
+                                    }}</label>
                             </div>
                             <div class="col">
-                                <input type="text" id="licenseType" placeholder="License type"
-                                    formControlName="licenseType" i18n-placeholder>
+                                <input type="text" id="licenseType"
+                                    placeholder="{{'license.attributes.licenseType' | translate }}"
+                                    formControlName="licenseType">
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" i18n>Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'operations.cancel' |
+                    translate }}</button>
                 <button type="submit" class="btn btn-primary"
-                    (click)="manage.emit({entity:formGroup.value, organization:organization, operation:operation, closeElement:closeButton})"
-                    i18n>Save</button>
+                    (click)="manage.emit({entity:formGroup.value, organization:organization, operation:operation, closeElement:closeButton})">{{
+                    'operations.save' | translate }}</button>
             </div>
         </div>
     </div>

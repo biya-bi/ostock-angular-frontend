@@ -1,15 +1,15 @@
 <div class="container-lg bg-light">
     <div class="text-center pt-3">
-        <h2 i18n>You are not currently logged in</h2>
+        <h2>{{ 'authentication.messages.notLoggedIn' | translate }}</h2>
     </div>
     <div class="row align-items-center justify-content-center">
         <div class="col-8 col-lg-4 col-xl-3">
             <div class="card border-2 mt-3 mb-4">
-                <div class="card-header text-center lead text-muted" i18n>Login with</div>
+                <div class="card-header text-center lead text-muted">{{ 'authentication.loginWith' | translate }}</div>
                 <div class="card-body text-center">
                     <ul class="list-unstyled">
-                        <li><a class="btn btn-link p-0" (click)="login(OAuthProviderType.google)" i18n>Google</a></li>
-                        <li><a class="btn btn-link p-0" (click)="login(OAuthProviderType.keycloak)" i18n>Keycloak</a></li>
+                        <li><a class="btn btn-link p-0" (click)="login(OAuthProviderType.google)">{{ 'authentication.singleSignOns.google' | translate }}</a></li>
+                        <li><a class="btn btn-link p-0" (click)="login(OAuthProviderType.keycloak)">{{ 'authentication.singleSignOns.keycloak' | translate }}</a></li>
                     </ul>
                 </div>
             </div>

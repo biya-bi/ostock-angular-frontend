@@ -1,0 +1,89 @@
+{
+	"application": {
+		"name": "O-Stock",
+		"messages": {
+			"welcome": "Bienvenue sur O-Stock"
+		}
+	},
+	"locales": {
+		"en": "English",
+		"fr": "Français"
+	},
+	"authentication": {
+		"login": "Se connecter",
+		"loginWith": "Se connecter avec",
+		"singleSignOns": {
+			"google": "Google",
+			"keycloak": "Keycloak"
+		},
+		"messages": {
+			"notLoggedIn": "Vous n'êtes actuellement pas connecté(e)",
+			"loggedOut": "Vous avez été déconnecté !"
+		}
+	},
+	"general": {
+		"welcome": "Bienvenue {{userName}}",
+		"home": "Accueil",
+		"organizations": "Organisations",
+		"licenses": "Licences"
+	},
+	"data": {
+		"entriesPerPage": "entrées par page",
+		"loading": "Chargement en cours...",
+		"noRecord": "Aucun enregistrement à afficher"
+	},
+	"operations": {
+		"edit": "Modifier",
+		"delete": "Supprimer",
+		"details": "Détails",
+		"list": "Liste",
+		"save": "Enregistrer",
+		"cancel": "Annuler",
+		"close": "Fermer"
+	},
+	"organization": {
+		"operations": {
+			"add": "Ajouter une organisation",
+			"edit": "Modifier l'organisation",
+			"delete": "Supprimer l'organisation",
+			"details": "Détails de l'organisation"
+		},
+		"attributes": {
+			"name": "Nom",
+			"contactName": "Nom du contact",
+			"contactEmail": "Courriel du contact",
+			"contactPhone": "Téléphone du contact"
+		},
+		"labels": {
+			"name": "Nom :",
+			"contactName": "Nom du contact :",
+			"contactEmail": "Courriel du contact :",
+			"contactPhone": "Téléphone du contact :"
+		}
+	},
+	"license": {
+		"operations": {
+			"add": "Ajouter une licence",
+			"edit": "Modifier la licence",
+			"delete": "Supprimer la licence",
+			"details": "Détails de la licence"
+		},
+		"attributes": {
+			"productName": "Nom du produit",
+			"description": "Description",
+			"comment": "Commentaire",
+			"licenseType": "Type de licence"
+		},
+		"labels": {
+			"productName": "Nom du produit :",
+			"description": "Description :",
+			"comment": "Commentaire :",
+			"licenseType": "Type de licence :"
+		},
+		"messages": {
+			"notYetAdded": "Vous n'avez encore ajouté aucune licence.",
+			"available": "Ci-dessous la liste des licences disponibles :",
+			"delete": "Etes-vous sûr de vouloir supprimer cette licence?"
+		}
+	}
+}

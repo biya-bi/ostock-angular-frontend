@@ -1,18 +1,31 @@
-<h1 class="d-flex justify-content-center mb-4" i18n>Organizations</h1>
+<h1 class="d-flex justify-content-center mb-4">{{'general.organizations' | translate }}</h1>
 <div class="container d-flex justify-content-center">
     <div class="row justify-content-center">
         <div class="col">
             <div class="d-flex">
-                <a routerLink="/organizations/add" [queryParams]="{operation:Operation.Create}" i18n>Add an organization</a>
-                <span class="ms-3" *ngIf="busy" i18n>Loading...</span>
+                <a routerLink="/organizations/add" [queryParams]="{operation:Operation.Create}">{{
+                    'organization.operations.add' | translate }}</a>
+                <span class="ms-3" *ngIf="busy">{{ 'data.loading' | translate }}</span>
+            </div>
+            <div class="d-flex mt-2" *ngIf="entities?.length">
+                <select class="form-select form-select-sm w-auto" name="pageSize" [(ngModel)]="page.request.pageSize"
+                    (change)="search.emit(searchCriteria)">
+                    <option *ngFor="let count of [20,40,60]" [ngValue]="count">{{ count | number }}</option>
+                </select>
+                <span class="ms-2 pt-1">{{'data.entriesPerPage' | translate }}</span>
             </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col" sortable="name" (sort)="sort.emit($event)" i18n> Name </th>
-                        <th scope="col" sortable="contactName" (sort)="sort.emit($event)" i18n> Contact Name </th>
-                        <th scope="col" sortable="contactEmail" (sort)="sort.emit($event)" i18n> Contact Email </th>
-                        <th scope="col" sortable="contactPhone" (sort)="sort.emit($event)" i18n> Contact Phone </th>
+                        <th scope="col" sortable="name" (sort)="sort.emit($event)">{{
+                            'organization.attributes.name'
+                            | translate }}</th>
+                        <th scope="col" sortable="contactName" (sort)="sort.emit($event)">
+                            {{'organization.attributes.contactName' | translate }}</th>
+                        <th scope="col" sortable="contactEmail" (sort)="sort.emit($event)">
+                            {{'organization.attributes.contactEmail' | translate }}</th>
+                        <th scope="col" sortable="contactPhone" (sort)="sort.emit($event)">
+                            {{'organization.attributes.contactPhone' | translate }}</th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -51,15 +64,18 @@
                                     [term]="searchCriteria.contactPhone"></ngb-highlight></td>
                             <td>
                                 <a routerLink="/organizations/details"
-                                    [queryParams]="{uri:entity._links.self.href,operation:Operation.Read}" i18n>Details
+                                    [queryParams]="{uri:entity._links.self.href,operation:Operation.Read}">{{
+                                    'operations.details' | translate }}
                                 </a>
                             </td>
                             <td><a routerLink="/organizations/edit"
-                                    [queryParams]="{uri:entity._links.self.href,operation:Operation.Update}" i18n>Edit</a>
+                                    [queryParams]="{uri:entity._links.self.href,operation:Operation.Update}">{{
+                                    'operations.edit' | translate }}</a>
                             </td>
                             <td>
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#deleteOrganizationModal"
-                                    class="link-danger" (click)="selectedEntity=entity" i18n>Delete
+                                    class="link-danger" (click)="selectedEntity=entity">{{ 'operations.delete' |
+                                    translate }}
                                 </a>
                             </td>
                         </tr>
@@ -71,16 +87,9 @@
                 <ngb-pagination [collectionSize]="page.totalElements" [(page)]="page.request.pageNumber"
                     [pageSize]="page.request.pageSize" (pageChange)="pageChange.emit($event)">
                 </ngb-pagination>
-
-                <select class="form-select form-select-sm w-auto" name="pageSize" [(ngModel)]="page.request.pageSize"
-                    (change)="search.emit(searchCriteria)">
-                    <option [ngValue]="20" i18n>20 items per page</option>
-                    <option [ngValue]="40" i18n>40 items per page</option>
-                    <option [ngValue]="60" i18n>60 items per page</option>
-                </select>
             </div>
 
-            <p *ngIf="!entities?.length" i18n>No record to display</p>
+            <p *ngIf="!entities?.length">{{ 'data.noRecord' | translate }}</p>
 
             <app-organization-delete (manage)="manage.emit($event)" [entity]="selectedEntity"></app-organization-delete>
         </div>

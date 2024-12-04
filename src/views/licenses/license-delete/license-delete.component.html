@@ -3,17 +3,19 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="title" i18n>Delete license</h1>
+                <h1 class="modal-title fs-5" id="title">{{ 'license.operations.delete' | translate }}</h1>
                 <button #closeButton type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close" i18n-aria-label></button>
+                    attr.aria-label="{{'operations.close' | translate }}"></button>
             </div>
-            <div class="modal-body" i18n>
-                Are you sure you want to delete this license?
+            <div class="modal-body">
+                {{'license.messages.delete' | translate }}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" i18n>Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'operations.cancel' |
+                    translate }}</button>
                 <button type="button" class="btn btn-danger"
-                    (click)="manage.emit({entity:entity,organization:organization,closeElement:closeButton,operation:Operation.Delete})" i18n>Delete</button>
+                    (click)="manage.emit({entity:entity,organization:organization,closeElement:closeButton,operation:Operation.Delete})">{{
+                    'operations.delete' | translate }}</button>
             </div>
         </div>
     </div>

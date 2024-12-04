@@ -2,10 +2,11 @@
     <div class="row justify-content-center">
         <div class="col">
             <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal"
-                (click)="selectedLicense=null;operation=Operation.Create" i18n>Add a license</a>
+                (click)="selectedLicense=null;operation=Operation.Create">{{ 'license.operations.add' |
+                translate }}</a>
 
             <ng-container *ngIf="entities?.length; else emptyLicenseTemplate">
-                <p class="mt-2 fw-bold" i18n>Below is the list of available licenses:</p>
+                <p class="mt-2 fw-bold">{{ 'license.messages.available' | translate }}</p>
                 <div class="container">
                     <div class="row mt-1 mb-1" *ngFor="let entity of entities">
                         <div class="col">
@@ -14,18 +15,20 @@
                         </div>
                         <div class="col-auto">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal"
-                                (click)="selectedLicense=entity;operation=Operation.Update" i18n>Edit</a>
+                                (click)="selectedLicense=entity;operation=Operation.Update">{{ 'operations.edit' |
+                                translate }}</a>
                         </div>
                         <div class="col-auto">
                             <a href="#" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal"
-                                (click)="selectedLicense=entity;operation=Operation.Delete" i18n>Delete</a>
+                                (click)="selectedLicense=entity;operation=Operation.Delete">{{ 'operations.delete' |
+                                translate }}</a>
                         </div>
                     </div>
                 </div>
             </ng-container>
 
             <ng-template #emptyLicenseTemplate>
-                <p i18n>You haven't added any license yet.</p>
+                <p>{{ 'license.messages.notYetAdded' | translate }}</p>
             </ng-template>
         </div>
     </div>
