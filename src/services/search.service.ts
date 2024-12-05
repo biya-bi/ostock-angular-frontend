@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SearchCriteria } from '../criteria/search-criteria';
-import { Page } from '../models/page';
 import { PageRequest } from '../models/page-request';
+import { Pagination } from '../models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class SearchService {
     return clone;
   }
 
-  parsePage(page: Page): PageRequest {
+  parsePage(page: Pagination): PageRequest {
     let pageNumber = 0;
     let pageSize = 20;
     if (page?.request?.pageNumber) {

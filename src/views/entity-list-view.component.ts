@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, QueryList, ViewChildren } from '@angular/core';
-import { EntityEvent } from '../events/entity.event';
 import { SearchCriteria } from '../criteria/search-criteria';
-import { EntityComponent } from './entity.component';
-import { Page } from '../models/page';
 import { NgbdSortableHeader } from '../directives/sortable.directive';
+import { EntityEvent } from '../events/entity.event';
 import { SortEvent } from '../events/sort.event';
+import { Pagination } from '../models/pagination';
+import { EntityComponent } from './entity.component';
 
 @Component({
   template: '',
@@ -14,7 +14,7 @@ export abstract class EntityListViewComponent<T, U extends EntityEvent<T>, V ext
   private _entities: T[];
   selectedEntity: T;
   searchCriteria: V;
-  page: Page;
+  pagination: Pagination;
 
   search: EventEmitter<V> = new EventEmitter<V>();
   pageChange: EventEmitter<number> = new EventEmitter<number>();

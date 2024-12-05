@@ -8,7 +8,9 @@ import { Page } from '../dtos/page';
 import { EntityEvent } from '../events/entity.event';
 import { SortEvent } from '../events/sort.event';
 import { Operation } from '../models/operation';
+import { PageRange } from '../models/page-range';
 import { PageRequest } from '../models/page-request';
+import { Pagination } from '../models/pagination';
 import { SearchService } from '../services/search.service';
 import { SortingService } from '../services/sorting.service';
 import { BaseComponent } from './base.component';
@@ -30,7 +32,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
     onActivate(component: ViewComponent) {
         if (component instanceof EntityListViewComponent) {
             component.searchCriteria = {};
-            component.page = { request: {} };
+            component.pagination = { request: {} };
             this.readEntities(component);
             this.subscribeToEvents(component);
         } else if (component instanceof EntityViewComponent) {
@@ -73,7 +75,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
 
     private readEntities(component: EntityListViewComponent<T, U, V>): void {
         const searchCriteria = this.searchService.parseCriteria(component.searchCriteria);
-        const pageRequest = this.searchService.parsePage(component.page);
+        const pageRequest = this.searchService.parsePage(component.pagination);
 
         const obs$ = this.getEntities(searchCriteria, pageRequest);
 
@@ -126,16 +128,8 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
 
     private onRead(component: EntityListViewComponent<T, U, V>, page: Page<W>): void {
         component.entities = this.retrieveEntities(page);
-        component.page.request.pageNumber = page.number + 1;
-        component.page.request.pageSize = page.size;
-        component.page.totalPages = page.totalPages;
-        component.page.numberOfElements = page.numberOfElements;
-        component.page.totalElements = page.totalElements;
-        const range = this.getPaginationRange(page);
-        if (range) {
-            component.page.from = range.from;
-            component.page.to = range.to;
-        }
+        component.pagination = this.getPagination(page);
+
         const sortEvent = this.getSortEvent(component);
         if (sortEvent) {
             this.onSort(component, sortEvent);
@@ -167,13 +161,24 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         return null;
     }
 
-    private getPaginationRange(page: Page<W>): { from: number, to: number } {
+    private getPagination(page: Page<W>): Pagination {
+        return {
+            request: {
+                pageNumber: page.number + 1,
+                pageSize: page.size
+            },
+            totalElements: page.totalElements,
+            range: this.getPageRange(page)
+        };
+    }
+
+    private getPageRange(page: Page<W>): PageRange {
         const { number, size, totalElements } = page;
         if (!totalElements) {
             return null;
         }
-        const from = number * size + 1
-        const to = Math.min(from + size - 1, totalElements);
-        return { from, to };
+        const start = number * size + 1
+        const end = Math.min(start + size - 1, totalElements);
+        return { start, end };
     }
 }

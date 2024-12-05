@@ -8,8 +8,8 @@
                 <span class="ms-3" *ngIf="busy">{{ 'data.loading' | translate }}</span>
             </div>
             <div class="d-flex mt-2" *ngIf="entities?.length">
-                <select class="form-select form-select-sm w-auto" name="pageSize" [(ngModel)]="page.request.pageSize"
-                    (change)="search.emit(searchCriteria)">
+                <select class="form-select form-select-sm w-auto" name="pageSize"
+                    [(ngModel)]="pagination.request.pageSize" (change)="search.emit(searchCriteria)">
                     <option *ngFor="let count of [20,40,60]" [ngValue]="count">{{ count | number }}</option>
                 </select>
                 <span class="ms-2 pt-1">{{'data.entriesPerPage' | translate }}</span>
@@ -84,14 +84,17 @@
             </table>
 
             <div class="d-flex justify-content-between p-2" *ngIf="entities?.length">
-                <ng-container *ngIf="page.totalElements > 1; else oneEntryTemplate">
-                    {{ 'data.pagination.range.plural' | translate: {from:page.from, to:page.to, total: page.totalElements} }}
+                <ng-container *ngIf="pagination.totalElements > 1; else oneEntryTemplate">
+                    {{ 'data.pagination.range.plural' | translate: {start:pagination.range.start,
+                    end:pagination.range.end, total: pagination.totalElements} }}
                 </ng-container>
                 <ng-template #oneEntryTemplate>
-                    {{ 'data.pagination.range.singular' | translate: {from:page.from, to:page.to, total: page.totalElements} }}
+                    {{ 'data.pagination.range.singular' | translate: {start:pagination.range.start,
+                    end:pagination.range.end, total: pagination.totalElements} }}
                 </ng-template>
-                <ngb-pagination [boundaryLinks]="true" [collectionSize]="page.totalElements" [(page)]="page.request.pageNumber"
-                    [pageSize]="page.request.pageSize" (pageChange)="pageChange.emit($event)">
+                <ngb-pagination [boundaryLinks]="true" [collectionSize]="pagination.totalElements"
+                    [(page)]="pagination.request.pageNumber" [pageSize]="pagination.request.pageSize"
+                    (pageChange)="pageChange.emit($event)">
                 </ngb-pagination>
             </div>
 
