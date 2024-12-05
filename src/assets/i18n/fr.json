@@ -30,7 +30,13 @@
 	"data": {
 		"entriesPerPage": "entrées par page",
 		"loading": "Chargement en cours...",
-		"noRecord": "Aucun enregistrement à afficher"
+		"noRecord": "Aucun enregistrement à afficher",
+		"pagination": {
+			"range": {
+				"singular": "Affichage de {{from}} à {{to}} sur {{total}} entrée",
+				"plural": "Affichage de {{from}} à {{to}} sur {{total}} entrées"
+			}
+		}
 	},
 	"operations": {
 		"edit": "Modifier",

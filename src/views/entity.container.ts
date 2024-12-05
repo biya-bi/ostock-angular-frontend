@@ -131,7 +131,11 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         component.page.totalPages = page.totalPages;
         component.page.numberOfElements = page.numberOfElements;
         component.page.totalElements = page.totalElements;
-
+        const range = this.getPaginationRange(page);
+        if (range) {
+            component.page.from = range.from;
+            component.page.to = range.to;
+        }
         const sortEvent = this.getSortEvent(component);
         if (sortEvent) {
             this.onSort(component, sortEvent);
@@ -161,5 +165,15 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
             }
         }
         return null;
+    }
+
+    private getPaginationRange(page: Page<W>): { from: number, to: number } {
+        const { number, size, totalElements } = page;
+        if (!totalElements) {
+            return null;
+        }
+        const from = number * size + 1
+        const to = Math.min(from + size - 1, totalElements);
+        return { from, to };
     }
 }

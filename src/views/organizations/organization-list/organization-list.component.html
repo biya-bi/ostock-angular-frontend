@@ -84,7 +84,13 @@
             </table>
 
             <div class="d-flex justify-content-between p-2" *ngIf="entities?.length">
-                <ngb-pagination [collectionSize]="page.totalElements" [(page)]="page.request.pageNumber"
+                <ng-container *ngIf="page.totalElements > 1; else oneEntryTemplate">
+                    {{ 'data.pagination.range.plural' | translate: {from:page.from, to:page.to, total: page.totalElements} }}
+                </ng-container>
+                <ng-template #oneEntryTemplate>
+                    {{ 'data.pagination.range.singular' | translate: {from:page.from, to:page.to, total: page.totalElements} }}
+                </ng-template>
+                <ngb-pagination [boundaryLinks]="true" [collectionSize]="page.totalElements" [(page)]="page.request.pageNumber"
                     [pageSize]="page.request.pageSize" (pageChange)="pageChange.emit($event)">
                 </ngb-pagination>
             </div>

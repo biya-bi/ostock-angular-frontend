@@ -30,7 +30,13 @@
 	"data": {
 		"entriesPerPage": "entries per page",
 		"loading": "Loading...",
-		"noRecord": "No record to display"
+		"noRecord": "No record to display",
+		"pagination": {
+			"range": {
+				"singular": "Showing {{from}} to {{to}} of {{total}} entry",
+				"plural": "Showing {{from}} to {{to}} of {{total}} entries"
+			}
+		}
 	},
 	"operations": {
 		"edit": "Edit",

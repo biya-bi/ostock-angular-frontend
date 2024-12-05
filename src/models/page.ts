@@ -5,4 +5,6 @@ export interface Page {
     totalPages?: number;
     numberOfElements?: number;
     totalElements?: number;
+    from?: number;
+    to?: number;
 }
