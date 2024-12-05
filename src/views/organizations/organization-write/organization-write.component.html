@@ -1,4 +1,4 @@
-<form *ngIf="formGroup" [formGroup]="formGroup">
+<form *ngIf="formGroup" [formGroup]="formGroup" (ngSubmit)="manage.emit({entity:formGroup.value,operation:operation})">
     <div ngbAccordion>
         <div [collapsed]="false" ngbAccordionItem>
             <h2 ngbAccordionHeader>
@@ -60,9 +60,7 @@
                         </div>
                     </div>
                     <div class="mt-4 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary"
-                            (click)="manage.emit({entity:formGroup.value,operation:operation})">{{ 'operations.save'
-                            | translate }}</button>
+                        <button type="submit" class="btn btn-primary">{{ 'operations.save' | translate }}</button>
                         <span class="m-2">|</span>
                         <a routerLink="/organizations" class="btn btn-link ps-0">{{ 'operations.list' |
                             translate }}</a>

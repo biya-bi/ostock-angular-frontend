@@ -1,19 +1,20 @@
-<div class="modal fade" id="writeLicenseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="title" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="title" [ngSwitch]="operation">
-                    <ng-container *ngSwitchCase="Operation.Create">{{ 'license.operations.add' | translate
-                        }}</ng-container>
-                    <ng-container *ngSwitchCase="Operation.Update">{{ 'license.operations.edit' | translate
-                        }}</ng-container>
-                </h1>
-                <button #closeButton type="button" class="btn-close" data-bs-dismiss="modal"
-                    attr.aria-label="{{'operations.close' | translate }}"></button>
-            </div>
-            <div class="modal-body">
-                <form *ngIf="formGroup" [formGroup]="formGroup">
+<form *ngIf="formGroup" [formGroup]="formGroup"
+    (ngSubmit)="manage.emit({entity:formGroup.value, organization:organization, operation:operation, closeElement:closeButton})">
+    <div class="modal fade" id="writeLicenseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="title" [ngSwitch]="operation">
+                        <ng-container *ngSwitchCase="Operation.Create">{{ 'license.operations.add' | translate
+                            }}</ng-container>
+                        <ng-container *ngSwitchCase="Operation.Update">{{ 'license.operations.edit' | translate
+                            }}</ng-container>
+                    </h1>
+                    <button #closeButton type="button" class="btn-close" data-bs-dismiss="modal"
+                        attr.aria-label="{{'operations.close' | translate }}"></button>
+                </div>
+                <div class="modal-body">
                     <div class="container">
                         <div class="row m-2">
                             <div class="col text-end">
@@ -59,15 +60,13 @@
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'operations.cancel' |
-                    translate }}</button>
-                <button type="submit" class="btn btn-primary"
-                    (click)="manage.emit({entity:formGroup.value, organization:organization, operation:operation, closeElement:closeButton})">{{
-                    'operations.save' | translate }}</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'operations.cancel' |
+                        translate }}</button>
+                    <button type="submit" class="btn btn-primary">{{ 'operations.save' | translate }}</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
