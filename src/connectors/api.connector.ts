@@ -55,11 +55,6 @@ export class ApiConnector {
     return this.httpClient.delete<void>(url, this.getOptions());
   }
 
-  // TODO: Deprecate this method in favor of delete
-  deleteOrganization(url: string): Observable<void> {
-    return this.httpClient.delete<void>(url, this.getOptions());
-  }
-
   createLicense(license: License, uri: string): Observable<License> {
     return this.httpClient.post<License>(uri, license, this.getOptions());
   }

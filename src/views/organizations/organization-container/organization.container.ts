@@ -42,7 +42,7 @@ export class OrganizationContainer extends EntityContainer<OrganizationLinks, Or
     }
 
     protected override deleteEntity(uri: string): Observable<void> {
-        return this.apiConnector.deleteOrganization(uri);
+        return this.apiConnector.delete(uri);
     }
 
     protected override getEntity(uri: string): Observable<Organization> {
