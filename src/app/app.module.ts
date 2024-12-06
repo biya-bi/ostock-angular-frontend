@@ -29,6 +29,7 @@ import { OrganizationListComponent } from "../views/organizations/organization-l
 import { OrganizationWriteComponent } from "../views/organizations/organization-write/organization-write.component";
 import { AppComponent } from "./app.component";
 import { routes } from "./app.routes";
+import { NavigationModule } from "../modules/navigation/navigation.module";
 
 @NgModule({
     imports: [
@@ -54,7 +55,8 @@ import { routes } from "./app.routes";
                 deps: [HttpClient]
             }
         }),
-        LocaleModule
+        LocaleModule,
+		NavigationModule,
     ],
     declarations: [
         AppComponent,

@@ -1,7 +1,20 @@
-<app-banner></app-banner>
-<app-notification></app-notification>
-
 <div class="container">
-  <app-locale-container></app-locale-container>
-  <router-outlet></router-outlet>
+	<div class="row">
+		<div class="d-flex justify-content-between p-2">
+			<span class="fw-bold text-secondary">{{ 'application.name' | translate }}</span>
+			<div class="d-flex">
+				<app-locale-container />
+				<app-banner />
+			</div>
+		</div>
+		<app-notification />
+	</div>
+	<div class="row">
+		<div class="col-auto">
+			<app-navigation />
+		</div>
+		<div class="col">
+			<router-outlet />
+		</div>
+	</div>
 </div>
