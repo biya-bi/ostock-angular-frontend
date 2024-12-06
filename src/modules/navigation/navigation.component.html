@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-md" *ngIf="{userProfile: userProfile$ | async, 
+        isLoginPage: isLoginPage$ | async} as data">
+    <div class="container-xxl">
+        <!-- Navigation bar links -->
+        <div class="collapse navbar-collapse justify-content-end align-center" id="main-nav" *ngIf="!data.isLoginPage">
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item">
+                    <a routerLink="/home" class="nav-link d-flex">
+                        <em class="material-icons">home</em>
+                        <span class="">{{ 'general.home'| translate }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+					<a routerLink="/organizations" class="nav-link d-flex">
+						<em class="material-icons">groupes</em>
+						<span class="ms-1">{{ 'general.organizations' | translate }}</span>
+					</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
