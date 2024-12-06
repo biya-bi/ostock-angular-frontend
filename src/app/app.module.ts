@@ -11,7 +11,7 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { OAuthModule } from "angular-oauth2-oidc";
 import { NgbdSortableHeader } from "../directives/sortable.directive";
 import { environment } from "../environments/environment";
-import { LocaleModule } from "../modules/locales/locale.module";
+import { LocaleModule } from "../modules/locale/locale.module";
 import { AuthenticationComponent } from "../views/authentication/authentication.component";
 import { BannerComponent } from "../views/banner/banner.component";
 import { HomeComponent } from "../views/home/home.component";
