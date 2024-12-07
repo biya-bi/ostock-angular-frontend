@@ -12,8 +12,7 @@ import { OAuthModule } from "angular-oauth2-oidc";
 import { NgbdSortableHeader } from "../directives/sortable.directive";
 import { environment } from "../environments/environment";
 import { LocaleModule } from "../modules/locale/locale.module";
-import { AuthenticationToggleComponent } from "../modules/authentication/authentication-toggle/authentication-toggle.component";
-import { AuthenticationContainer } from "../modules/authentication/authentication-container/authentication.container";
+import { NavigationModule } from "../modules/navigation/navigation.module";
 import { HomeComponent } from "../views/home/home.component";
 import { LicenseDeleteComponent } from "../views/licenses/license-delete/license-delete.component";
 import { LicenseDetailsComponent } from "../views/licenses/license-details/license-details.component";
@@ -29,7 +28,7 @@ import { OrganizationListComponent } from "../views/organizations/organization-l
 import { OrganizationWriteComponent } from "../views/organizations/organization-write/organization-write.component";
 import { AppComponent } from "./app.component";
 import { routes } from "./app.routes";
-import { NavigationModule } from "../modules/navigation/navigation.module";
+import { AuthenticationModule } from "../modules/authentication/authentication.module";
 
 @NgModule({
     imports: [
@@ -57,11 +56,10 @@ import { NavigationModule } from "../modules/navigation/navigation.module";
         }),
         LocaleModule,
 		NavigationModule,
+		AuthenticationModule,
     ],
     declarations: [
         AppComponent,
-        AuthenticationToggleComponent,
-        AuthenticationContainer,
         HomeComponent,
         LoginComponent,
         LogOutComponent,
