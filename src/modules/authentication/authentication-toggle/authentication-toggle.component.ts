@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationAwareComponent } from '../../../modules/authentication-aware/authentication-aware.component';
+import { AuthenticationAwareComponent } from '../../authentication-aware/authentication-aware.component';
 
 @Component({
 	selector: 'app-authentication-toggle',

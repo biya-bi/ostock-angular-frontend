@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationManager } from '../../managers/authentication.manager';
-import { AuthenticationAwareContainer } from '../../modules/authentication-aware/authentication-aware.container';
+import { AuthenticationManager } from '../../../managers/authentication.manager';
+import { AuthenticationAwareContainer } from '../../authentication-aware/authentication-aware.container';
 
 @Component({
 	selector: 'app-authentication-container',
