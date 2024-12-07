@@ -13,7 +13,7 @@ import { NgbdSortableHeader } from "../directives/sortable.directive";
 import { environment } from "../environments/environment";
 import { LocaleModule } from "../modules/locale/locale.module";
 import { AuthenticationToggleComponent } from "../views/authentication/authentication-toggle/authentication-toggle.component";
-import { BannerComponent } from "../views/banner/banner.component";
+import { AuthenticationContainer } from "../views/authentication-container/authentication.container";
 import { HomeComponent } from "../views/home/home.component";
 import { LicenseDeleteComponent } from "../views/licenses/license-delete/license-delete.component";
 import { LicenseDetailsComponent } from "../views/licenses/license-details/license-details.component";
@@ -61,7 +61,7 @@ import { NavigationModule } from "../modules/navigation/navigation.module";
     declarations: [
         AppComponent,
         AuthenticationToggleComponent,
-        BannerComponent,
+        AuthenticationContainer,
         HomeComponent,
         LoginComponent,
         LogOutComponent,

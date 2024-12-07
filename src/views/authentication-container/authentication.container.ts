@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter, map } from 'rxjs';
+import { Router } from '@angular/router';
 import { AuthenticationManager } from '../../managers/authentication.manager';
-import { AuthenticationAwareComponent } from '../../modules/authentication-aware/authentication-aware.component';
 import { AuthenticationAwareContainer } from '../../modules/authentication-aware/authentication-aware.container';
 
 @Component({
-	selector: 'app-banner',
-	templateUrl: './banner.component.html',
-	styleUrl: './banner.component.css'
+	selector: 'app-authentication-container',
+	templateUrl: './authentication.container.html',
 })
-export class BannerComponent extends AuthenticationAwareContainer {
+export class AuthenticationContainer extends AuthenticationAwareContainer {
 	constructor(
 		protected override readonly authenticationManager: AuthenticationManager,
 		protected override readonly router: Router) {
