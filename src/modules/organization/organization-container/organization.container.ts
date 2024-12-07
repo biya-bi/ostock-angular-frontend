@@ -14,7 +14,7 @@ import { Operation } from '../../../models/operation';
 import { PageRequest } from '../../../models/page-request';
 import { SearchService } from '../../../services/search.service';
 import { SortingService } from '../../../services/sorting.service';
-import { EntityContainer } from '../../entity.container';
+import { EntityContainer } from '../../../views/entity.container';
 import { OrganizationViewComponent } from '../organization-view.component';
 
 @Component({

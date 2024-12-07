@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { OrganizationSearchCriteria } from "../../../criteria/organization-search-criteria";
 import { Organization } from "../../../dtos/organization";
 import { OrganizationEvent } from "../../../events/organization.event";
-import { EntityListViewComponent } from "../../entity-list-view.component";
+import { EntityListViewComponent } from "../../../views/entity-list-view.component";
 
 @Component({
     selector: 'app-organization-list',
