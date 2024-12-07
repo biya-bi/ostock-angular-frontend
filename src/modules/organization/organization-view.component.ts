@@ -3,7 +3,7 @@ import { License } from '../../dtos/license';
 import { Organization } from '../../dtos/organization';
 import { OrganizationEvent } from '../../events/organization.event';
 import { EntityViewComponent } from '../../views/entity-view.component';
-import { LicenseListComponent } from '../../views/licenses/license-list/license-list.component';
+import { LicenseListComponent } from '../license/license-list/license-list.component';
 import { LicenseEvent } from '../../events/license.event';
 
 @Component({

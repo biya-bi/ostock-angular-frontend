@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { License } from '../../../dtos/license';
 import { Operation } from '../../../models/operation';
 import { Organization } from '../../../dtos/organization';
-import { EntityListViewComponent } from '../../entity-list-view.component';
+import { EntityListViewComponent } from '../../../views/entity-list-view.component';
 import { LicenseEvent } from '../../../events/license.event';
 import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
 

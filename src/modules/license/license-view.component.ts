@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { License } from '../../dtos/license';
 import { Organization } from '../../dtos/organization';
-import { EntityViewComponent } from '../entity-view.component';
+import { EntityViewComponent } from '../../views/entity-view.component';
 import { LicenseEvent } from '../../events/license.event';
 
 @Component({
