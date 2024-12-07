@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, map, takeUntil } from 'rxjs';
-import { AuthenticationManager } from '../../managers/authentication.manager';
-import { BaseComponent } from '../../views/base.component';
+import { AuthenticationManager } from '../../../managers/authentication.manager';
+import { BaseComponent } from '../../../views/base.component';
 
 @Component({
-	selector: 'app-navigation',
-	templateUrl: './navigation.component.html',
-	styleUrl: './navigation.component.css'
+	selector: 'app-navigation-menu',
+	templateUrl: './navigation-menu.component.html',
+	styleUrl: './navigation-menu.component.css'
 })
-export class NavigationComponent extends BaseComponent {
+export class NavigationMenuComponent extends BaseComponent {
 
 	private readonly url$ = this.router.events.pipe(takeUntil(this.destroy$), filter(e => e instanceof NavigationEnd), map((e: NavigationEnd) => e.url));
 

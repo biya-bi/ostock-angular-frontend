@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { NavigationComponent } from './navigation.component';
+import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
 
 @NgModule({
 	declarations: [
-		NavigationComponent
+		NavigationMenuComponent
 	],
 	imports: [
 		CommonModule,
@@ -16,7 +16,7 @@ import { NavigationComponent } from './navigation.component';
         NgbModule,
 	],
 	exports: [
-		NavigationComponent,
+		NavigationMenuComponent,
 	],
 })
 export class NavigationModule { }
