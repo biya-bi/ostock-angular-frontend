@@ -6,7 +6,7 @@
 		<span class="material-icons">menu</span>
 	</button>
 	<ng-container class="" *ngIf="!data.isLoginPage">
-		<app-authentication class="d-md-none" [userProfile]="data.userProfile" />
-		<app-authentication class="ms-2 d-none d-md-inline" [userProfile]="data.userProfile" />
+		<app-authentication-toggle class="d-md-none" [userProfile]="data.userProfile" />
+		<app-authentication-toggle class="ms-2 d-none d-md-inline" [userProfile]="data.userProfile" />
 	</ng-container>
 </div>
