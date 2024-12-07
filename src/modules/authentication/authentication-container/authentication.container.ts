@@ -13,5 +13,4 @@ export class AuthenticationContainer extends AuthenticationAwareContainer {
 		protected override readonly router: Router) {
 		super(authenticationManager, router);
 	}
-
 }
