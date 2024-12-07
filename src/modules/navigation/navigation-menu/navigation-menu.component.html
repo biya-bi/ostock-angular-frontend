@@ -1,8 +1,7 @@
-<nav class="navbar navbar-expand-md" *ngIf="{userProfile: userProfile$ | async, 
-        isLoginPage: isLoginPage$ | async} as data">
+<nav class="navbar navbar-expand-md">
     <div class="container-xxl">
         <!-- Navigation bar links -->
-        <div class="collapse navbar-collapse justify-content-end align-center" id="main-nav" *ngIf="!data.isLoginPage">
+        <div class="collapse navbar-collapse justify-content-end align-center" id="main-nav" *ngIf="!isLoginPage">
             <ul class="navbar-nav flex-column">
                 <li class="nav-item">
                     <a routerLink="/home" class="nav-link d-flex">

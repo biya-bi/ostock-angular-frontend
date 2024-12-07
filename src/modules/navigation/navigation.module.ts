@@ -4,10 +4,12 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
+import { NavigationContainer } from './navigation-container/navigation.container';
 
 @NgModule({
 	declarations: [
-		NavigationMenuComponent
+		NavigationMenuComponent,
+		NavigationContainer
 	],
 	imports: [
 		CommonModule,
@@ -16,7 +18,7 @@ import { NavigationMenuComponent } from './navigation-menu/navigation-menu.compo
         NgbModule,
 	],
 	exports: [
-		NavigationMenuComponent,
+		NavigationContainer,
 	],
 })
 export class NavigationModule { }
