@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationManager } from '../../managers/authentication.manager';
+import { AuthenticationManager } from '../../../managers/authentication.manager';
 
 @Component({
   selector: 'app-logout',

@@ -15,8 +15,6 @@ import { LocaleModule } from "../modules/locale/locale.module";
 import { NavigationModule } from "../modules/navigation/navigation.module";
 import { OrganizationModule } from "../modules/organization/organization.module";
 import { HomeComponent } from "../views/home/home.component";
-import { LoginComponent } from "../views/login/login.component";
-import { LogOutComponent } from "../views/logout/logout.component";
 import { NotificationContainer } from "../views/notification/notification.container";
 import { AppComponent } from "./app.component";
 import { routes } from "./app.routes";
@@ -53,8 +51,6 @@ import { routes } from "./app.routes";
     declarations: [
         AppComponent,
         HomeComponent,
-        LoginComponent,
-        LogOutComponent,
         NotificationContainer,
     ],
     bootstrap: [
