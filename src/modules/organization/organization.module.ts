@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateModule } from "@ngx-translate/core";
-import { NgbdSortableHeader } from "../../directives/sortable.directive";
+import { NgbdSortableHeader } from "../sort/sortable.directive";
 import { OrganizationContainer } from "./organization-container/organization.container";
 import { OrganizationDeleteComponent } from "./organization-delete/organization-delete.component";
 import { OrganizationDetailsComponent } from "./organization-details/organization-details.component";
@@ -12,6 +12,7 @@ import { OrganizationListComponent } from "./organization-list/organization-list
 import { OrganizationWriteComponent } from "./organization-write/organization-write.component";
 import { ORGANIZATION_ROUTES } from "./organization.routes";
 import { LicenseModule } from "../license/license.module";
+import { SortModule } from "../sort/sort.module";
 
 @NgModule({
 	imports: [
@@ -22,6 +23,7 @@ import { LicenseModule } from "../license/license.module";
 		NgbModule,
 		RouterModule.forChild(ORGANIZATION_ROUTES),
 		LicenseModule,
+		SortModule,
 	],
 	declarations: [
 		OrganizationContainer,
@@ -29,7 +31,6 @@ import { LicenseModule } from "../license/license.module";
 		OrganizationDetailsComponent,
 		OrganizationListComponent,
 		OrganizationWriteComponent,
-		NgbdSortableHeader,
 	],
 	exports: [
 		OrganizationContainer,
