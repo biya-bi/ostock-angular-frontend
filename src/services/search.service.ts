@@ -22,14 +22,14 @@ export class SearchService {
     return clone;
   }
 
-  parsePage(page: Pagination): PageRequest {
+  parsePagination(pagination: Pagination): PageRequest {
     let pageNumber = 0;
     let pageSize = 20;
-    if (page?.request?.pageNumber) {
-      pageNumber = page.request.pageNumber - 1;
+    if (pagination?.request?.pageNumber) {
+      pageNumber = pagination.request.pageNumber - 1;
     }
-    if (page?.request?.pageSize) {
-      pageSize = page.request.pageSize;
+    if (pagination?.request?.pageSize) {
+      pageSize = pagination.request.pageSize;
     }
     return { pageNumber, pageSize };
   }

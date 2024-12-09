@@ -75,7 +75,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
 
     private readEntities(component: EntityListViewComponent<T, U, V>): void {
         const searchCriteria = this.searchService.parseCriteria(component.searchCriteria);
-        const pageRequest = this.searchService.parsePage(component.pagination);
+        const pageRequest = this.searchService.parsePagination(component.pagination);
 
         const obs$ = this.getEntities(searchCriteria, pageRequest);
 
