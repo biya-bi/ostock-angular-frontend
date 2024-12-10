@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -20,10 +20,17 @@ import { AppComponent } from "./app.component";
 import { routes } from "./app.routes";
 
 @NgModule({
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        NotificationContainer,
+    ],
+    bootstrap: [
+        AppComponent
+    ],
     imports: [
         BrowserModule,
         CommonModule,
-        HttpClientModule,
         OAuthModule.forRoot(),
         ReactiveFormsModule,
         RouterOutlet,
@@ -44,17 +51,10 @@ import { routes } from "./app.routes";
             }
         }),
         LocaleModule,
-		NavigationModule,
-		AuthenticationModule,
-		OrganizationModule,
+        NavigationModule,
+        AuthenticationModule,
+        OrganizationModule,
     ],
-    declarations: [
-        AppComponent,
-        HomeComponent,
-        NotificationContainer,
-    ],
-    bootstrap: [
-        AppComponent
-    ]
+    providers: [provideHttpClient(withInterceptorsFromDi())]
 })
 export class AppModule { }
