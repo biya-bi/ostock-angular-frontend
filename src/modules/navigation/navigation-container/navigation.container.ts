@@ -4,8 +4,9 @@ import { AuthenticationManager } from "../../../managers/authentication.manager"
 import { Router } from "@angular/router";
 
 @Component({
-	selector: 'app-navigation-container',
-	templateUrl: './navigation.container.html'
+    selector: 'app-navigation-container',
+    templateUrl: './navigation.container.html',
+    standalone: false
 })
 export class NavigationContainer extends AuthenticationAwareContainer {
 	constructor(

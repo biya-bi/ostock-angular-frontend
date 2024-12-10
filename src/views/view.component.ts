@@ -4,6 +4,7 @@ import { BaseComponent } from './base.component';
 
 @Component({
     template: '',
+    standalone: false
 })
 export abstract class ViewComponent extends BaseComponent {
 

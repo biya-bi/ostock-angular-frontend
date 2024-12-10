@@ -6,7 +6,8 @@ import { BaseComponent } from '../../../views/base.component';
 @Component({
     selector: 'app-locale-container',
     templateUrl: './locale.container.html',
-    styleUrl: './locale.container.css'
+    styleUrl: './locale.container.css',
+    standalone: false
 })
 export class LocaleContainer extends BaseComponent {
     private readonly selectedLocaleSubject = new ReplaySubject<string>(1);

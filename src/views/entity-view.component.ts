@@ -4,7 +4,8 @@ import { Operation } from '../models/operation';
 import { EntityComponent } from './entity.component';
 
 @Component({
-  template: '',
+    template: '',
+    standalone: false
 })
 export abstract class EntityViewComponent<T, U extends EntityEvent<T>> extends EntityComponent<T, U> {
   @Input() operation: Operation;

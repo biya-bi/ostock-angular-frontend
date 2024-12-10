@@ -3,8 +3,9 @@ import { Subscription } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
 
 @Component({
-  selector: 'app-notification',
-  template: ''
+    selector: 'app-notification',
+    template: '',
+    standalone: false
 })
 export class NotificationContainer {
 

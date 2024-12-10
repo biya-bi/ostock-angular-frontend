@@ -5,7 +5,8 @@ import { EntityViewComponent } from '../../views/entity-view.component';
 import { LicenseEvent } from '../../events/license.event';
 
 @Component({
-  template: '',
+    template: '',
+    standalone: false
 })
 export abstract class LicenseViewComponent extends EntityViewComponent<License, LicenseEvent> {
   @Input() organization: Organization;

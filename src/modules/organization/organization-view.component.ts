@@ -7,7 +7,8 @@ import { LicenseListComponent } from '../license/license-list/license-list.compo
 import { LicenseEvent } from '../../events/license.event';
 
 @Component({
-  template: '',
+    template: '',
+    standalone: false
 })
 export abstract class OrganizationViewComponent extends EntityViewComponent<Organization, OrganizationEvent> {
   @Input() licenses: License[];

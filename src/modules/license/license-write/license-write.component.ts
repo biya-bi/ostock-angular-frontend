@@ -6,7 +6,8 @@ import { LicenseViewComponent } from '../license-view.component';
 @Component({
     selector: 'app-license-write',
     templateUrl: './license-write.component.html',
-    styleUrl: './license-write.component.css'
+    styleUrl: './license-write.component.css',
+    standalone: false
 })
 export class LicenseWriteComponent extends LicenseViewComponent implements OnInit {
     formGroup: FormGroup;

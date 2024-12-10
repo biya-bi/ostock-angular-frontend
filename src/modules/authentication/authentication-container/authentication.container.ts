@@ -4,8 +4,9 @@ import { AuthenticationManager } from '../../../managers/authentication.manager'
 import { AuthenticationAwareContainer } from '../../authentication-aware/authentication-aware.container';
 
 @Component({
-	selector: 'app-authentication-container',
-	templateUrl: './authentication.container.html',
+    selector: 'app-authentication-container',
+    templateUrl: './authentication.container.html',
+    standalone: false
 })
 export class AuthenticationContainer extends AuthenticationAwareContainer {
 	constructor(

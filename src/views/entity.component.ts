@@ -4,7 +4,8 @@ import { ViewComponent } from './view.component';
 import { Operation } from '../models/operation';
 
 @Component({
-  template: '',
+    template: '',
+    standalone: false
 })
 export abstract class EntityComponent<T, U extends EntityEvent<T>> extends ViewComponent {
   @Output() manage = new EventEmitter<U>();

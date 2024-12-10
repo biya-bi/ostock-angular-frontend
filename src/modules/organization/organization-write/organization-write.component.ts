@@ -8,7 +8,8 @@ import { OrganizationViewComponent } from '../organization-view.component';
 @Component({
     selector: 'app-organization-write',
     templateUrl: './organization-write.component.html',
-    styleUrl: './organization-write.component.css'
+    styleUrl: './organization-write.component.css',
+    standalone: false
 })
 export class OrganizationWriteComponent extends OrganizationViewComponent {
 

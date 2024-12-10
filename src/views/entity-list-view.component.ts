@@ -7,7 +7,8 @@ import { Pagination } from '../models/pagination';
 import { EntityComponent } from './entity.component';
 
 @Component({
-  template: '',
+    template: '',
+    standalone: false
 })
 export abstract class EntityListViewComponent<T, U extends EntityEvent<T>, V extends SearchCriteria> extends EntityComponent<T, U> {
 
