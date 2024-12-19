@@ -14,7 +14,7 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'operations.cancel' |
                     translate }}</button>
                 <button type="button" class="btn btn-danger"
-                    (click)="manage.emit({entity:entity,organization:organization,closeElement:closeButton,operation:Operation.Delete})">{{
+                    (click)="manage.emit({entity:entity,closeElement:closeButton,operation:Operation.Delete})">{{
                     'operations.delete' | translate }}</button>
             </div>
         </div>

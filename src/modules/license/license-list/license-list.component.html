@@ -112,8 +112,7 @@
 
 			<p *ngIf="!busy && !context.entities?.length">{{ 'data.noRecord' | translate }}</p>
 
-			<app-license-delete [entity]="context.selectedEntity" [organization]="organization"
-				(manage)="manage.emit($event)" />
+			<app-license-delete [entity]="context.selectedEntity" (manage)="manage.emit($event)" />
 		</div>
 	</div>
 </div>

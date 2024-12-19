@@ -1,6 +1,6 @@
 <ng-container *ngIf="context() as context">
 	<form *ngIf="formGroup" [formGroup]="formGroup"
-		(ngSubmit)="manage.emit({entity:formGroup.value, organization:context.selectedOrganization, operation:context.operation})">
+		(ngSubmit)="manage.emit({entity:formGroup.value, operation:context.operation})">
 
 		<h1 class="mb-4 d-flex justify-content-center" id="title" [ngSwitch]="context.operation">
 			<ng-container *ngSwitchCase="Operation.Create">{{ 'license.operations.add' | translate
@@ -61,11 +61,11 @@
 						typeToSearchText="{{'data.prompts.typeToSearch' | translate }}"
 						[typeahead]="searchOrganizationSubject" [items]="context.organizations" bindLabel="name"
 						placeholder="{{'license.messages.selectOrganization' | translate }}"
-						formControlName="organization" (change)="organizationSelected.emit($event)" />
+						formControlName="organization" />
 
-					<a *ngIf="context.selectedOrganization && context.operation===Operation.Update"
+					<a *ngIf="context.selectedEntity?.organization && context.operation===Operation.Update"
 						routerLink="/organizations/details"
-						[queryParams]="{uri:context.selectedOrganization?._links.self.href, operation:Operation.Read}">{{context.selectedOrganization.name
+						[queryParams]="{uri:context.selectedEntity.organization._links.self.href, operation:Operation.Read}">{{context.selectedEntity.organization.name
 						}}
 					</a>
 				</div>

@@ -1,6 +1,6 @@
 import { Component, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable, ReplaySubject, switchMap, take, takeUntil, tap } from 'rxjs';
+import { map, Observable, take, takeUntil, tap } from 'rxjs';
 import { ApiConnector } from '../../../connectors/api.connector';
 import { LicenseContext } from '../../../contexts/license.context';
 import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
@@ -26,8 +26,6 @@ import { LicenseWriteComponent } from '../license-write/license-write.component'
 	standalone: false
 })
 export class LicenseContainer extends EntityContainer<LicenseLinks, License, LicenseEvent, LicenseSearchCriteria, LicenseListWrapper, LicenseContext> {
-
-	private readonly organizationSelectedSubject = new ReplaySubject<Organization>(1);
 
 	constructor(
 		protected override readonly router: Router,
@@ -79,7 +77,6 @@ export class LicenseContainer extends EntityContainer<LicenseLinks, License, Lic
 	protected override subscribeToEntityViewEvents(component: EntityViewComponent<License, LicenseEvent, LicenseSearchCriteria, LicenseContext>): void {
 		super.subscribeToEntityViewEvents(component);
 		if (component instanceof LicenseWriteComponent && this.isOperation(Operation.Create)) {
-			component.organizationSelected.pipe(takeUntil(this.destroy$), tap(organization => this.organizationSelectedSubject.next(organization))).subscribe();
 			this.initOrganizations().pipe(takeUntil(this.destroy$)).subscribe();
 		}
 	}
@@ -89,11 +86,9 @@ export class LicenseContainer extends EntityContainer<LicenseLinks, License, Lic
 	}
 
 	protected override onReadEntity(entity: License): Observable<License> {
-		return this.apiConnector.readOrganization(entity._links.organization.href).pipe(take(1),
-			tap(organization => {
-				this.organizationSelectedSubject.next(organization);
-				const context = this.getContext();
-				context.selectedOrganization = organization;
-			}), map(() => entity));
+		return this.apiConnector.readOrganization(entity._links.organization.href).pipe(
+			take(1),
+			tap(organization => entity.organization = organization),
+			map(() => entity));
 	}
 }

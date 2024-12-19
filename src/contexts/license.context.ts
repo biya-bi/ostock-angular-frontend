@@ -5,5 +5,4 @@ import { EntityContext } from "./entity.context";
 
 export interface LicenseContext extends EntityContext<License, LicenseSearchCriteria> {
 	organizations: Organization[];
-	selectedOrganization?: Organization;
 }

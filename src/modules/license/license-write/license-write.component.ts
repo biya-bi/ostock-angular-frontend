@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { LicenseContext } from '../../../contexts/license.context';
@@ -14,8 +14,6 @@ import { LicenseViewComponent } from '../license-view.component';
 })
 export class LicenseWriteComponent extends LicenseViewComponent {
 	@Input() organizations: Organization[];
-
-	@Output() organizationSelected = new EventEmitter<Organization>();
 
 	formGroup: FormGroup;
 

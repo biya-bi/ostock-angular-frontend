@@ -81,7 +81,7 @@ export class OrganizationContainer extends EntityContainer<OrganizationLinks, Or
         let obs$: Observable<any>;
         switch (event.operation) {
             case Operation.Create:
-                obs$ = this.apiConnector.createLicense(event.entity, event.organization._links.licenses.href);
+                obs$ = this.apiConnector.createLicense(event.entity, event.entity.organization._links.licenses.href);
                 break;
             case Operation.Update:
                 obs$ = this.apiConnector.updateLicense(event.entity);
@@ -91,7 +91,7 @@ export class OrganizationContainer extends EntityContainer<OrganizationLinks, Or
                 break;
         }
         return this.run(obs$).pipe(take(1),
-            switchMap(() => this.readLicenses(event.organization._links.licenses.href, component)),
+            switchMap(() => this.readLicenses(event.entity.organization._links.licenses.href, component)),
             tap(() => event.closeElement.click()));
     }
 }

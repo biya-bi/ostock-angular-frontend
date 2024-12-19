@@ -40,8 +40,8 @@
                     }}</label>
             </div>
             <div class="col">
-                <a *ngIf="context.selectedOrganization" routerLink="/organizations/details"
-                    [queryParams]="{uri:context.selectedOrganization?._links.self.href, operation:Operation.Read}">{{context.selectedOrganization.name
+                <a *ngIf="context.selectedEntity?.organization" routerLink="/organizations/details"
+                    [queryParams]="{uri:context.selectedEntity.organization._links.self.href, operation:Operation.Read}">{{context.selectedEntity.organization.name
                     }}
                 </a>
             </div>
