@@ -19,12 +19,13 @@ import { BaseComponent } from './base.component';
 import { EntityListViewComponent } from './entity-list-view.component';
 import { EntityViewComponent } from './entity-view.component';
 import { ViewComponent } from './view.component';
+import { EntityService } from '../services/entity.service';
 
-export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>, U extends EntityEvent<T>, V extends SearchCriteria, W extends ListWrapper, X extends EntityContext<T, V>> extends BaseComponent {
+export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>, U extends EntityEvent<T>, V extends SearchCriteria, W extends ListWrapper, X extends EntityContext<T, V>, Y extends EntityService<T, V, W>> extends BaseComponent {
     private readonly busySubject = new Subject<boolean>();
     private readonly searchEventSubject = new Subject<SearchEvent<V>>();
 
-    private readonly page$: Observable<Page<W>> = this.searchEventSubject.pipe(switchMap(e => this.run(this.getEntities(e))));
+    private readonly page$: Observable<Page<W>> = this.searchEventSubject.pipe(switchMap(e => this.run(this.entityService.read(e))));
 
     readonly busy$ = this.busySubject.asObservable();
     readonly entityContext: WritableSignal<X> = this.getEntityContextSignal();
@@ -33,7 +34,8 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         protected readonly router: Router,
         protected readonly activatedRoute: ActivatedRoute,
         protected readonly searchService: SearchService,
-        protected readonly sortingService: SortingService<T>) {
+        protected readonly sortingService: SortingService<T>,
+        protected readonly entityService: Y) {
         super();
     }
 
@@ -46,11 +48,6 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         }
     }
 
-    protected abstract createEntity(entity: T): Observable<T>;
-    protected abstract updateEntity(entity: T): Observable<T>;
-    protected abstract deleteEntity(uri: string): Observable<void>;
-    protected abstract getEntity(uri: string): Observable<T>;
-    protected abstract getEntities(searchEvent: SearchEvent<V>): Observable<Page<W>>;
     protected abstract retrieveEntities(page: Page<W>): T[];
     protected abstract getEntityListPath(): string;
 
@@ -83,7 +80,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
     private readEntity(): void {
         const queryParams = this.activatedRoute.snapshot.queryParams;
 
-        const obs$ = this.getEntity(queryParams[this.getEntityUriParamName()]);
+        const obs$ = this.entityService.readByUri(queryParams[this.getEntityUriParamName()]);
 
         this.run(obs$).pipe(
             take(1),
@@ -101,13 +98,13 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         let obs$: Observable<any>;
         switch (event.operation) {
             case Operation.Create:
-                obs$ = this.createEntity(event.entity);
+                obs$ = this.entityService.create(event.entity);
                 break;
             case Operation.Update:
-                obs$ = this.updateEntity(event.entity);
+                obs$ = this.entityService.update(event.entity);
                 break;
             case Operation.Delete:
-                obs$ = this.deleteEntity(event.entity._links.delete.href);
+                obs$ = this.entityService.delete(event.entity._links.delete.href);
                 break;
         }
         return this.run(obs$).pipe(take(1),

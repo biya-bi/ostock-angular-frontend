@@ -7,11 +7,12 @@ import { Page } from '../dtos/page';
 import { SearchEvent } from '../events/search.event';
 import { EntityService } from './entity.service';
 import { SearchService } from './search.service';
+import { License } from '../dtos/license';
 
 @Injectable({
     providedIn: 'root'
 })
-export class LicenseService extends EntityService<LicenseSearchCriteria, LicenseListWrapper> {
+export class LicenseService extends EntityService<License, LicenseSearchCriteria, LicenseListWrapper> {
 
     constructor(protected override readonly searchService: SearchService, private readonly apiConnector: ApiConnector) {
         super(searchService);
@@ -21,4 +22,20 @@ export class LicenseService extends EntityService<LicenseSearchCriteria, License
         const { searchCriteria, pageRequest } = searchEvent;
         return this.apiConnector.readLicenses(searchCriteria, pageRequest);
     }
+
+    override create(entity: License): Observable<License> {
+		return this.apiConnector.createLicense(entity, entity.organization._links.addLicense.href);
+	}
+
+	override update(entity: License): Observable<License> {
+		return this.apiConnector.updateLicense(entity);
+	}
+
+	override delete(uri: string): Observable<void> {
+		return this.apiConnector.delete(uri);
+	}
+
+	override readByUri(uri: string): Observable<License> {
+		return this.apiConnector.readLicense(uri);
+	}
 }

@@ -1,7 +1,6 @@
 import { Component, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, take, takeUntil, tap } from 'rxjs';
-import { ApiConnector } from '../../../connectors/api.connector';
 import { LicenseContext } from '../../../contexts/license.context';
 import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
 import { License } from '../../../dtos/license';
@@ -10,7 +9,6 @@ import { LicenseListWrapper } from '../../../dtos/license-list-wrapper';
 import { Organization } from '../../../dtos/organization';
 import { Page } from '../../../dtos/page';
 import { LicenseEvent } from '../../../events/license.event';
-import { SearchEvent } from '../../../events/search.event';
 import { Operation } from '../../../models/operation';
 import { LicenseService } from '../../../services/license.service';
 import { OrganizationService } from '../../../services/organization.service';
@@ -25,37 +23,16 @@ import { LicenseWriteComponent } from '../license-write/license-write.component'
 	templateUrl: './license.container.html',
 	standalone: false
 })
-export class LicenseContainer extends EntityContainer<LicenseLinks, License, LicenseEvent, LicenseSearchCriteria, LicenseListWrapper, LicenseContext> {
+export class LicenseContainer extends EntityContainer<LicenseLinks, License, LicenseEvent, LicenseSearchCriteria, LicenseListWrapper, LicenseContext, LicenseService> {
 
 	constructor(
 		protected override readonly router: Router,
 		protected override readonly activatedRoute: ActivatedRoute,
 		protected override readonly searchService: SearchService,
 		protected override readonly sortingService: SortingService<License>,
-		private readonly apiConnector: ApiConnector,
-		private readonly licenseService: LicenseService,
+		protected override readonly entityService: LicenseService,
 		private readonly organizationService: OrganizationService) {
-		super(router, activatedRoute, searchService, sortingService);
-	}
-
-	protected override createEntity(entity: License): Observable<License> {
-		return this.apiConnector.createLicense(entity, entity.organization._links.addLicense.href);
-	}
-
-	protected override updateEntity(entity: License): Observable<License> {
-		return this.apiConnector.updateLicense(entity);
-	}
-
-	protected override deleteEntity(uri: string): Observable<void> {
-		return this.apiConnector.delete(uri);
-	}
-
-	protected override getEntity(uri: string): Observable<License> {
-		return this.apiConnector.readLicense(uri);
-	}
-
-	protected override getEntities(searchEvent: SearchEvent<LicenseSearchCriteria>): Observable<Page<LicenseListWrapper>> {
-		return this.licenseService.read(searchEvent);
+		super(router, activatedRoute, searchService, sortingService, entityService);
 	}
 
 	protected override retrieveEntities(page: Page<LicenseListWrapper>): License[] {
@@ -86,7 +63,7 @@ export class LicenseContainer extends EntityContainer<LicenseLinks, License, Lic
 	}
 
 	protected override onReadEntity(entity: License): Observable<License> {
-		return this.apiConnector.readOrganization(entity._links.organization.href).pipe(
+		return this.organizationService.readByUri(entity._links.organization.href).pipe(
 			take(1),
 			tap(organization => entity.organization = organization),
 			map(() => entity));

@@ -11,7 +11,6 @@ import { OrganizationListWrapper } from '../../../dtos/organization-list-wrapper
 import { Page } from '../../../dtos/page';
 import { LicenseEvent } from '../../../events/license.event';
 import { OrganizationEvent } from '../../../events/organization.event';
-import { SearchEvent } from '../../../events/search.event';
 import { Operation } from '../../../models/operation';
 import { OrganizationService } from '../../../services/organization.service';
 import { SearchService } from '../../../services/search.service';
@@ -25,36 +24,16 @@ import { OrganizationViewComponent } from '../organization-view.component';
     styleUrl: './organization.container.css',
     standalone: false
 })
-export class OrganizationContainer extends EntityContainer<OrganizationLinks, Organization, OrganizationEvent, OrganizationSearchCriteria, OrganizationListWrapper, OrganizationContext> {
+export class OrganizationContainer extends EntityContainer<OrganizationLinks, Organization, OrganizationEvent, OrganizationSearchCriteria, OrganizationListWrapper, OrganizationContext, OrganizationService> {
 
     constructor(
         protected override readonly router: Router,
         protected override readonly activatedRoute: ActivatedRoute,
         protected override readonly searchService: SearchService,
         protected override readonly sortingService: SortingService<Organization>,
-        private readonly apiConnector: ApiConnector,
-        private readonly organizationService: OrganizationService) {
-        super(router, activatedRoute, searchService, sortingService);
-    }
-
-    protected override createEntity(entity: Organization): Observable<Organization> {
-        return this.apiConnector.createOrganization(entity);
-    }
-
-    protected override updateEntity(entity: Organization): Observable<Organization> {
-        return this.apiConnector.updateOrganization(entity);
-    }
-
-    protected override deleteEntity(uri: string): Observable<void> {
-        return this.apiConnector.delete(uri);
-    }
-
-    protected override getEntity(uri: string): Observable<Organization> {
-        return this.apiConnector.readOrganization(uri);
-    }
-
-    protected override getEntities(searchEvent: SearchEvent<OrganizationSearchCriteria>): Observable<Page<OrganizationListWrapper>> {
-        return this.organizationService.read(searchEvent);
+        protected override readonly entityService: OrganizationService,
+        private readonly apiConnector: ApiConnector) {
+        super(router, activatedRoute, searchService, sortingService, entityService);
     }
 
     protected override retrieveEntities(page: Page<OrganizationListWrapper>): Organization[] {
