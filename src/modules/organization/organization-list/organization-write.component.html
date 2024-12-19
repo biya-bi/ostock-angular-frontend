@@ -1,0 +1,84 @@
+<form *ngIf="formGroup" [formGroup]="formGroup" (ngSubmit)="manage.emit({entity:formGroup.value,operation:operation})">
+    <div ngbAccordion>
+        <div [collapsed]="false" ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton [ngSwitch]="operation">
+                    <ng-container *ngSwitchCase="Operation.Create">{{ 'organization.operations.add' |
+                        translate }}</ng-container>
+                    <ng-container *ngSwitchCase="Operation.Update">{{ 'organization.operations.edit' |
+                        translate }}</ng-container>
+                    <ng-container *ngSwitchCase="Operation.Read">{{ 'organization.operations.details' |
+                        translate }}</ng-container>
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                    <div class="container">
+                        <div class="row m-2">
+                            <div class="col text-end">
+                                <label for="name" class="fw-bold">{{ 'organization.labels.name' |
+                                    translate }}</label>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="name"
+                                    placeholder="{{'organization.attributes.name' | translate }}"
+                                    formControlName="name">
+                            </div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col text-end">
+                                <label for="contactName" class="fw-bold">{{ 'organization.labels.contactName' |
+                                    translate }}</label>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="contactName"
+                                    placeholder="{{'organization.attributes.contactName' | translate }}"
+                                    formControlName="contactName">
+                            </div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col text-end">
+                                <label for="contactEmail" class="fw-bold">{{ 'organization.labels.contactEmail' |
+                                    translate }}</label>
+                            </div>
+                            <div class="col">
+                                <input type="email" id="contactEmail"
+                                    placeholder="{{'organization.attributes.contactEmail' | translate }}"
+                                    formControlName="contactEmail">
+                            </div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col text-end">
+                                <label for="contactPhone" class="fw-bold">{{ 'organization.labels.contactPhone' |
+                                    translate }}</label>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="contactPhone"
+                                    placeholder="{{'organization.attributes.contactPhone' | translate }}"
+                                    formControlName="contactPhone">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">{{ 'operations.save' | translate }}</button>
+                        <span class="m-2">|</span>
+                        <a routerLink="/organizations" class="btn btn-link ps-0">{{ 'operations.list' |
+                            translate }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="entity?._links?.licenses?.href" (shown)="loadLicenses.emit(entity._links.licenses.href)"
+            ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>{{ 'general.licenses' | translate }}</button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                    <app-license-list [entities]="licenses" [organization]="entity"
+                        (manage)="writeLicense.emit($event)"></app-license-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

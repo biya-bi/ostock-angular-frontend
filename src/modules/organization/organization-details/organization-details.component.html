@@ -1,16 +1,16 @@
-<div ngbAccordion>
+<div ngbAccordion *ngIf="context() as context">
     <div [collapsed]="false" ngbAccordionItem>
         <h2 ngbAccordionHeader>
             <button ngbAccordionButton>{{ 'organization.operations.details' | translate }}</button>
         </h2>
         <div ngbAccordionCollapse>
-            <div class="container" *ngIf="entity" ngbAccordionBody>
+            <div class="container" *ngIf="context.selectedEntity" ngbAccordionBody>
                 <div class="row">
                     <div class="col text-end">
                         <span class="fw-bold">{{ 'organization.labels.name' | translate }}</span>
                     </div>
                     <div class="col">
-                        <span>{{entity.name}}</span>
+                        <span>{{context.selectedEntity.name}}</span>
                     </div>
                 </div>
                 <div class="row">
@@ -18,7 +18,7 @@
                         <span class="fw-bold">{{ 'organization.labels.contactName' | translate }}</span>
                     </div>
                     <div class="col">
-                        <span>{{entity.contactName}}</span>
+                        <span>{{context.selectedEntity.contactName}}</span>
                     </div>
                 </div>
                 <div class="row">
@@ -26,7 +26,7 @@
                         <span class="fw-bold">{{ 'organization.labels.contactEmail' | translate }}</span>
                     </div>
                     <div class="col">
-                        <span>{{entity.contactEmail}}</span>
+                        <span>{{context.selectedEntity.contactEmail}}</span>
                     </div>
                 </div>
                 <div class="row">
@@ -34,11 +34,11 @@
                         <span class="fw-bold">{{ 'organization.labels.contactPhone' | translate }}</span>
                     </div>
                     <div class="col">
-                        <span>{{entity.contactPhone}}</span>
+                        <span>{{context.selectedEntity.contactPhone}}</span>
                     </div>
                 </div>
                 <div class="mt-4 d-flex justify-content-center">
-                    <a routerLink="/organizations/edit" [queryParams]="{uri:entity._links.self.href,operation:Operation.Update}">{{ 'operations.edit' | translate }}</a>
+                    <a routerLink="/organizations/edit" [queryParams]="{uri:context.selectedEntity._links.self.href,operation:Operation.Update}">{{ 'operations.edit' | translate }}</a>
                     <span class="ms-2 me-2">|</span>
                     <a href="#" data-bs-toggle="modal" data-bs-target="#deleteOrganizationModal" class="link-danger">{{ 'operations.delete' | translate }}</a>
                     <span class="ms-2 me-2">|</span>
@@ -47,15 +47,15 @@
             </div>
         </div>
     </div>
-    <div *ngIf="entity?._links?.licenses?.href" (shown)="loadLicenses.emit(entity._links.licenses.href)" ngbAccordionItem>
+    <div *ngIf="context.selectedEntity?._links?.licenses?.href" (shown)="loadLicenses.emit(context.selectedEntity._links.licenses.href)" ngbAccordionItem>
         <h2 ngbAccordionHeader>
             <button ngbAccordionButton>{{ 'general.licenses' | translate }}</button>
         </h2>
         <div ngbAccordionCollapse>
             <div ngbAccordionBody>
-                <app-license-list [entities]="licenses" [organization]="entity" (manage)="writeLicense.emit($event)"></app-license-list>
+                <app-license-list [entities]="licenses" [organization]="context.selectedEntity" (manage)="writeLicense.emit($event)"></app-license-list>
             </div>
         </div>
     </div>
+    <app-organization-delete (manage)="manage.emit($event)" [entity]="context.selectedEntity"></app-organization-delete>
 </div>
-<app-organization-delete (manage)="manage.emit($event)" [entity]="entity"></app-organization-delete>

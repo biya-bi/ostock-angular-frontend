@@ -20,7 +20,9 @@ export class LocaleContainer extends BaseComponent {
         super();
     }
 
-    ngOnInit(): void {
+    override ngOnInit(): void {
+        super.ngOnInit();
+
         const supportedLocales = this.localeService.getSupportedLocales();
         const selectedLocale = this.localeService.getLocale();
 

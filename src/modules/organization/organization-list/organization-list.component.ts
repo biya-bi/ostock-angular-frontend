@@ -3,6 +3,7 @@ import { OrganizationSearchCriteria } from "../../../criteria/organization-searc
 import { Organization } from "../../../dtos/organization";
 import { OrganizationEvent } from "../../../events/organization.event";
 import { EntityListViewComponent } from "../../../views/entity-list-view.component";
+import { OrganizationContext } from "../../../contexts/organization.context";
 
 @Component({
     selector: 'app-organization-list',
@@ -10,5 +11,5 @@ import { EntityListViewComponent } from "../../../views/entity-list-view.compone
     styleUrl: './organization-list.component.css',
     standalone: false
 })
-export class OrganizationListComponent extends EntityListViewComponent<Organization, OrganizationEvent, OrganizationSearchCriteria> {
+export class OrganizationListComponent extends EntityListViewComponent<Organization, OrganizationEvent, OrganizationSearchCriteria, OrganizationContext> {
 }

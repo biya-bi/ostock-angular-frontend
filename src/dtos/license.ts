@@ -1,7 +1,7 @@
 import { Entity } from "./entity";
-import { EntityLinks } from "./entity-links";
+import { LicenseLinks } from "./license-links";
 
-export interface License extends Entity<EntityLinks> {
+export interface License extends Entity<LicenseLinks> {
     description: string;
     productName: string;
     licenseType: string;

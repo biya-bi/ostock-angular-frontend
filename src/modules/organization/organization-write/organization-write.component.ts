@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable, take, tap } from 'rxjs';
-import { Organization } from '../../../dtos/organization';
+import { OrganizationContext } from '../../../contexts/organization.context';
 import { OrganizationViewComponent } from '../organization-view.component';
 
 @Component({
@@ -13,17 +11,17 @@ import { OrganizationViewComponent } from '../organization-view.component';
 })
 export class OrganizationWriteComponent extends OrganizationViewComponent {
 
-    protected title$: Observable<string>;
-
     formGroup: FormGroup;
 
-    protected override onEntityChange(organization: Organization): void {
+    protected override onContextChange(context: OrganizationContext): void {
+        const entity = context?.selectedEntity;
+
         this.formGroup = new FormGroup({
-            name: new FormControl(organization?.name),
-            contactName: new FormControl(organization?.contactName),
-            contactEmail: new FormControl(organization?.contactEmail),
-            contactPhone: new FormControl(organization?.contactPhone),
-            _links: new FormControl(organization?._links),
+            name: new FormControl(entity?.name),
+            contactName: new FormControl(entity?.contactName),
+            contactEmail: new FormControl(entity?.contactEmail),
+            contactPhone: new FormControl(entity?.contactPhone),
+            _links: new FormControl(entity?._links),
         });
     }
 

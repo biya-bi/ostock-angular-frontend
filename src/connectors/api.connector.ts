@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { Observable, map, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { LicenseSearchCriteria } from '../criteria/license-search-criteria';
 import { OrganizationSearchCriteria } from '../criteria/organization-search-criteria';
 import { License } from '../dtos/license';
 import { LicenseListWrapper } from '../dtos/license-list-wrapper';
@@ -19,6 +20,7 @@ export class ApiConnector {
   private readonly url = environment.apiConnectorUrl;
   private readonly organizationEndpoint = `${this.url}/v1/organization`;
   private readonly notificationEndpoint = `${this.url}/v1/notification`;
+  private readonly licenseEndpoint = `${this.url}/v1/license`;
 
   constructor(private readonly httpClient: HttpClient, private readonly oAuthService: OAuthService) { }
 
@@ -59,8 +61,8 @@ export class ApiConnector {
     return this.httpClient.post<License>(uri, license, this.getOptions());
   }
 
-  readLicenses(uri: string): Observable<License[]> {
-    return this.httpClient.get<LicenseListWrapper>(uri, this.getOptions()).pipe(map(m => m?._embedded?.licenseDtoList));
+  readLicensesByUri(uri: string, pageRequest: PageRequest): Observable<Page<LicenseListWrapper>> {
+    return this.httpClient.post<Page<LicenseListWrapper>>(uri, {}, this.getOptions(pageRequest));
   }
 
   readLicense(uri: string): Observable<License> {
@@ -69,6 +71,10 @@ export class ApiConnector {
 
   updateLicense(license: License): Observable<License> {
     return this.httpClient.put<License>(license._links.update.href, license, this.getOptions());
+  }
+
+  readLicenses(searchCriteria: LicenseSearchCriteria, pageRequest: PageRequest): Observable<Page<LicenseListWrapper>> {
+    return this.httpClient.post<Page<LicenseListWrapper>>(`${this.licenseEndpoint}/search`, searchCriteria, this.getOptions(pageRequest));
   }
 
 }

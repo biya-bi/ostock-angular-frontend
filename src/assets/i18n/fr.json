@@ -36,6 +36,9 @@
 				"singular": "Affichage de {{start}} à {{end}} sur {{total}} entrée",
 				"plural": "Affichage de {{start}} à {{end}} sur {{total}} entrées"
 			}
+		},
+		"prompts": {
+			"typeToSearch": "Tapez pour rechercher"
 		}
 	},
 	"operations": {
@@ -65,6 +68,9 @@
 			"contactName": "Nom du contact :",
 			"contactEmail": "Courriel du contact :",
 			"contactPhone": "Téléphone du contact :"
+		},
+		"messages": {
+			"delete": "Etes-vous sûr de vouloir supprimer cette organisation?"
 		}
 	},
 	"license": {
@@ -84,12 +90,14 @@
 			"productName": "Nom du produit :",
 			"description": "Description :",
 			"comment": "Commentaire :",
-			"licenseType": "Type de licence :"
+			"licenseType": "Type de licence :",
+			"organization": "Organisation :"
 		},
 		"messages": {
 			"notYetAdded": "Vous n'avez encore ajouté aucune licence.",
 			"available": "Ci-dessous la liste des licences disponibles :",
-			"delete": "Etes-vous sûr de vouloir supprimer cette licence?"
+			"delete": "Etes-vous sûr de vouloir supprimer cette licence?",
+			"selectOrganization": "Sélectionnez une organisation"
 		}
 	}
 }

@@ -3,4 +3,5 @@ import { Link } from "./link";
 
 export interface OrganizationLinks extends EntityLinks {
     licenses: Link;
+    addLicense: Link;
 }

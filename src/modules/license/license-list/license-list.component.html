@@ -1,41 +1,119 @@
-<div class="container d-flex justify-content-center">
-    <div class="row justify-content-center">
-        <div class="col">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal"
-                (click)="selectedLicense=null;operation=Operation.Create">{{ 'license.operations.add' |
-                translate }}</a>
+<h1 class="d-flex justify-content-center mb-4">{{'general.licenses' | translate }}</h1>
+<div class="container d-flex justify-content-center" *ngIf="context() as context">
+	<div class="row justify-content-center">
+		<div class="col">
+			<div class="d-flex">
+				<a routerLink="/licenses/add" [queryParams]="{operation:Operation.Create}"
+					(click)="operation=Operation.Create;select.emit(null)">{{ 'license.operations.add' |
+					translate }}</a>
+				<span class="ms-3" *ngIf="busy">{{ 'data.loading' | translate }}</span>
+			</div>
+			<div class="d-flex mt-2" *ngIf="context.entities?.length">
+				<select class="form-select form-select-sm w-auto" name="pageSize"
+					[(ngModel)]="context.pagination?.request.pageSize"
+					(change)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})">
+					<option *ngFor="let count of [20,40,60]" [ngValue]="count">{{ count | number }}</option>
+				</select>
+				<span class="ms-2 pt-1">{{'data.entriesPerPage' | translate }}</span>
+			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col" sortable="productName" (sort)="sort.emit($event)">{{
+							'license.attributes.productName'
+							| translate }}</th>
+						<th scope="col" sortable="description" (sort)="sort.emit($event)">
+							{{'license.attributes.description' | translate }}</th>
+						<th scope="col" sortable="comment" (sort)="sort.emit($event)">
+							{{'license.attributes.comment' | translate }}</th>
+						<th scope="col" sortable="licenseType" (sort)="sort.emit($event)">
+							{{'license.attributes.licenseType' | translate }}</th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<input class="form-control" type="text" name="productName"
+								[(ngModel)]="context.searchCriteria.productName"
+								(keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
+						</td>
+						<td>
+							<input class="form-control" type="text" name="description"
+								[(ngModel)]="context.searchCriteria.description"
+								(keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
+						</td>
+						<td>
+							<input class="form-control" type="text" name="comment"
+								[(ngModel)]="context.searchCriteria.comment"
+								(keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
+						</td>
+						<td>
+							<input class="form-control" type="text" name="licenseType"
+								[(ngModel)]="context.searchCriteria.licenseType"
+								(keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<ng-container *ngIf="context.entities?.length">
+						<tr *ngFor="let entity of context.entities">
+							<td><ngb-highlight [result]="entity.productName"
+									[term]="context.searchCriteria.productName"></ngb-highlight></td>
+							<td><ngb-highlight [result]="entity.description"
+									[term]="context.searchCriteria.description"></ngb-highlight></td>
+							<td><ngb-highlight [result]="entity.comment"
+									[term]="context.searchCriteria.comment"></ngb-highlight></td>
+							<td><ngb-highlight [result]="entity.licenseType"
+									[term]="context.searchCriteria.licenseType"></ngb-highlight></td>
+							<td>
+								<a routerLink="/licenses/details"
+									[queryParams]="{uri:entity._links.self.href, operation:Operation.Read}"
+									(click)="operation=Operation.Read;select.emit(entity);">{{
+									'operations.details' | translate }}
+								</a>
+							</td>
+							<td>
+								<a routerLink="/licenses/edit"
+									[queryParams]="{uri:entity._links.self.href, operation:Operation.Update}"
+									(click)="operation=Operation.Update;select.emit(entity);">{{
+									'operations.edit'
+									|
+									translate }}</a>
+							</td>
+							<td>
+								<a href="#" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal"
+									class="link-danger" (click)="selectedEntity=entity">{{ 'operations.delete' |
+									translate }}
+								</a>
+							</td>
+						</tr>
+					</ng-container>
+				</tbody>
+			</table>
 
-            <ng-container *ngIf="entities?.length; else emptyLicenseTemplate">
-                <p class="mt-2 fw-bold">{{ 'license.messages.available' | translate }}</p>
-                <div class="container">
-                    <div class="row mt-1 mb-1" *ngFor="let entity of entities">
-                        <div class="col">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#viewLicenseModal"
-                                (click)="selectedLicense=entity;operation=Operation.Update">{{entity.productName}}</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal"
-                                (click)="selectedLicense=entity;operation=Operation.Update">{{ 'operations.edit' |
-                                translate }}</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal"
-                                (click)="selectedLicense=entity;operation=Operation.Delete">{{ 'operations.delete' |
-                                translate }}</a>
-                        </div>
-                    </div>
-                </div>
-            </ng-container>
+			<div class="d-flex justify-content-between p-2" *ngIf="context.entities?.length">
+				<ng-container *ngIf="context.pagination.totalElements > 1; else oneEntryTemplate">
+					{{ 'data.pagination.range.plural' | translate: {start:context.pagination.range.start,
+					end:context.pagination.range.end, total: context.pagination.totalElements} }}
+				</ng-container>
+				<ng-template #oneEntryTemplate>
+					{{ 'data.pagination.range.singular' | translate: {start:context.pagination.range.start,
+					end:context.pagination.range.end, total: context.pagination.totalElements} }}
+				</ng-template>
+				<ngb-pagination [boundaryLinks]="true" [collectionSize]="context.pagination.totalElements"
+					[(page)]="context.pagination.request.pageNumber" [pageSize]="context.pagination.request.pageSize"
+					(pageChange)="pageChange.emit($event)">
+				</ngb-pagination>
+			</div>
 
-            <ng-template #emptyLicenseTemplate>
-                <p>{{ 'license.messages.notYetAdded' | translate }}</p>
-            </ng-template>
-        </div>
-    </div>
+			<p *ngIf="!busy && !context.entities?.length">{{ 'data.noRecord' | translate }}</p>
+
+			<app-license-delete [entity]="context.selectedEntity" [organization]="organization"
+				(manage)="manage.emit($event)" />
+		</div>
+	</div>
 </div>
-<app-license-write [entity]="selectedLicense" (manage)="manage.emit($event)" [organization]="organization"
-    [operation]="operation"></app-license-write>
-<app-license-delete [entity]="selectedLicense" [organization]="organization"
-    (manage)="manage.emit($event)"></app-license-delete>
-<app-license-details [entity]="selectedLicense" [organization]="organization"
-    [operation]="operation"></app-license-details>

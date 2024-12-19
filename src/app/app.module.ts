@@ -11,6 +11,7 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { OAuthModule } from "angular-oauth2-oidc";
 import { environment } from "../environments/environment";
 import { AuthenticationModule } from "../modules/authentication/authentication.module";
+import { LicenseModule } from "../modules/license/license.module";
 import { LocaleModule } from "../modules/locale/locale.module";
 import { NavigationModule } from "../modules/navigation/navigation.module";
 import { OrganizationModule } from "../modules/organization/organization.module";
@@ -54,6 +55,7 @@ import { routes } from "./app.routes";
         NavigationModule,
         AuthenticationModule,
         OrganizationModule,
+		LicenseModule,
     ],
     providers: [provideHttpClient(withInterceptorsFromDi())]
 })

@@ -1,7 +1,6 @@
 import { License } from "./license"
+import { ListWrapper } from "./list-wrapper"
 
-export interface LicenseListWrapper {
-    _embedded: {
-        licenseDtoList: License[]
-    }
+export interface LicenseListWrapper extends ListWrapper {
+	licenseDtoList: License[]
 }

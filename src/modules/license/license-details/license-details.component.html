@@ -1,55 +1,60 @@
-<div class="modal fade" id="viewLicenseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="title" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="title">{{ 'license.operations.details' | translate }}</h1>
-                <button #closeButton type="button" class="btn-close" data-bs-dismiss="modal"
-                    attr.aria-label="{{ 'operations.close' | translate }}"></button>
+<ng-container *ngIf="context() as context">
+    <h1 class="mb-4 d-flex justify-content-center">{{ 'license.operations.details' | translate }}</h1>
+    <div class="container" *ngIf="context.selectedEntity">
+        <div class="row">
+            <div class="col text-end">
+                <span class="fw-bold">{{ 'license.labels.productName' | translate }}</span>
             </div>
-            <div class="modal-body">
-                <div class="container" *ngIf="entity">
-                    <div class="row">
-                        <div class="col text-end">
-                            <span class="fw-bold">{{ 'license.labels.productName' | translate }}</span>
-                        </div>
-                        <div class="col">
-                            <span>{{entity.productName}}</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col text-end">
-                            <span class="fw-bold">{{ 'license.labels.description' | translate }}</span>
-                        </div>
-                        <div class="col">
-                            <span>{{entity.description}}</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col text-end">
-                            <span class="fw-bold">{{ 'license.labels.comment' | translate }}</span>
-                        </div>
-                        <div class="col">
-                            <span>{{entity.comment}}</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col text-end">
-                            <span class="fw-bold">{{ 'license.labels.licenseType' | translate }}</span>
-                        </div>
-                        <div class="col">
-                            <span>{{entity.licenseType}}</span>
-                        </div>
-                    </div>
-                    <div class="mt-4 d-flex justify-content-center">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#writeLicenseModal">{{ 'operations.edit' |
-                            translate }}</a>
-                        <span class="ms-2 me-2">|</span>
-                        <a href="#" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal">{{
-                            'operations.delete' | translate }}</a>
-                    </div>
-                </div>
+            <div class="col">
+                <span>{{context.selectedEntity.productName}}</span>
             </div>
         </div>
+        <div class="row">
+            <div class="col text-end">
+                <span class="fw-bold">{{ 'license.labels.description' | translate }}</span>
+            </div>
+            <div class="col">
+                <span>{{context.selectedEntity.description}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-end">
+                <span class="fw-bold">{{ 'license.labels.comment' | translate }}</span>
+            </div>
+            <div class="col">
+                <span>{{context.selectedEntity.comment}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-end">
+                <span class="fw-bold">{{ 'license.labels.licenseType' | translate }}</span>
+            </div>
+            <div class="col">
+                <span>{{context.selectedEntity.licenseType}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-end">
+                <label for="organization" class="fw-bold">{{ 'license.labels.organization' |
+                    translate
+                    }}</label>
+            </div>
+            <div class="col">
+                <a *ngIf="context.selectedOrganization" routerLink="/organizations/details"
+                    [queryParams]="{uri:context.selectedOrganization?._links.self.href, operation:Operation.Read}">{{context.selectedOrganization.name
+                    }}
+                </a>
+            </div>
+        </div>
+        <div class="mt-4 d-flex justify-content-center">
+            <a routerLink="/licenses/edit"
+                [queryParams]="{uri:context.selectedEntity._links.self.href,operation:Operation.Update}">{{
+                'operations.edit' | translate }}</a>
+            <span class="ms-2 me-2">|</span>
+            <a href="#" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal">{{
+                'operations.delete' | translate }}</a>
+            <span class="ms-2 me-2">|</span>
+            <a routerLink="/licenses">{{ 'operations.list' | translate }}</a>
+        </div>
     </div>
-</div>
+</ng-container>
