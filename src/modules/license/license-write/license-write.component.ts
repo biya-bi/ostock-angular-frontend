@@ -30,7 +30,7 @@ export class LicenseWriteComponent extends LicenseViewComponent {
 			comment: new FormControl(entity.comment),
 			licenseType: new FormControl(entity.licenseType),
 			_links: new FormControl(entity._links),
-			organization: new FormControl(entity._links?.organization?.href),
+			organization: new FormControl(entity.organization),
 		});
 	}
 }

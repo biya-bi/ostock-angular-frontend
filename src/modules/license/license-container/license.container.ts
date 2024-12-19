@@ -41,7 +41,7 @@ export class LicenseContainer extends EntityContainer<LicenseLinks, License, Lic
 	}
 
 	protected override createEntity(entity: License): Observable<License> {
-		return this.organizationSelectedSubject.pipe(take(1), switchMap(organization => this.apiConnector.createLicense(entity, organization._links.addLicense.href)));
+		return this.apiConnector.createLicense(entity, entity.organization._links.addLicense.href);
 	}
 
 	protected override updateEntity(entity: License): Observable<License> {

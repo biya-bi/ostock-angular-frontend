@@ -59,8 +59,7 @@
 				<div class="col">
 					<ng-select *ngIf="context.operation===Operation.Create"
 						typeToSearchText="{{'data.prompts.typeToSearch' | translate }}"
-						[typeahead]="searchOrganizationSubject" [items]="context.organizations"
-						bindValue="_links.self.href" bindLabel="name"
+						[typeahead]="searchOrganizationSubject" [items]="context.organizations" bindLabel="name"
 						placeholder="{{'license.messages.selectOrganization' | translate }}"
 						formControlName="organization" (change)="organizationSelected.emit($event)" />
 
