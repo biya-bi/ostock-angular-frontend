@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, QueryList, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { EntityContext } from '../contexts/entity.context';
 import { SearchCriteria } from '../criteria/search-criteria';
 import { EntityEvent } from '../events/entity.event';
@@ -18,10 +18,10 @@ export abstract class EntityListViewComponent<T, U extends EntityEvent<T>, V ext
   selectedEntity: T;
   operation: Operation;
 
-  search: EventEmitter<SearchEvent<V>> = new EventEmitter<SearchEvent<V>>();
-  pageChange: EventEmitter<number> = new EventEmitter<number>();
-  sort: EventEmitter<SortEvent> = new EventEmitter<SortEvent>();
-  select: EventEmitter<T> = new EventEmitter<T>();
+  @Output() search = new EventEmitter<SearchEvent<V>>();
+  @Output() pageChange = new EventEmitter<number>();
+  @Output() sort = new EventEmitter<SortEvent>();
+  @Output() select = new EventEmitter<T>();
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
