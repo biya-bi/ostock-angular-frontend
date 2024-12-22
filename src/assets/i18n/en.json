@@ -52,7 +52,7 @@
 	},
 	"organization": {
 		"operations": {
-			"add": "Add organization",
+			"add": "Add an organization",
 			"edit": "Update organization",
 			"delete": "Delete organization",
 			"details": "Organization details"
