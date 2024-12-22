@@ -30,3 +30,7 @@ th[sortable].desc:before {
 .material-icons {
 	width: 1.5rem;
 }
+
+.navbar-nav .nav-link.active {
+    color: #007bff;
+}
