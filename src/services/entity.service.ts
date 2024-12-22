@@ -5,11 +5,11 @@ import { Page } from '../dtos/page';
 import { SearchEvent } from '../events/search.event';
 import { SearchService } from './search.service';
 
-export abstract class EntityService<T, U extends SearchCriteria, V extends ListWrapper> {
+export abstract class EntityService<T, U extends SearchCriteria> {
 
     constructor(protected readonly searchService: SearchService) { }
 
-    read(searchEvent: SearchEvent<U>, uri?: string): Observable<Page<V>> {
+    read(searchEvent: SearchEvent<U>, uri?: string): Observable<Page<ListWrapper>> {
         const { searchCriteria, pageRequest } = searchEvent;
 
         const criteria = this.searchService.parseCriteria(searchCriteria);
@@ -18,7 +18,7 @@ export abstract class EntityService<T, U extends SearchCriteria, V extends ListW
         return this.onRead({ searchCriteria: criteria, pageRequest: request }, uri);
     }
 
-    protected abstract onRead(searchEvent: SearchEvent<U>, uri?: string): Observable<Page<V>>;
+    protected abstract onRead(searchEvent: SearchEvent<U>, uri?: string): Observable<Page<ListWrapper>>;
 
     abstract create(entity: T): Observable<T>;
 

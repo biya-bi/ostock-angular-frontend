@@ -16,13 +16,14 @@ import { SortingService } from '../../../services/sorting.service';
 import { EntityViewComponent } from '../../../views/entity-view.component';
 import { EntityContainer } from '../../../views/entity.container';
 import { LicenseWriteComponent } from '../license-write/license-write.component';
+import { OrganizationListWrapper } from '../../../dtos/organization-list-wrapper';
 
 @Component({
 	selector: 'app-license-container',
 	templateUrl: './license.container.html',
 	standalone: false
 })
-export class LicenseContainer extends EntityContainer<License, LicenseSearchCriteria, LicenseListWrapper, LicenseContext, LicenseSearchEvent> {
+export class LicenseContainer extends EntityContainer<License, LicenseSearchCriteria, LicenseContext, LicenseSearchEvent> {
 
 	constructor(
 		protected override readonly router: Router,
@@ -44,10 +45,12 @@ export class LicenseContainer extends EntityContainer<License, LicenseSearchCrit
 
 	private initOrganizations(): Observable<Organization[]> {
 		const obs$ = this.organizationService.read({}); // TODO: Improve this
-		return this.run(obs$).pipe(map(page => page._embedded?.organizationDtoList), tap(organizations => {
-			const context = this.getContext();
-			this.entityContext.set({ ...context, organizations });
-		}));
+		return this.run(obs$).pipe(
+			map((page: Page<OrganizationListWrapper>) => page._embedded?.organizationDtoList),
+			tap(organizations => {
+				const context = this.getContext();
+				this.entityContext.set({ ...context, organizations });
+			}));
 	}
 
 	protected override subscribeToEntityViewEvents(component: EntityViewComponent<License, LicenseSearchCriteria, LicenseContext>): void {

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output, QueryList, ViewChildren } from '@angular/core';
 import { EntityContext } from '../contexts/entity.context';
 import { SearchCriteria } from '../criteria/search-criteria';
-import { EntityEvent } from '../events/entity.event';
 import { SearchEvent } from '../events/search.event';
 import { SortEvent } from '../events/sort.event';
 import { Operation } from '../models/operation';

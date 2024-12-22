@@ -10,7 +10,6 @@ import { Organization } from '../../../dtos/organization';
 import { OrganizationListWrapper } from '../../../dtos/organization-list-wrapper';
 import { Page } from '../../../dtos/page';
 import { LicenseEvent } from '../../../events/license.event';
-import { OrganizationEvent } from '../../../events/organization.event';
 import { SearchEvent } from '../../../events/search.event';
 import { Operation } from '../../../models/operation';
 import { PageRequest } from '../../../models/page-request';
@@ -28,7 +27,7 @@ import { OrganizationViewComponent } from '../organization-view.component';
     styleUrl: './organization.container.css',
     standalone: false
 })
-export class OrganizationContainer extends EntityContainer<Organization, OrganizationSearchCriteria, OrganizationListWrapper, OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
+export class OrganizationContainer extends EntityContainer<Organization, OrganizationSearchCriteria, OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
 
     constructor(
         protected override readonly router: Router,
@@ -87,12 +86,14 @@ export class OrganizationContainer extends EntityContainer<Organization, Organiz
             searchCriteria = licenseContext.searchCriteria;
         }
         const obs$ = this.licenseService.read({ searchCriteria, pageRequest }, uri);
-        return this.run(obs$).pipe(take(1), tap(page => {
-            const licenses = page?._embedded?.licenseDtoList;
-            licenseContext.entities = licenses;
-            licenseContext.pagination = PageUtil.getPagination(page);
-            this.entityContext.set({ ...context, licenseContext });
-        }));
+        return this.run(obs$).pipe(
+            take(1),
+            tap((page: Page<LicenseListWrapper>) => {
+                const licenses = page?._embedded?.licenseDtoList;
+                licenseContext.entities = licenses;
+                licenseContext.pagination = PageUtil.getPagination(page);
+                this.entityContext.set({ ...context, licenseContext });
+            }));
     }
 
     private deleteLicense(event: LicenseEvent): Observable<Page<LicenseListWrapper>> {

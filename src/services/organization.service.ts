@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiConnector } from '../connectors/api.connector';
 import { OrganizationSearchCriteria } from '../criteria/organization-search-criteria';
+import { Organization } from '../dtos/organization';
 import { OrganizationListWrapper } from '../dtos/organization-list-wrapper';
 import { Page } from '../dtos/page';
 import { SearchEvent } from '../events/search.event';
 import { EntityService } from './entity.service';
 import { SearchService } from './search.service';
-import { Organization } from '../dtos/organization';
 
 @Injectable({
     providedIn: 'root'
 })
-export class OrganizationService extends EntityService<Organization, OrganizationSearchCriteria, OrganizationListWrapper> {
+export class OrganizationService extends EntityService<Organization, OrganizationSearchCriteria> {
 
     constructor(protected override readonly searchService: SearchService, private readonly apiConnector: ApiConnector) {
         super(searchService);
