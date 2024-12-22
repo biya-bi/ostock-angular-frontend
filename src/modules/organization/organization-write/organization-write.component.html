@@ -1,4 +1,4 @@
-<ng-container *ngIf="context() as context">
+<ng-container *ngIf="context">
     <form *ngIf="formGroup" [formGroup]="formGroup"
         (ngSubmit)="manage.emit({entity:formGroup.value,operation:context.operation})">
         <div ngbAccordion>
@@ -71,14 +71,16 @@
                 </div>
             </div>
             <div *ngIf="formGroup.value?._links?.licenses?.href"
-                (shown)="loadLicenses.emit(formGroup.value._links.licenses.href)" ngbAccordionItem>
+                (shown)="searchLicenses.emit({searchCriteria: context.licenseContext.searchCriteria, pageRequest: context.licenseContext.pagination.request, uri: formGroup.value._links.licenses.href})"
+                ngbAccordionItem>
                 <h2 ngbAccordionHeader>
                     <button ngbAccordionButton>{{ 'general.licenses' | translate }}</button>
                 </h2>
                 <div ngbAccordionCollapse>
                     <div ngbAccordionBody>
-                        <app-license-list [busy]="busy" [entities]="licenses" [organization]="formGroup.value"
-                            (manage)="writeLicense.emit($event)"></app-license-list>
+                        <app-license-list [enableManualContext]="true" [context]="context.licenseContext" [busy]="busy"
+                            (manage)="writeLicense.emit($event)" (pageChange)="licensePageChange.emit($event)"
+                            (search)="searchLicenses.emit($event)" />
                     </div>
                 </div>
             </div>

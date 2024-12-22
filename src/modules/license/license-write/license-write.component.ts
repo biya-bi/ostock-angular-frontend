@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { LicenseContext } from '../../../contexts/license.context';
 import { License } from '../../../dtos/license';
 import { Organization } from '../../../dtos/organization';
@@ -17,9 +16,9 @@ export class LicenseWriteComponent extends LicenseViewComponent {
 
 	formGroup: FormGroup;
 
-	readonly searchOrganizationSubject = new Subject<string>();
-
 	protected override onContextChange(context: LicenseContext): void {
+		super.onContextChange(context);
+
 		const entity: License = context?.selectedEntity ? context.selectedEntity : {} as License;
 
 		this.formGroup = new FormGroup({

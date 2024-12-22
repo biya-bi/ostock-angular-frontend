@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { OrganizationContext } from '../../../contexts/organization.context';
 import { OrganizationViewComponent } from '../organization-view.component';
@@ -14,6 +14,8 @@ export class OrganizationWriteComponent extends OrganizationViewComponent {
     formGroup: FormGroup;
 
     protected override onContextChange(context: OrganizationContext): void {
+        super.onContextChange(context);
+
         const entity = context?.selectedEntity;
 
         this.formGroup = new FormGroup({

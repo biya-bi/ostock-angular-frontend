@@ -1,22 +1,18 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { License } from '../../dtos/license';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { OrganizationContext } from '../../contexts/organization.context';
+import { OrganizationSearchCriteria } from '../../criteria/organization-search-criteria';
 import { Organization } from '../../dtos/organization';
+import { LicenseSearchEvent } from '../../events/license-search.event';
+import { LicenseEvent } from '../../events/license.event';
 import { OrganizationEvent } from '../../events/organization.event';
 import { EntityViewComponent } from '../../views/entity-view.component';
-import { LicenseListComponent } from '../license/license-list/license-list.component';
-import { LicenseEvent } from '../../events/license.event';
-import { OrganizationSearchCriteria } from '../../criteria/organization-search-criteria';
-import { OrganizationContext } from '../../contexts/organization.context';
 
 @Component({
   template: '',
   standalone: false
 })
 export abstract class OrganizationViewComponent extends EntityViewComponent<Organization, OrganizationEvent, OrganizationSearchCriteria, OrganizationContext> {
-  @Input() licenses: License[];
-
   @Output() writeLicense = new EventEmitter<LicenseEvent>();
-  @Output() loadLicenses = new EventEmitter<string>();
-
-  @ViewChild(LicenseListComponent) licenseListComponent: LicenseListComponent;
+  @Output() licensePageChange = new EventEmitter<number>();
+  @Output() searchLicenses = new EventEmitter<LicenseSearchEvent>();
 }

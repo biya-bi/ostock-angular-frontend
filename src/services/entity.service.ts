@@ -9,16 +9,16 @@ export abstract class EntityService<T, U extends SearchCriteria, V extends ListW
 
     constructor(protected readonly searchService: SearchService) { }
 
-    read(searchEvent: SearchEvent<U>): Observable<Page<V>> {
+    read(searchEvent: SearchEvent<U>, uri?: string): Observable<Page<V>> {
         const { searchCriteria, pageRequest } = searchEvent;
 
         const criteria = this.searchService.parseCriteria(searchCriteria);
         const request = this.searchService.parsePageRequest(pageRequest);
 
-        return this.onRead({ searchCriteria: criteria, pageRequest: request });
+        return this.onRead({ searchCriteria: criteria, pageRequest: request }, uri);
     }
 
-    protected abstract onRead(searchEvent: SearchEvent<U>): Observable<Page<V>>;
+    protected abstract onRead(searchEvent: SearchEvent<U>, uri?: string): Observable<Page<V>>;
 
     abstract create(entity: T): Observable<T>;
 

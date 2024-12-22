@@ -18,24 +18,24 @@ export class LicenseService extends EntityService<License, LicenseSearchCriteria
         super(searchService);
     }
 
-    protected override onRead(searchEvent: SearchEvent<LicenseSearchCriteria>): Observable<Page<LicenseListWrapper>> {
+    protected override onRead(searchEvent: SearchEvent<LicenseSearchCriteria>, uri?: string): Observable<Page<LicenseListWrapper>> {
         const { searchCriteria, pageRequest } = searchEvent;
-        return this.apiConnector.readLicenses(searchCriteria, pageRequest);
+        return this.apiConnector.readLicenses(searchCriteria, pageRequest, uri);
     }
 
     override create(entity: License): Observable<License> {
-		return this.apiConnector.createLicense(entity, entity.organization._links.addLicense.href);
-	}
+        return this.apiConnector.createLicense(entity, entity.organization._links.addLicense.href);
+    }
 
-	override update(entity: License): Observable<License> {
-		return this.apiConnector.updateLicense(entity);
-	}
+    override update(entity: License): Observable<License> {
+        return this.apiConnector.updateLicense(entity);
+    }
 
-	override delete(uri: string): Observable<void> {
-		return this.apiConnector.delete(uri);
-	}
+    override delete(uri: string): Observable<void> {
+        return this.apiConnector.delete(uri);
+    }
 
-	override readByUri(uri: string): Observable<License> {
-		return this.apiConnector.readLicense(uri);
-	}
+    override readByUri(uri: string): Observable<License> {
+        return this.apiConnector.readLicense(uri);
+    }
 }

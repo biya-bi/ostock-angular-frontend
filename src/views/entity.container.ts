@@ -11,19 +11,18 @@ import { EntityEvent } from '../events/entity.event';
 import { SearchEvent } from '../events/search.event';
 import { SortEvent } from '../events/sort.event';
 import { Operation } from '../models/operation';
-import { PageRange } from '../models/page-range';
-import { Pagination } from '../models/pagination';
+import { EntityService } from '../services/entity.service';
 import { SearchService } from '../services/search.service';
 import { SortingService } from '../services/sorting.service';
+import { PageUtil } from '../util/PageUtil';
 import { BaseComponent } from './base.component';
 import { EntityListViewComponent } from './entity-list-view.component';
 import { EntityViewComponent } from './entity-view.component';
 import { ViewComponent } from './view.component';
-import { EntityService } from '../services/entity.service';
 
-export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>, U extends EntityEvent<T>, V extends SearchCriteria, W extends ListWrapper, X extends EntityContext<T, V>, Y extends EntityService<T, V, W>> extends BaseComponent {
+export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>, U extends EntityEvent<T>, V extends SearchCriteria, W extends ListWrapper, X extends EntityContext<T, V>, Y extends EntityService<T, V, W>, Z extends SearchEvent<V>> extends BaseComponent {
     private readonly busySubject = new Subject<boolean>();
-    private readonly searchEventSubject = new Subject<SearchEvent<V>>();
+    private readonly searchEventSubject = new Subject<Z>();
 
     private readonly page$: Observable<Page<W>> = this.searchEventSubject.pipe(switchMap(e => this.run(this.entityService.read(e))));
 
@@ -51,7 +50,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
     protected abstract retrieveEntities(page: Page<W>): T[];
     protected abstract getEntityListPath(): string;
 
-    protected subscribeToEntityListViewEvents(component: EntityListViewComponent<T, U, V, X>) {
+    protected subscribeToEntityListViewEvents(component: EntityListViewComponent<T, U, V, X, Z>) {
         this.page$.pipe(takeUntil(component.destroy$), tap(page => this.onPage(page, component))).subscribe();
         component.manage.pipe(takeUntil(component.destroy$), switchMap(event => this.writeEntity(event)), tap(() => this.search())).subscribe();
         component.search.pipe(takeUntil(component.destroy$), debounceTime(1000), tap(event => this.searchEventSubject.next(event))).subscribe();
@@ -133,13 +132,13 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         }
     }
 
-    private onPage(page: Page<W>, component: EntityListViewComponent<T, U, V, X>): void {
+    private onPage(page: Page<W>, component: EntityListViewComponent<T, U, V, X, Z>): void {
         const entities = this.sort(component, null, this.retrieveEntities(page));
         const context = this.getContext();
-        this.entityContext.set({ ...context, entities, pagination: this.getPagination(page) } as X);
+        this.entityContext.set({ ...context, entities, pagination: PageUtil.getPagination(page) } as X);
     }
 
-    private onSort(component: EntityListViewComponent<T, U, V, X>, event: SortEvent): void {
+    private onSort(component: EntityListViewComponent<T, U, V, X, Z>, event: SortEvent): void {
         if (!event) {
             return;
         }
@@ -155,7 +154,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         this.entityContext.set({ ...context, entities } as X);
     }
 
-    private sort(component: EntityListViewComponent<T, U, V, X>, event: SortEvent, entities: T[]): T[] {
+    private sort(component: EntityListViewComponent<T, U, V, X, Z>, event: SortEvent, entities: T[]): T[] {
         if (!event) {
             event = this.getSortEvent(component);
             if (!event) {
@@ -181,7 +180,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         return this.sortingService.sort(entities, attribute, direction);
     }
 
-    private getSortEvent(component: EntityListViewComponent<T, U, V, X>): SortEvent {
+    private getSortEvent(component: EntityListViewComponent<T, U, V, X, Z>): SortEvent {
         for (let i = 0; i < component.headers.length; i++) {
             const header = component.headers.get(i);
             if (header.direction !== '') {
@@ -191,35 +190,14 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         return null;
     }
 
-    protected getPagination(page: Page<W>): Pagination {
-        return {
-            request: {
-                pageNumber: page.number + 1,
-                pageSize: page.size
-            },
-            totalElements: page.totalElements,
-            range: this.getPageRange(page)
-        };
-    }
-
-    private getPageRange(page: Page<W>): PageRange {
-        const { number, size, totalElements } = page;
-        if (!totalElements) {
-            return null;
-        }
-        const start = number * size + 1
-        const end = Math.min(start + size - 1, totalElements);
-        return { start, end };
-    }
-
     private search(): void {
         this.searchEventSubject.pipe(
             take(1),
             tap(searchEvent => {
-                let event: SearchEvent<V> = searchEvent;
+                let event: Z = searchEvent;
                 if (!event) {
                     const context = this.getContext();
-                    event = { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request };
+                    event = { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request } as Z;
                 }
                 this.searchEventSubject.next({ ...event });
             })).subscribe();
@@ -240,13 +218,13 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
             request = {};
         }
         request.pageNumber = pageNumber;
-        const event = { searchCriteria: context.searchCriteria, pageRequest: request };
+        const event = { searchCriteria: context.searchCriteria, pageRequest: request } as Z;
         this.searchEventSubject.next(event);
     }
 
-    private getSearchEvent(): SearchEvent<V> {
+    private getSearchEvent(): Z {
         const context = this.getContext();
-        return { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request };
+        return { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request } as Z;
     }
 
     private onSelect(entity: T): void {

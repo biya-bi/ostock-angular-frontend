@@ -8,6 +8,7 @@ import { LicenseLinks } from '../../../dtos/license-links';
 import { LicenseListWrapper } from '../../../dtos/license-list-wrapper';
 import { Organization } from '../../../dtos/organization';
 import { Page } from '../../../dtos/page';
+import { LicenseSearchEvent } from '../../../events/license-search.event';
 import { LicenseEvent } from '../../../events/license.event';
 import { Operation } from '../../../models/operation';
 import { LicenseService } from '../../../services/license.service';
@@ -23,7 +24,7 @@ import { LicenseWriteComponent } from '../license-write/license-write.component'
 	templateUrl: './license.container.html',
 	standalone: false
 })
-export class LicenseContainer extends EntityContainer<LicenseLinks, License, LicenseEvent, LicenseSearchCriteria, LicenseListWrapper, LicenseContext, LicenseService> {
+export class LicenseContainer extends EntityContainer<LicenseLinks, License, LicenseEvent, LicenseSearchCriteria, LicenseListWrapper, LicenseContext, LicenseService, LicenseSearchEvent> {
 
 	constructor(
 		protected override readonly router: Router,

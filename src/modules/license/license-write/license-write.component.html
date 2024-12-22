@@ -1,4 +1,4 @@
-<ng-container *ngIf="context() as context">
+<ng-container *ngIf="context">
 	<form *ngIf="formGroup" [formGroup]="formGroup"
 		(ngSubmit)="manage.emit({entity:formGroup.value, operation:context.operation})">
 
@@ -58,9 +58,8 @@
 				</div>
 				<div class="col">
 					<ng-select *ngIf="context.operation===Operation.Create"
-						typeToSearchText="{{'data.prompts.typeToSearch' | translate }}"
-						[typeahead]="searchOrganizationSubject" [items]="context.organizations" bindLabel="name"
-						placeholder="{{'license.messages.selectOrganization' | translate }}"
+						typeToSearchText="{{'data.prompts.typeToSearch' | translate }}" [items]="context.organizations"
+						bindLabel="name" placeholder="{{'license.messages.selectOrganization' | translate }}"
 						formControlName="organization" />
 
 					<a *ngIf="context.selectedEntity?.organization && context.operation===Operation.Update"

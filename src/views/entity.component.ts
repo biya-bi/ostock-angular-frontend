@@ -7,7 +7,6 @@ import { SearchCriteria } from '../criteria/search-criteria';
 import { EntityEvent } from '../events/entity.event';
 import { Operation } from '../models/operation';
 import { ViewComponent } from './view.component';
-
 @Component({
   template: '',
   standalone: false
@@ -18,10 +17,11 @@ export abstract class EntityComponent<T, U extends EntityEvent<T>, V extends Sea
   Operation = Operation;
 
   @Input() busy: boolean;
+  @Input() enableManualContext: boolean;
+  @Input() context: W;
 
-  readonly context = inject(ROUTER_OUTLET_DATA) as Signal<W>;
-
-  private context$ = toObservable(this.context);
+  private readonly contextSignal = inject(ROUTER_OUTLET_DATA) as Signal<W>;
+  private readonly context$ = toObservable(this.contextSignal);
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -29,5 +29,8 @@ export abstract class EntityComponent<T, U extends EntityEvent<T>, V extends Sea
   }
 
   protected onContextChange(context: W): void {
+    if (!this.enableManualContext) {
+      this.context = context;
+    }
   }
 }

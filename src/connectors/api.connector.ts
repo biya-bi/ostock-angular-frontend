@@ -73,8 +73,9 @@ export class ApiConnector {
     return this.httpClient.put<License>(license._links.update.href, license, this.getOptions());
   }
 
-  readLicenses(searchCriteria: LicenseSearchCriteria, pageRequest: PageRequest): Observable<Page<LicenseListWrapper>> {
-    return this.httpClient.post<Page<LicenseListWrapper>>(`${this.licenseEndpoint}/search`, searchCriteria, this.getOptions(pageRequest));
+  readLicenses(searchCriteria: LicenseSearchCriteria, pageRequest: PageRequest, uri?: string): Observable<Page<LicenseListWrapper>> {
+    const endpoint = uri || `${this.licenseEndpoint}/search`;
+    return this.httpClient.post<Page<LicenseListWrapper>>(endpoint, searchCriteria, this.getOptions(pageRequest));
   }
 
 }

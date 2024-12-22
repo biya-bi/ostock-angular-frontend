@@ -1,5 +1,5 @@
 <h1 class="d-flex justify-content-center mb-4">{{'general.licenses' | translate }}</h1>
-<div class="container d-flex justify-content-center" *ngIf="context() as context">
+<div class="container d-flex justify-content-center" *ngIf="context">
 	<div class="row justify-content-center">
 		<div class="col">
 			<div class="d-flex">
@@ -86,7 +86,7 @@
 							</td>
 							<td>
 								<a href="#" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal"
-									class="link-danger" (click)="selectedEntity=entity">{{ 'operations.delete' |
+									class="link-danger" (click)="context.selectedEntity=entity">{{ 'operations.delete' |
 									translate }}
 								</a>
 							</td>
