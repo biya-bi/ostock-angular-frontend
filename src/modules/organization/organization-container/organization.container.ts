@@ -7,7 +7,6 @@ import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria
 import { OrganizationSearchCriteria } from '../../../criteria/organization-search-criteria';
 import { LicenseListWrapper } from '../../../dtos/license-list-wrapper';
 import { Organization } from '../../../dtos/organization';
-import { OrganizationLinks } from '../../../dtos/organization-links';
 import { OrganizationListWrapper } from '../../../dtos/organization-list-wrapper';
 import { Page } from '../../../dtos/page';
 import { LicenseEvent } from '../../../events/license.event';
@@ -29,7 +28,7 @@ import { OrganizationViewComponent } from '../organization-view.component';
     styleUrl: './organization.container.css',
     standalone: false
 })
-export class OrganizationContainer extends EntityContainer<OrganizationLinks, Organization, OrganizationEvent, OrganizationSearchCriteria, OrganizationListWrapper, OrganizationContext, OrganizationService, SearchEvent<OrganizationSearchCriteria>> {
+export class OrganizationContainer extends EntityContainer<Organization, OrganizationEvent, OrganizationSearchCriteria, OrganizationListWrapper, OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
 
     constructor(
         protected override readonly router: Router,

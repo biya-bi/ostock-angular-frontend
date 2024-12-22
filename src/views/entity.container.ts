@@ -20,9 +20,9 @@ import { EntityListViewComponent } from './entity-list-view.component';
 import { EntityViewComponent } from './entity-view.component';
 import { ViewComponent } from './view.component';
 
-export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>, U extends EntityEvent<T>, V extends SearchCriteria, W extends ListWrapper, X extends EntityContext<T, V>, Y extends EntityService<T, V, W>, Z extends SearchEvent<V>> extends BaseComponent {
+export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends EntityEvent<T>, V extends SearchCriteria, W extends ListWrapper, X extends EntityContext<T, V>, Y extends SearchEvent<V>> extends BaseComponent {
     private readonly busySubject = new Subject<boolean>();
-    private readonly searchEventSubject = new Subject<Z>();
+    private readonly searchEventSubject = new Subject<Y>();
 
     private readonly page$: Observable<Page<W>> = this.searchEventSubject.pipe(switchMap(e => this.run(this.entityService.read(e))));
 
@@ -34,7 +34,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         protected readonly activatedRoute: ActivatedRoute,
         protected readonly searchService: SearchService,
         protected readonly sortingService: SortingService<T>,
-        protected readonly entityService: Y) {
+        protected readonly entityService: EntityService<T, V, W>) {
         super();
     }
 
@@ -50,7 +50,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
     protected abstract retrieveEntities(page: Page<W>): T[];
     protected abstract getEntityListPath(): string;
 
-    protected subscribeToEntityListViewEvents(component: EntityListViewComponent<T, U, V, X, Z>) {
+    protected subscribeToEntityListViewEvents(component: EntityListViewComponent<T, U, V, X, Y>) {
         this.page$.pipe(takeUntil(component.destroy$), tap(page => this.onPage(page, component))).subscribe();
         component.manage.pipe(takeUntil(component.destroy$), switchMap(event => this.writeEntity(event)), tap(() => this.search())).subscribe();
         component.search.pipe(takeUntil(component.destroy$), debounceTime(1000), tap(event => this.searchEventSubject.next(event))).subscribe();
@@ -132,13 +132,13 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         }
     }
 
-    private onPage(page: Page<W>, component: EntityListViewComponent<T, U, V, X, Z>): void {
+    private onPage(page: Page<W>, component: EntityListViewComponent<T, U, V, X, Y>): void {
         const entities = this.sort(component, null, this.retrieveEntities(page));
         const context = this.getContext();
         this.entityContext.set({ ...context, entities, pagination: PageUtil.getPagination(page) } as X);
     }
 
-    private onSort(component: EntityListViewComponent<T, U, V, X, Z>, event: SortEvent): void {
+    private onSort(component: EntityListViewComponent<T, U, V, X, Y>, event: SortEvent): void {
         if (!event) {
             return;
         }
@@ -154,7 +154,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         this.entityContext.set({ ...context, entities } as X);
     }
 
-    private sort(component: EntityListViewComponent<T, U, V, X, Z>, event: SortEvent, entities: T[]): T[] {
+    private sort(component: EntityListViewComponent<T, U, V, X, Y>, event: SortEvent, entities: T[]): T[] {
         if (!event) {
             event = this.getSortEvent(component);
             if (!event) {
@@ -180,7 +180,7 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         return this.sortingService.sort(entities, attribute, direction);
     }
 
-    private getSortEvent(component: EntityListViewComponent<T, U, V, X, Z>): SortEvent {
+    private getSortEvent(component: EntityListViewComponent<T, U, V, X, Y>): SortEvent {
         for (let i = 0; i < component.headers.length; i++) {
             const header = component.headers.get(i);
             if (header.direction !== '') {
@@ -194,10 +194,10 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
         this.searchEventSubject.pipe(
             take(1),
             tap(searchEvent => {
-                let event: Z = searchEvent;
+                let event: Y = searchEvent;
                 if (!event) {
                     const context = this.getContext();
-                    event = { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request } as Z;
+                    event = { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request } as Y;
                 }
                 this.searchEventSubject.next({ ...event });
             })).subscribe();
@@ -218,13 +218,13 @@ export abstract class EntityContainer<S extends EntityLinks, T extends Entity<S>
             request = {};
         }
         request.pageNumber = pageNumber;
-        const event = { searchCriteria: context.searchCriteria, pageRequest: request } as Z;
+        const event = { searchCriteria: context.searchCriteria, pageRequest: request } as Y;
         this.searchEventSubject.next(event);
     }
 
-    private getSearchEvent(): Z {
+    private getSearchEvent(): Y {
         const context = this.getContext();
-        return { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request } as Z;
+        return { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request } as Y;
     }
 
     private onSelect(entity: T): void {

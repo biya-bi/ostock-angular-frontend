@@ -4,7 +4,6 @@ import { map, Observable, take, takeUntil, tap } from 'rxjs';
 import { LicenseContext } from '../../../contexts/license.context';
 import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
 import { License } from '../../../dtos/license';
-import { LicenseLinks } from '../../../dtos/license-links';
 import { LicenseListWrapper } from '../../../dtos/license-list-wrapper';
 import { Organization } from '../../../dtos/organization';
 import { Page } from '../../../dtos/page';
@@ -24,7 +23,7 @@ import { LicenseWriteComponent } from '../license-write/license-write.component'
 	templateUrl: './license.container.html',
 	standalone: false
 })
-export class LicenseContainer extends EntityContainer<LicenseLinks, License, LicenseEvent, LicenseSearchCriteria, LicenseListWrapper, LicenseContext, LicenseService, LicenseSearchEvent> {
+export class LicenseContainer extends EntityContainer<License, LicenseEvent, LicenseSearchCriteria, LicenseListWrapper, LicenseContext, LicenseSearchEvent> {
 
 	constructor(
 		protected override readonly router: Router,
