@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, Observable, switchMap, take, takeUntil, tap } from 'rxjs';
+import { debounceTime, filter, Observable, switchMap, take, takeUntil, tap } from 'rxjs';
 import { LicenseContext } from '../../../contexts/license.context';
 import { OrganizationContext } from '../../../contexts/organization.context';
 import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
@@ -51,7 +51,11 @@ export class OrganizationContainer extends EntityContainer<OrganizationLinks, Or
 
     protected override subscribeToEntityViewEvents(component: OrganizationViewComponent): void {
         super.subscribeToEntityViewEvents(component);
-        component.writeLicense.pipe(takeUntil(this.destroy$), switchMap(event => this.writeLicense(event))).subscribe();
+        component.writeLicense.pipe(
+            takeUntil(this.destroy$),
+            filter(event => event.operation === Operation.Delete),
+            switchMap(event => this.deleteLicense(event)))
+            .subscribe();
         component.licensePageChange.pipe(
             takeUntil(component.destroy$),
             debounceTime(1000),
@@ -92,19 +96,8 @@ export class OrganizationContainer extends EntityContainer<OrganizationLinks, Or
         }));
     }
 
-    private writeLicense(event: LicenseEvent): Observable<Page<LicenseListWrapper>> {
-        let obs$: Observable<any>;
-        switch (event.operation) {
-            case Operation.Create:
-                obs$ = this.licenseService.create(event.entity);
-                break;
-            case Operation.Update:
-                obs$ = this.licenseService.update(event.entity);
-                break;
-            case Operation.Delete:
-                obs$ = this.licenseService.delete(event.entity._links.delete.href);
-                break;
-        }
+    private deleteLicense(event: LicenseEvent): Observable<Page<LicenseListWrapper>> {
+        const obs$: Observable<void> = this.licenseService.delete(event.entity._links.delete.href);
         return this.run(obs$).pipe(take(1), switchMap(() => this.readLicenses()), tap(() => event.closeElement.click()));
     }
 
