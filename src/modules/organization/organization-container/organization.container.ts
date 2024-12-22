@@ -27,7 +27,7 @@ import { OrganizationViewComponent } from '../organization-view.component';
     styleUrl: './organization.container.css',
     standalone: false
 })
-export class OrganizationContainer extends EntityContainer<Organization, OrganizationSearchCriteria, OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
+export class OrganizationContainer extends EntityContainer<Organization, OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
 
     constructor(
         protected override readonly router: Router,

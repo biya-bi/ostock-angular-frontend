@@ -20,21 +20,21 @@ import { EntityViewComponent } from './entity-view.component';
 import { ViewComponent } from './view.component';
 import { EntityEvent } from '../events/entity.event';
 
-export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends SearchCriteria, V extends EntityContext<T, U>, W extends SearchEvent<U>> extends BaseComponent {
+export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends EntityContext<T, SearchCriteria>, V extends SearchEvent<SearchCriteria>> extends BaseComponent {
     private readonly busySubject = new Subject<boolean>();
-    private readonly searchEventSubject = new Subject<W>();
+    private readonly searchEventSubject = new Subject<V>();
 
     private readonly page$: Observable<Page<ListWrapper>> = this.searchEventSubject.pipe(switchMap(e => this.run(this.entityService.read(e))));
 
     readonly busy$ = this.busySubject.asObservable();
-    readonly entityContext: WritableSignal<V> = this.getEntityContextSignal();
+    readonly entityContext: WritableSignal<U> = this.getEntityContextSignal();
 
     constructor(
         protected readonly router: Router,
         protected readonly activatedRoute: ActivatedRoute,
         protected readonly searchService: SearchService,
         protected readonly sortingService: SortingService<T>,
-        protected readonly entityService: EntityService<T, U>) {
+        protected readonly entityService: EntityService<T, SearchCriteria>) {
         super();
     }
 
@@ -50,7 +50,7 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends S
     protected abstract retrieveEntities(page: Page<ListWrapper>): T[];
     protected abstract getEntityListPath(): string;
 
-    protected subscribeToEntityListViewEvents(component: EntityListViewComponent<T, U, V, W>) {
+    protected subscribeToEntityListViewEvents(component: EntityListViewComponent<T, U, V>) {
         this.page$.pipe(takeUntil(component.destroy$), tap(page => this.onPage(page, component))).subscribe();
         component.manage.pipe(takeUntil(component.destroy$), switchMap(event => this.writeEntity(event)), tap(() => this.search())).subscribe();
         component.search.pipe(takeUntil(component.destroy$), debounceTime(1000), tap(event => this.searchEventSubject.next(event))).subscribe();
@@ -59,7 +59,7 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends S
         component.select.pipe(takeUntil(component.destroy$), tap((entity) => this.onSelect(entity))).subscribe();
     }
 
-    protected subscribeToEntityViewEvents(component: EntityViewComponent<T, U, V>) {
+    protected subscribeToEntityViewEvents(component: EntityViewComponent<T, U>) {
         component.manage.pipe(takeUntil(component.destroy$), switchMap(event => this.writeEntity(event))).subscribe();
     }
 
@@ -89,7 +89,7 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends S
             tap(entity => {
                 const context = this.getContext();
                 const operation = queryParams[this.getOperationParamName()];
-                this.entityContext.set({ ...context, selectedEntity: entity, operation } as V);
+                this.entityContext.set({ ...context, selectedEntity: entity, operation } as U);
             })).subscribe();
     }
 
@@ -132,13 +132,13 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends S
         }
     }
 
-    private onPage(page: Page<ListWrapper>, component: EntityListViewComponent<T, U, V, W>): void {
+    private onPage(page: Page<ListWrapper>, component: EntityListViewComponent<T, U, V>): void {
         const entities = this.sort(component, null, this.retrieveEntities(page));
         const context = this.getContext();
-        this.entityContext.set({ ...context, entities, pagination: PageUtil.getPagination(page) } as V);
+        this.entityContext.set({ ...context, entities, pagination: PageUtil.getPagination(page) } as U);
     }
 
-    private onSort(component: EntityListViewComponent<T, U, V, W>, event: SortEvent): void {
+    private onSort(component: EntityListViewComponent<T, U, V>, event: SortEvent): void {
         if (!event) {
             return;
         }
@@ -151,10 +151,10 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends S
 
         const context = this.getContext();
 
-        this.entityContext.set({ ...context, entities } as V);
+        this.entityContext.set({ ...context, entities } as U);
     }
 
-    private sort(component: EntityListViewComponent<T, U, V, W>, event: SortEvent, entities: T[]): T[] {
+    private sort(component: EntityListViewComponent<T, U, V>, event: SortEvent, entities: T[]): T[] {
         if (!event) {
             event = this.getSortEvent(component);
             if (!event) {
@@ -180,7 +180,7 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends S
         return this.sortingService.sort(entities, attribute, direction);
     }
 
-    private getSortEvent(component: EntityListViewComponent<T, U, V, W>): SortEvent {
+    private getSortEvent(component: EntityListViewComponent<T, U, V>): SortEvent {
         for (let i = 0; i < component.headers.length; i++) {
             const header = component.headers.get(i);
             if (header.direction !== '') {
@@ -194,19 +194,19 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends S
         this.searchEventSubject.pipe(
             take(1),
             tap(searchEvent => {
-                let event: W = searchEvent;
+                let event: V = searchEvent;
                 if (!event) {
                     const context = this.getContext();
-                    event = { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request } as W;
+                    event = { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request } as V;
                 }
                 this.searchEventSubject.next({ ...event });
             })).subscribe();
     }
 
-    protected getContext(): V {
+    protected getContext(): U {
         let context = this.entityContext();
         if (!context) {
-            context = { entities: [], pagination: {} } as V;
+            context = { entities: [], pagination: {} } as U;
         }
         return context;
     }
@@ -218,22 +218,22 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends S
             request = {};
         }
         request.pageNumber = pageNumber;
-        const event = { searchCriteria: context.searchCriteria, pageRequest: request } as W;
+        const event = { searchCriteria: context.searchCriteria, pageRequest: request } as V;
         this.searchEventSubject.next(event);
     }
 
-    private getSearchEvent(): W {
+    private getSearchEvent(): V {
         const context = this.getContext();
-        return { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request } as W;
+        return { searchCriteria: context.searchCriteria, pageRequest: context.pagination?.request } as V;
     }
 
     private onSelect(entity: T): void {
         const context = this.getContext();
-        this.entityContext.set({ ...context, selectedEntity: entity } as V);
+        this.entityContext.set({ ...context, selectedEntity: entity } as U);
     }
 
-    protected getEntityContextSignal(): WritableSignal<V> {
-        return signal({ entities: [], pagination: {}, searchCriteria: {} } as V);
+    protected getEntityContextSignal(): WritableSignal<U> {
+        return signal({ entities: [], pagination: {}, searchCriteria: {} } as U);
     }
 
     protected onReadEntity(entity: T): Observable<T> {

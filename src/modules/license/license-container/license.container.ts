@@ -2,10 +2,10 @@ import { Component, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, take, takeUntil, tap } from 'rxjs';
 import { LicenseContext } from '../../../contexts/license.context';
-import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
 import { License } from '../../../dtos/license';
 import { LicenseListWrapper } from '../../../dtos/license-list-wrapper';
 import { Organization } from '../../../dtos/organization';
+import { OrganizationListWrapper } from '../../../dtos/organization-list-wrapper';
 import { Page } from '../../../dtos/page';
 import { LicenseSearchEvent } from '../../../events/license-search.event';
 import { Operation } from '../../../models/operation';
@@ -16,14 +16,13 @@ import { SortingService } from '../../../services/sorting.service';
 import { EntityViewComponent } from '../../../views/entity-view.component';
 import { EntityContainer } from '../../../views/entity.container';
 import { LicenseWriteComponent } from '../license-write/license-write.component';
-import { OrganizationListWrapper } from '../../../dtos/organization-list-wrapper';
 
 @Component({
 	selector: 'app-license-container',
 	templateUrl: './license.container.html',
 	standalone: false
 })
-export class LicenseContainer extends EntityContainer<License, LicenseSearchCriteria, LicenseContext, LicenseSearchEvent> {
+export class LicenseContainer extends EntityContainer<License, LicenseContext, LicenseSearchEvent> {
 
 	constructor(
 		protected override readonly router: Router,
@@ -53,7 +52,7 @@ export class LicenseContainer extends EntityContainer<License, LicenseSearchCrit
 			}));
 	}
 
-	protected override subscribeToEntityViewEvents(component: EntityViewComponent<License, LicenseSearchCriteria, LicenseContext>): void {
+	protected override subscribeToEntityViewEvents(component: EntityViewComponent<License, LicenseContext>): void {
 		super.subscribeToEntityViewEvents(component);
 		if (component instanceof LicenseWriteComponent && this.isOperation(Operation.Create)) {
 			this.initOrganizations().pipe(takeUntil(this.destroy$)).subscribe();

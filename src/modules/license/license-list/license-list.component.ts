@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { LicenseContext } from '../../../contexts/license.context';
-import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
 import { License } from '../../../dtos/license';
 import { LicenseSearchEvent } from '../../../events/license-search.event';
 import { EntityListViewComponent } from '../../../views/entity-list-view.component';
@@ -11,5 +10,5 @@ import { EntityListViewComponent } from '../../../views/entity-list-view.compone
 	styleUrl: './license-list.component.css',
 	standalone: false
 })
-export class LicenseListComponent extends EntityListViewComponent<License, LicenseSearchCriteria, LicenseContext, LicenseSearchEvent> {
+export class LicenseListComponent extends EntityListViewComponent<License, LicenseContext, LicenseSearchEvent> {
 }

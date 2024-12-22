@@ -11,5 +11,5 @@ import { EntityListViewComponent } from "../../../views/entity-list-view.compone
     styleUrl: './organization-list.component.css',
     standalone: false
 })
-export class OrganizationListComponent extends EntityListViewComponent<Organization, OrganizationSearchCriteria, OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
+export class OrganizationListComponent extends EntityListViewComponent<Organization, OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
 }

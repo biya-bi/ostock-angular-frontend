@@ -11,16 +11,16 @@ import { ViewComponent } from './view.component';
   template: '',
   standalone: false
 })
-export abstract class EntityComponent<T, U extends SearchCriteria, V extends EntityContext<T, U>> extends ViewComponent {
+export abstract class EntityComponent<T, U extends EntityContext<T, SearchCriteria>> extends ViewComponent {
   @Output() manage = new EventEmitter<EntityEvent<T>>();
 
   Operation = Operation;
 
   @Input() busy: boolean;
   @Input() enableManualContext: boolean;
-  @Input() context: V;
+  @Input() context: U;
 
-  private readonly contextSignal = inject(ROUTER_OUTLET_DATA) as Signal<V>;
+  private readonly contextSignal = inject(ROUTER_OUTLET_DATA) as Signal<U>;
   private readonly context$ = toObservable(this.contextSignal);
 
   override ngOnInit(): void {
@@ -28,7 +28,7 @@ export abstract class EntityComponent<T, U extends SearchCriteria, V extends Ent
     this.context$.pipe(takeUntil(this.destroy$), tap(context => this.onContextChange(context))).subscribe();
   }
 
-  protected onContextChange(context: V): void {
+  protected onContextChange(context: U): void {
     if (!this.enableManualContext) {
       this.context = context;
     }
