@@ -22,7 +22,7 @@ import { LicenseWriteComponent } from '../license-write/license-write.component'
 	templateUrl: './license.container.html',
 	standalone: false
 })
-export class LicenseContainer extends EntityContainer<License, LicenseContext, LicenseSearchEvent> {
+export class LicenseContainer extends EntityContainer<LicenseContext, LicenseSearchEvent> {
 
 	constructor(
 		protected override readonly router: Router,
