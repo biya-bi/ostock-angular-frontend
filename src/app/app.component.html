@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<div class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 text-white">
-			<span class="fw-bold">{{ 'application.name' | translate }}</span>
+			<span class="fw-bold ms-4">{{ 'application.name' | translate }}</span>
 			<div class="d-flex">
 				<app-locale-container />
 				<app-authentication-container />
@@ -9,8 +9,8 @@
 		</div>
 		<app-notification />
 	</div>
-	<div class="row">
-		<div class="col-auto">
+	<div class="row min-vh-100">
+		<div class="col-auto bg-light">
 			<app-navigation-container />
 		</div>
 		<div class="col">
