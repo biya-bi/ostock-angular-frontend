@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, Observable, switchMap, take, takeUntil, tap } from 'rxjs';
-import { ApiConnector } from '../../../connectors/api.connector';
 import { LicenseContext } from '../../../contexts/license.context';
 import { OrganizationContext } from '../../../contexts/organization.context';
 import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
@@ -38,8 +37,7 @@ export class OrganizationContainer extends EntityContainer<OrganizationLinks, Or
         protected override readonly searchService: SearchService,
         protected override readonly sortingService: SortingService<Organization>,
         protected override readonly entityService: OrganizationService,
-        private readonly licenseService: LicenseService,
-        private readonly apiConnector: ApiConnector) {
+        private readonly licenseService: LicenseService) {
         super(router, activatedRoute, searchService, sortingService, entityService);
     }
 
@@ -98,13 +96,13 @@ export class OrganizationContainer extends EntityContainer<OrganizationLinks, Or
         let obs$: Observable<any>;
         switch (event.operation) {
             case Operation.Create:
-                obs$ = this.apiConnector.createLicense(event.entity, event.entity.organization._links.licenses.href);
+                obs$ = this.licenseService.create(event.entity);
                 break;
             case Operation.Update:
-                obs$ = this.apiConnector.updateLicense(event.entity);
+                obs$ = this.licenseService.update(event.entity);
                 break;
             case Operation.Delete:
-                obs$ = this.apiConnector.delete(event.entity._links.delete.href);
+                obs$ = this.licenseService.delete(event.entity._links.delete.href);
                 break;
         }
         return this.run(obs$).pipe(take(1), switchMap(() => this.readLicenses()), tap(() => event.closeElement.click()));
