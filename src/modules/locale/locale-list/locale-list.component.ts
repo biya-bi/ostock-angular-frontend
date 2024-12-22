@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     styleUrl: './locale-list.component.css',
     standalone: false
 })
-export class localeListComponent {
+export class LocaleListComponent {
 	@Input() selectedLocale: string;
 	@Input() supportedLocales: string[];
 

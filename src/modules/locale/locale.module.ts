@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { LocaleService } from '../../services/locale.service';
 import { LocaleContainer } from './locale-container/locale.container';
-import { localeListComponent } from './locale-list/locale-list.component';
+import { LocaleListComponent } from './locale-list/locale-list.component';
 
 @NgModule({
 	declarations: [
 		LocaleContainer,
-		localeListComponent,
+		LocaleListComponent,
 	],
 	imports: [
 		CommonModule,
