@@ -7,7 +7,6 @@ import { Entity } from '../dtos/entity';
 import { EntityLinks } from '../dtos/entity-links';
 import { ListWrapper } from '../dtos/list-wrapper';
 import { Page } from '../dtos/page';
-import { EntityEvent } from '../events/entity.event';
 import { SearchEvent } from '../events/search.event';
 import { SortEvent } from '../events/sort.event';
 import { Operation } from '../models/operation';
@@ -19,8 +18,9 @@ import { BaseComponent } from './base.component';
 import { EntityListViewComponent } from './entity-list-view.component';
 import { EntityViewComponent } from './entity-view.component';
 import { ViewComponent } from './view.component';
+import { EntityEvent } from '../events/entity.event';
 
-export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends EntityEvent<T>, V extends SearchCriteria, W extends ListWrapper, X extends EntityContext<T, V>, Y extends SearchEvent<V>> extends BaseComponent {
+export abstract class EntityContainer<T extends Entity<EntityLinks>, V extends SearchCriteria, W extends ListWrapper, X extends EntityContext<T, V>, Y extends SearchEvent<V>> extends BaseComponent {
     private readonly busySubject = new Subject<boolean>();
     private readonly searchEventSubject = new Subject<Y>();
 
@@ -50,7 +50,7 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends E
     protected abstract retrieveEntities(page: Page<W>): T[];
     protected abstract getEntityListPath(): string;
 
-    protected subscribeToEntityListViewEvents(component: EntityListViewComponent<T, U, V, X, Y>) {
+    protected subscribeToEntityListViewEvents(component: EntityListViewComponent<T, V, X, Y>) {
         this.page$.pipe(takeUntil(component.destroy$), tap(page => this.onPage(page, component))).subscribe();
         component.manage.pipe(takeUntil(component.destroy$), switchMap(event => this.writeEntity(event)), tap(() => this.search())).subscribe();
         component.search.pipe(takeUntil(component.destroy$), debounceTime(1000), tap(event => this.searchEventSubject.next(event))).subscribe();
@@ -59,7 +59,7 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends E
         component.select.pipe(takeUntil(component.destroy$), tap((entity) => this.onSelect(entity))).subscribe();
     }
 
-    protected subscribeToEntityViewEvents(component: EntityViewComponent<T, U, V, X>) {
+    protected subscribeToEntityViewEvents(component: EntityViewComponent<T, V, X>) {
         component.manage.pipe(takeUntil(component.destroy$), switchMap(event => this.writeEntity(event))).subscribe();
     }
 
@@ -93,7 +93,7 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends E
             })).subscribe();
     }
 
-    private writeEntity(event: U): Observable<void> {
+    private writeEntity(event: EntityEvent<T>): Observable<void> {
         let obs$: Observable<any>;
         switch (event.operation) {
             case Operation.Create:
@@ -132,13 +132,13 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends E
         }
     }
 
-    private onPage(page: Page<W>, component: EntityListViewComponent<T, U, V, X, Y>): void {
+    private onPage(page: Page<W>, component: EntityListViewComponent<T, V, X, Y>): void {
         const entities = this.sort(component, null, this.retrieveEntities(page));
         const context = this.getContext();
         this.entityContext.set({ ...context, entities, pagination: PageUtil.getPagination(page) } as X);
     }
 
-    private onSort(component: EntityListViewComponent<T, U, V, X, Y>, event: SortEvent): void {
+    private onSort(component: EntityListViewComponent<T, V, X, Y>, event: SortEvent): void {
         if (!event) {
             return;
         }
@@ -154,7 +154,7 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends E
         this.entityContext.set({ ...context, entities } as X);
     }
 
-    private sort(component: EntityListViewComponent<T, U, V, X, Y>, event: SortEvent, entities: T[]): T[] {
+    private sort(component: EntityListViewComponent<T, V, X, Y>, event: SortEvent, entities: T[]): T[] {
         if (!event) {
             event = this.getSortEvent(component);
             if (!event) {
@@ -180,7 +180,7 @@ export abstract class EntityContainer<T extends Entity<EntityLinks>, U extends E
         return this.sortingService.sort(entities, attribute, direction);
     }
 
-    private getSortEvent(component: EntityListViewComponent<T, U, V, X, Y>): SortEvent {
+    private getSortEvent(component: EntityListViewComponent<T, V, X, Y>): SortEvent {
         for (let i = 0; i < component.headers.length; i++) {
             const header = component.headers.get(i);
             if (header.direction !== '') {

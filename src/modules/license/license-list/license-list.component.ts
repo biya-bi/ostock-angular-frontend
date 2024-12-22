@@ -3,7 +3,6 @@ import { LicenseContext } from '../../../contexts/license.context';
 import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
 import { License } from '../../../dtos/license';
 import { LicenseSearchEvent } from '../../../events/license-search.event';
-import { LicenseEvent } from '../../../events/license.event';
 import { EntityListViewComponent } from '../../../views/entity-list-view.component';
 
 @Component({
@@ -12,5 +11,5 @@ import { EntityListViewComponent } from '../../../views/entity-list-view.compone
 	styleUrl: './license-list.component.css',
 	standalone: false
 })
-export class LicenseListComponent extends EntityListViewComponent<License, LicenseEvent, LicenseSearchCriteria, LicenseContext, LicenseSearchEvent> {
+export class LicenseListComponent extends EntityListViewComponent<License, LicenseSearchCriteria, LicenseContext, LicenseSearchEvent> {
 }

@@ -1,10 +1,9 @@
 import { Component } from "@angular/core";
+import { OrganizationContext } from "../../../contexts/organization.context";
 import { OrganizationSearchCriteria } from "../../../criteria/organization-search-criteria";
 import { Organization } from "../../../dtos/organization";
-import { OrganizationEvent } from "../../../events/organization.event";
-import { EntityListViewComponent } from "../../../views/entity-list-view.component";
-import { OrganizationContext } from "../../../contexts/organization.context";
 import { SearchEvent } from "../../../events/search.event";
+import { EntityListViewComponent } from "../../../views/entity-list-view.component";
 
 @Component({
     selector: 'app-organization-list',
@@ -12,5 +11,5 @@ import { SearchEvent } from "../../../events/search.event";
     styleUrl: './organization-list.component.css',
     standalone: false
 })
-export class OrganizationListComponent extends EntityListViewComponent<Organization, OrganizationEvent, OrganizationSearchCriteria, OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
+export class OrganizationListComponent extends EntityListViewComponent<Organization, OrganizationSearchCriteria, OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
 }

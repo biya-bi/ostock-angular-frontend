@@ -8,7 +8,6 @@ import { LicenseListWrapper } from '../../../dtos/license-list-wrapper';
 import { Organization } from '../../../dtos/organization';
 import { Page } from '../../../dtos/page';
 import { LicenseSearchEvent } from '../../../events/license-search.event';
-import { LicenseEvent } from '../../../events/license.event';
 import { Operation } from '../../../models/operation';
 import { LicenseService } from '../../../services/license.service';
 import { OrganizationService } from '../../../services/organization.service';
@@ -23,7 +22,7 @@ import { LicenseWriteComponent } from '../license-write/license-write.component'
 	templateUrl: './license.container.html',
 	standalone: false
 })
-export class LicenseContainer extends EntityContainer<License, LicenseEvent, LicenseSearchCriteria, LicenseListWrapper, LicenseContext, LicenseSearchEvent> {
+export class LicenseContainer extends EntityContainer<License, LicenseSearchCriteria, LicenseListWrapper, LicenseContext, LicenseSearchEvent> {
 
 	constructor(
 		protected override readonly router: Router,
@@ -51,7 +50,7 @@ export class LicenseContainer extends EntityContainer<License, LicenseEvent, Lic
 		}));
 	}
 
-	protected override subscribeToEntityViewEvents(component: EntityViewComponent<License, LicenseEvent, LicenseSearchCriteria, LicenseContext>): void {
+	protected override subscribeToEntityViewEvents(component: EntityViewComponent<License, LicenseSearchCriteria, LicenseContext>): void {
 		super.subscribeToEntityViewEvents(component);
 		if (component instanceof LicenseWriteComponent && this.isOperation(Operation.Create)) {
 			this.initOrganizations().pipe(takeUntil(this.destroy$)).subscribe();

@@ -12,11 +12,11 @@ import { EntityComponent } from './entity.component';
   template: '',
   standalone: false
 })
-export abstract class EntityListViewComponent<T, U extends EntityEvent<T>, V extends SearchCriteria, W extends EntityContext<T, V>, X extends SearchEvent<V>> extends EntityComponent<T, U, V, W> {
+export abstract class EntityListViewComponent<T, U extends SearchCriteria, V extends EntityContext<T, U>, W extends SearchEvent<U>> extends EntityComponent<T, U, V> {
 
   operation: Operation;
 
-  @Output() search = new EventEmitter<X>();
+  @Output() search = new EventEmitter<W>();
   @Output() pageChange = new EventEmitter<number>();
   @Output() sort = new EventEmitter<SortEvent>();
   @Output() select = new EventEmitter<T>();
