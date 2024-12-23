@@ -4,7 +4,7 @@
         <div class="col">
             <div class="d-flex">
                 <a routerLink="/organizations/add" [queryParams]="{operation:Operation.Create}"
-                    (click)="operation=Operation.Create;select.emit(null)">{{ 'organization.operations.add' |
+                    (click)="select.emit(null)">{{ 'organization.operations.add' |
                     translate }}</a>
                 <span class="ms-3" *ngIf="busy">{{ 'data.loading' | translate }}</span>
             </div>
@@ -73,17 +73,13 @@
                             <td>
                                 <a routerLink="/organizations/details"
                                     [queryParams]="{uri:entity._links.self.href, operation:Operation.Read}"
-                                    (click)="operation=Operation.Read;select.emit(entity);">{{
-                                    'operations.details' | translate }}
+                                    (click)="select.emit(entity);">{{ 'operations.details' | translate }}
                                 </a>
                             </td>
                             <td>
                                 <a routerLink="/organizations/edit"
                                     [queryParams]="{uri:entity._links.self.href, operation:Operation.Update}"
-                                    (click)="operation=Operation.Update;select.emit(entity);">{{
-                                    'operations.edit'
-                                    |
-                                    translate }}</a>
+                                    (click)="select.emit(entity);">{{ 'operations.edit' | translate }}</a>
                             </td>
                             <td>
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#deleteOrganizationModal"
