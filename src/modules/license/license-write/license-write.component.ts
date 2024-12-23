@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LicenseContext } from '../../../contexts/license.context';
-import { License } from '../../../dtos/license';
 import { Organization } from '../../../dtos/organization';
 import { LicenseViewComponent } from '../license-view.component';
 
@@ -14,20 +13,24 @@ import { LicenseViewComponent } from '../license-view.component';
 export class LicenseWriteComponent extends LicenseViewComponent {
 	@Input() organizations: Organization[];
 
-	formGroup: FormGroup;
+	readonly formGroup: FormGroup = this.formBuilder.group({
+		productName: ['', Validators.required],
+		description: [''],
+		comment: [''],
+		licenseType: ['', Validators.required],
+		_links: [{}],
+		organization: [undefined, Validators.required],
+	});
+
+	constructor(private readonly formBuilder: FormBuilder) {
+		super();
+	}
 
 	protected override onContextChange(context: LicenseContext): void {
 		super.onContextChange(context);
 
-		const entity: License = context?.selectedEntity ? context.selectedEntity : {} as License;
+		const entity = context?.selectedEntity || {};
 
-		this.formGroup = new FormGroup({
-			productName: new FormControl(entity.productName, Validators.required),
-			description: new FormControl(entity.description),
-			comment: new FormControl(entity.comment),
-			licenseType: new FormControl(entity.licenseType, Validators.required),
-			_links: new FormControl(entity._links),
-			organization: new FormControl(entity.organization, Validators.required),
-		});
+		this.formGroup.patchValue(entity);
 	}
 }

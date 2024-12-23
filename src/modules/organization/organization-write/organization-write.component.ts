@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrganizationContext } from '../../../contexts/organization.context';
 import { OrganizationViewComponent } from '../organization-view.component';
 
@@ -11,20 +11,24 @@ import { OrganizationViewComponent } from '../organization-view.component';
 })
 export class OrganizationWriteComponent extends OrganizationViewComponent {
 
-    formGroup: FormGroup;
+    readonly formGroup: FormGroup = this.formBuilder.group({
+        name: ['', Validators.required],
+        contactName: ['', Validators.required],
+        contactEmail: ['', Validators.required],
+        contactPhone: ['', Validators.required],
+        _links: [{}],
+    })
+
+    constructor(private readonly formBuilder: FormBuilder) {
+        super();
+    }
 
     protected override onContextChange(context: OrganizationContext): void {
         super.onContextChange(context);
 
-        const entity = context?.selectedEntity;
+        const entity = context?.selectedEntity || {};
 
-        this.formGroup = new FormGroup({
-            name: new FormControl(entity?.name, Validators.required),
-            contactName: new FormControl(entity?.contactName, Validators.required),
-            contactEmail: new FormControl(entity?.contactEmail, Validators.required),
-            contactPhone: new FormControl(entity?.contactPhone, Validators.required),
-            _links: new FormControl(entity?._links),
-        });
+        this.formGroup.patchValue(entity);
     }
 
 }
