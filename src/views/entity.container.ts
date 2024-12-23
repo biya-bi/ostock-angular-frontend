@@ -78,7 +78,6 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
 
     private readEntity(): void {
         const queryParams = this.activatedRoute.snapshot.queryParams;
-
         const obs$ = this.entityService.readByUrl(queryParams[this.getEntityUriParamName()]);
 
         this.run(obs$).pipe(
@@ -88,14 +87,14 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
             }),
             tap(entity => {
                 const context = this.getContext();
-                const operation = queryParams[this.getOperationParamName()];
-                this.entityContext.set({ ...context, selectedEntity: entity, operation } as T);
+                this.entityContext.set({ ...context, selectedEntity: entity, operation: this.getOperation() } as T);
             })).subscribe();
     }
 
     private writeEntity(event: EntityEvent<Entity<EntityLinks>>): Observable<void> {
         let obs$: Observable<any>;
-        switch (event.operation) {
+        const operation = event.operation || this.getOperation();
+        switch (operation) {
             case Operation.Create:
                 obs$ = this.entityService.create(event.entity);
                 break;
@@ -206,7 +205,7 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
     protected getContext(): T {
         let context = this.entityContext();
         if (!context) {
-            context = { entities: [], pagination: {} } as T;
+            context = { entities: [], pagination: {}, operation: this.getOperation() } as T;
         }
         return context;
     }
@@ -241,6 +240,10 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
     }
 
     protected isOperation(operation: Operation): boolean {
-        return this.activatedRoute.snapshot.queryParams[this.getOperationParamName()] === operation;
+        return this.getOperation() === operation;
+    }
+
+    private getOperation(): Operation {
+        return this.activatedRoute.snapshot.queryParams[this.getOperationParamName()];
     }
 }
