@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiConnector } from '../connectors/api.connector';
+import { LicenseConnector } from '../connectors/license.connector';
 import { LicenseSearchCriteria } from '../criteria/license-search-criteria';
 import { License } from '../dtos/license';
 import { LicenseListWrapper } from '../dtos/license-list-wrapper';
@@ -14,28 +14,28 @@ import { SearchService } from './search.service';
 })
 export class LicenseService extends EntityService<License, LicenseSearchCriteria> {
 
-    constructor(protected override readonly searchService: SearchService, private readonly apiConnector: ApiConnector) {
+    constructor(protected override readonly searchService: SearchService, private readonly connector: LicenseConnector) {
         super(searchService);
     }
 
     protected override onRead(searchEvent: SearchEvent<LicenseSearchCriteria>, uri?: string): Observable<Page<LicenseListWrapper>> {
         const { searchCriteria, pageRequest } = searchEvent;
-        return this.apiConnector.readLicenses(searchCriteria, pageRequest, uri);
+        return this.connector.read(searchCriteria, pageRequest, uri);
     }
 
     override create(entity: License): Observable<License> {
-        return this.apiConnector.createLicense(entity, entity.organization._links.addLicense.href);
+        return this.connector.create(entity, entity.organization._links.addLicense.href);
     }
 
     override update(entity: License): Observable<License> {
-        return this.apiConnector.updateLicense(entity);
+        return this.connector.update(entity, entity._links.update.href);
     }
 
     override delete(uri: string): Observable<void> {
-        return this.apiConnector.delete(uri);
+        return this.connector.delete(uri);
     }
 
-    override readByUri(uri: string): Observable<License> {
-        return this.apiConnector.readLicense(uri);
+    override readByUrl(url: string): Observable<License> {
+        return this.connector.readByUrl(url);
     }
 }

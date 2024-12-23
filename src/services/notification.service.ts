@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
-import { Observable, from, of, switchMap, take } from 'rxjs';
-import { ApiConnector } from '../connectors/api.connector';
+import { Observable, from, of, switchMap } from 'rxjs';
+import { NotificationConnector } from '../connectors/notifcation.connector';
 import { environment } from '../environments/environment';
 import { AuthenticationManager } from '../managers/authentication.manager';
 
@@ -13,7 +13,7 @@ export class NotificationService {
 
   constructor(
     private readonly swPush: SwPush,
-    private readonly apiConnector: ApiConnector,
+    private readonly connector: NotificationConnector,
     private readonly authenticationManager: AuthenticationManager) {
 
     this.subscriptionRequest$ = this.authenticationManager.userProfile$.pipe(
@@ -25,7 +25,7 @@ export class NotificationService {
       return of(null);
     }
     return from(this.swPush.requestSubscription({ serverPublicKey: environment.vapidPublicKey }))
-      .pipe(switchMap((subscription) => this.apiConnector.subscribeToNotifications(subscription.toJSON())));
+      .pipe(switchMap((subscription) => this.connector.subscribe(subscription.toJSON())));
   }
 
 }

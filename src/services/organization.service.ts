@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiConnector } from '../connectors/api.connector';
+import { OrganizationConnector } from '../connectors/organization.connector';
 import { OrganizationSearchCriteria } from '../criteria/organization-search-criteria';
 import { Organization } from '../dtos/organization';
 import { OrganizationListWrapper } from '../dtos/organization-list-wrapper';
@@ -14,28 +14,28 @@ import { SearchService } from './search.service';
 })
 export class OrganizationService extends EntityService<Organization, OrganizationSearchCriteria> {
 
-    constructor(protected override readonly searchService: SearchService, private readonly apiConnector: ApiConnector) {
+    constructor(protected override readonly searchService: SearchService, private readonly connector: OrganizationConnector) {
         super(searchService);
     }
 
     protected override onRead(searchEvent: SearchEvent<OrganizationSearchCriteria>): Observable<Page<OrganizationListWrapper>> {
         const { searchCriteria, pageRequest } = searchEvent;
-        return this.apiConnector.readOrganizations(searchCriteria, pageRequest);
+        return this.connector.read(searchCriteria, pageRequest);
     }
 
     override create(entity: Organization): Observable<Organization> {
-        return this.apiConnector.createOrganization(entity);
+        return this.connector.create(entity);
     }
 
     override update(entity: Organization): Observable<Organization> {
-        return this.apiConnector.updateOrganization(entity);
+        return this.connector.update(entity, entity._links.update.href);
     }
 
     override delete(uri: string): Observable<void> {
-        return this.apiConnector.delete(uri);
+        return this.connector.delete(uri);
     }
 
-    override readByUri(uri: string): Observable<Organization> {
-        return this.apiConnector.readOrganization(uri);
+    override readByUrl(url: string): Observable<Organization> {
+        return this.connector.readByUrl(url);
     }
 }

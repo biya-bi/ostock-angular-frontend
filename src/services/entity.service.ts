@@ -26,5 +26,5 @@ export abstract class EntityService<T, U extends SearchCriteria> {
 
     abstract delete(uri: string): Observable<void>;
 
-    abstract readByUri(uri: string): Observable<T>;
+    abstract readByUrl(uri: string): Observable<T>;
 }

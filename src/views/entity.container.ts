@@ -79,7 +79,7 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
     private readEntity(): void {
         const queryParams = this.activatedRoute.snapshot.queryParams;
 
-        const obs$ = this.entityService.readByUri(queryParams[this.getEntityUriParamName()]);
+        const obs$ = this.entityService.readByUrl(queryParams[this.getEntityUriParamName()]);
 
         this.run(obs$).pipe(
             take(1),

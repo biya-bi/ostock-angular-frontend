@@ -64,7 +64,7 @@ export class LicenseContainer extends EntityContainer<LicenseContext, LicenseSea
 	}
 
 	protected override onReadEntity(entity: License): Observable<License> {
-		return this.organizationService.readByUri(entity._links.organization.href).pipe(
+		return this.organizationService.readByUrl(entity._links.organization.href).pipe(
 			take(1),
 			tap(organization => entity.organization = organization),
 			map(() => entity));
