@@ -1,80 +1,78 @@
-<ng-container *ngIf="context">
-	<form *ngIf="formGroup" [formGroup]="formGroup"
-		(ngSubmit)="manage.emit({entity:formGroup.value, operation:context.operation})">
+<form *ngIf="context && formGroup" [formGroup]="formGroup"
+	(ngSubmit)="manage.emit({entity:formGroup.value, operation:context.operation})">
 
-		<h1 class="mb-4 d-flex justify-content-center" id="title" [ngSwitch]="context.operation">
-			<ng-container *ngSwitchCase="Operation.Create">{{ 'license.operations.add' | translate
-				}}</ng-container>
-			<ng-container *ngSwitchCase="Operation.Update">{{ 'license.operations.edit' | translate
-				}}</ng-container>
-		</h1>
+	<h1 class="mb-4 d-flex justify-content-center" id="title" [ngSwitch]="context.operation">
+		<ng-container *ngSwitchCase="Operation.Create">{{ 'license.operations.add' | translate
+			}}</ng-container>
+		<ng-container *ngSwitchCase="Operation.Update">{{ 'license.operations.edit' | translate
+			}}</ng-container>
+	</h1>
 
-		<div class="container">
-			<div class="row m-2">
-				<div class="col text-end">
-					<label for="productName" class="fw-bold">{{ 'license.labels.productName' | translate
-						}}</label>
-				</div>
-				<div class="col">
-					<input type="text" id="productName" placeholder="{{'license.attributes.productName' | translate }}"
-						formControlName="productName">
-				</div>
+	<div class="container">
+		<div class="row m-2">
+			<div class="col text-end">
+				<label for="productName" class="fw-bold">{{ 'license.labels.productName' | translate
+					}}</label>
 			</div>
-			<div class="row m-2">
-				<div class="col text-end">
-					<label for="description" class="fw-bold">{{ 'license.labels.description' | translate
-						}}</label>
-				</div>
-				<div class="col">
-					<input type="text" id="description" placeholder="{{'license.attributes.description' | translate }}"
-						formControlName="description">
-				</div>
-			</div>
-			<div class="row m-2">
-				<div class="col text-end">
-					<label for="comment" class="fw-bold">{{ 'license.labels.comment' | translate
-						}}</label>
-				</div>
-				<div class="col">
-					<input type="email" id="comment" placeholder="{{'license.attributes.comment' | translate }}"
-						formControlName="comment">
-				</div>
-			</div>
-			<div class="row m-2">
-				<div class="col text-end">
-					<label for="licenseType" class="fw-bold">{{ 'license.labels.licenseType' | translate
-						}}</label>
-				</div>
-				<div class="col">
-					<input type="text" id="licenseType" placeholder="{{'license.attributes.licenseType' | translate }}"
-						formControlName="licenseType">
-				</div>
-			</div>
-			<div class="row m-2">
-				<div class="col text-end">
-					<label for="organization" class="fw-bold">{{ 'license.labels.organization' |
-						translate
-						}}</label>
-				</div>
-				<div class="col">
-					<ng-select *ngIf="context.operation===Operation.Create"
-						typeToSearchText="{{'data.prompts.typeToSearch' | translate }}" [items]="context.organizations"
-						bindLabel="name" placeholder="{{'license.messages.selectOrganization' | translate }}"
-						formControlName="organization" />
-
-					<a *ngIf="context.selectedEntity?.organization && context.operation===Operation.Update"
-						routerLink="/organizations/details"
-						[queryParams]="{uri:context.selectedEntity.organization._links.self.href, operation:Operation.Read}">{{context.selectedEntity.organization.name
-						}}
-					</a>
-				</div>
+			<div class="col">
+				<input type="text" id="productName" placeholder="{{'license.attributes.productName' | translate }}"
+					formControlName="productName">
 			</div>
 		</div>
-		<div class="mt-4 d-flex justify-content-center">
-			<button type="submit" class="btn btn-primary">{{ 'operations.save' | translate }}</button>
-			<span class="m-2">|</span>
-			<a routerLink="/licenses" class="btn btn-link ps-0">{{ 'operations.list' |
-				translate }}</a>
+		<div class="row m-2">
+			<div class="col text-end">
+				<label for="description" class="fw-bold">{{ 'license.labels.description' | translate
+					}}</label>
+			</div>
+			<div class="col">
+				<input type="text" id="description" placeholder="{{'license.attributes.description' | translate }}"
+					formControlName="description">
+			</div>
 		</div>
-	</form>
-</ng-container>
+		<div class="row m-2">
+			<div class="col text-end">
+				<label for="comment" class="fw-bold">{{ 'license.labels.comment' | translate
+					}}</label>
+			</div>
+			<div class="col">
+				<input type="email" id="comment" placeholder="{{'license.attributes.comment' | translate }}"
+					formControlName="comment">
+			</div>
+		</div>
+		<div class="row m-2">
+			<div class="col text-end">
+				<label for="licenseType" class="fw-bold">{{ 'license.labels.licenseType' | translate
+					}}</label>
+			</div>
+			<div class="col">
+				<input type="text" id="licenseType" placeholder="{{'license.attributes.licenseType' | translate }}"
+					formControlName="licenseType">
+			</div>
+		</div>
+		<div class="row m-2">
+			<div class="col text-end">
+				<label for="organization" class="fw-bold">{{ 'license.labels.organization' |
+					translate
+					}}</label>
+			</div>
+			<div class="col">
+				<ng-select *ngIf="context.operation===Operation.Create"
+					typeToSearchText="{{'data.prompts.typeToSearch' | translate }}" [items]="context.organizations"
+					bindLabel="name" placeholder="{{'license.messages.selectOrganization' | translate }}"
+					formControlName="organization" />
+
+				<a *ngIf="context.selectedEntity?.organization && context.operation===Operation.Update"
+					routerLink="/organizations/details"
+					[queryParams]="{uri:context.selectedEntity.organization._links.self.href, operation:Operation.Read}">{{context.selectedEntity.organization.name
+					}}
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="mt-4 d-flex justify-content-center">
+		<button type="submit" class="btn btn-primary">{{ 'operations.save' | translate }}</button>
+		<span class="m-2">|</span>
+		<a routerLink="/licenses" class="btn btn-link ps-0">{{ 'operations.list' |
+			translate }}</a>
+	</div>
+</form>
