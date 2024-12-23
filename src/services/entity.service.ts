@@ -1,30 +1,51 @@
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { CrudConnector } from '../connectors/crud.connector';
 import { SearchCriteria } from '../criteria/search-criteria';
+import { Entity } from '../dtos/entity';
+import { EntityLinks } from '../dtos/entity-links';
 import { ListWrapper } from '../dtos/list-wrapper';
 import { Page } from '../dtos/page';
 import { SearchEvent } from '../events/search.event';
+import { Serializer } from '../serialization/serializer';
 import { SearchService } from './search.service';
 
-export abstract class EntityService<T, U extends SearchCriteria> {
+export abstract class EntityService<T extends Entity<EntityLinks>, U extends SearchCriteria> {
 
-    constructor(protected readonly searchService: SearchService) { }
+    constructor(protected readonly searchService: SearchService, protected readonly connector: CrudConnector<T, U, ListWrapper>) { }
 
-    read(searchEvent: SearchEvent<U>, uri?: string): Observable<Page<ListWrapper>> {
+    read(searchEvent: SearchEvent<U>, url?: string): Observable<Page<ListWrapper>> {
         const { searchCriteria, pageRequest } = searchEvent;
 
         const criteria = this.searchService.parseCriteria(searchCriteria);
         const request = this.searchService.parsePageRequest(pageRequest);
 
-        return this.onRead({ searchCriteria: criteria, pageRequest: request }, uri);
+        return  this.connector.read(criteria, request, url);
     }
 
-    protected abstract onRead(searchEvent: SearchEvent<U>, uri?: string): Observable<Page<ListWrapper>>;
+    create(entity: T): Observable<T> {
+        const payload = this.serialize(entity);
+        return this.connector.create(payload);
+    }
 
-    abstract create(entity: T): Observable<T>;
+    update(entity: T): Observable<T> {
+        const url = entity._links.update.href;
+        const payload = this.serialize(entity);
+        return this.connector.update(payload, url);
+    }
 
-    abstract update(entity: T): Observable<T>;
+    delete(url: string): Observable<void> {
+        return this.connector.delete(url);
+    }
 
-    abstract delete(uri: string): Observable<void>;
+    readByUrl(url: string): Observable<T> {
+        return url ? this.connector.readByUrl(url) : of(null);
+    }
 
-    abstract readByUrl(uri: string): Observable<T>;
+    protected getTransientFields(): string[] {
+        return ['_links'];
+    }
+
+    protected serialize(entity: T): T {
+        return Serializer.serialize(entity, this.getTransientFields());
+    }
 }
