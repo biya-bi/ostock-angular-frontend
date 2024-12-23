@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="mt-4 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary">{{ 'operations.save' | translate }}</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="!formGroup.valid">{{ 'operations.save' | translate }}</button>
                         <span class="m-2">|</span>
                         <a routerLink="/organizations" class="btn btn-link ps-0">{{ 'operations.list' |
                             translate }}</a>

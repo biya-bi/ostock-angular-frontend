@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OrganizationContext } from '../../../contexts/organization.context';
 import { OrganizationViewComponent } from '../organization-view.component';
 
@@ -19,10 +19,10 @@ export class OrganizationWriteComponent extends OrganizationViewComponent {
         const entity = context?.selectedEntity;
 
         this.formGroup = new FormGroup({
-            name: new FormControl(entity?.name),
-            contactName: new FormControl(entity?.contactName),
-            contactEmail: new FormControl(entity?.contactEmail),
-            contactPhone: new FormControl(entity?.contactPhone),
+            name: new FormControl(entity?.name, Validators.required),
+            contactName: new FormControl(entity?.contactName, Validators.required),
+            contactEmail: new FormControl(entity?.contactEmail, Validators.required),
+            contactPhone: new FormControl(entity?.contactPhone, Validators.required),
             _links: new FormControl(entity?._links),
         });
     }

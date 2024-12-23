@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LicenseContext } from '../../../contexts/license.context';
 import { License } from '../../../dtos/license';
 import { Organization } from '../../../dtos/organization';
@@ -22,12 +22,12 @@ export class LicenseWriteComponent extends LicenseViewComponent {
 		const entity: License = context?.selectedEntity ? context.selectedEntity : {} as License;
 
 		this.formGroup = new FormGroup({
-			productName: new FormControl(entity.productName),
+			productName: new FormControl(entity.productName, Validators.required),
 			description: new FormControl(entity.description),
 			comment: new FormControl(entity.comment),
-			licenseType: new FormControl(entity.licenseType),
+			licenseType: new FormControl(entity.licenseType, Validators.required),
 			_links: new FormControl(entity._links),
-			organization: new FormControl(entity.organization),
+			organization: new FormControl(entity.organization, Validators.required),
 		});
 	}
 }
