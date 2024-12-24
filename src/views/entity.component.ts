@@ -7,6 +7,7 @@ import { SearchCriteria } from '../criteria/search-criteria';
 import { EntityEvent } from '../events/entity.event';
 import { Operation } from '../models/operation';
 import { ViewComponent } from './view.component';
+
 @Component({
   template: '',
   standalone: false
