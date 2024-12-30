@@ -1,5 +1,5 @@
 <form *ngIf="context && formGroup" [formGroup]="formGroup"
-	(ngSubmit)="manage.emit({entity:formGroup.value, operation:context.operation})">
+	(ngSubmit)="formGroup.valid && manage.emit({entity:formGroup.value, operation:context.operation})">
 
 	<h1 class="mb-4 d-flex justify-content-center" id="title" [ngSwitch]="context.operation">
 		<ng-container *ngSwitchCase="Operation.Create">{{ 'license.operations.add' | translate
@@ -16,7 +16,7 @@
 			</div>
 			<div class="col">
 				<input type="text" id="productName" placeholder="{{'license.attributes.productName' | translate }}"
-					formControlName="productName">
+					formControlName="productName" validationMessage>
 			</div>
 		</div>
 		<div class="row m-2">
@@ -46,7 +46,7 @@
 			</div>
 			<div class="col">
 				<input type="text" id="licenseType" placeholder="{{'license.attributes.licenseType' | translate }}"
-					formControlName="licenseType">
+					formControlName="licenseType" validationMessage>
 			</div>
 		</div>
 		<div class="row m-2">
@@ -59,7 +59,8 @@
 				<ng-select *ngIf="context.operation===Operation.Create"
 					typeToSearchText="{{'data.prompts.typeToSearch' | translate }}" [items]="context.organizations"
 					bindLabel="name" placeholder="{{'license.messages.selectOrganization' | translate }}"
-					formControlName="organization" />
+					formControlName="organization" validationMessage
+					validationFieldName="{{'license.attributes.organization' | translate }}" />
 
 				<a *ngIf="context.selectedEntity?.organization && context.operation===Operation.Update"
 					routerLink="/organizations/details"
@@ -70,9 +71,9 @@
 		</div>
 	</div>
 	<div class="mt-4 d-flex justify-content-center">
-		<button type="submit" class="btn btn-primary" [disabled]="!formGroup.valid">{{ 'operations.save' | translate }}</button>
+		<button type="submit" class="btn btn-primary" [disabled]="!formGroup.valid">{{ 'operations.save' | translate
+			}}</button>
 		<span class="m-2">|</span>
-		<a routerLink="/licenses" class="btn btn-link ps-0">{{ 'operations.list' |
-			translate }}</a>
+		<a routerLink="/licenses" class="btn btn-link ps-0">{{ 'operations.list' | translate }}</a>
 	</div>
 </form>

@@ -50,6 +50,16 @@
 		"cancel": "Annuler",
 		"close": "Fermer"
 	},
+	"validation": {
+		"messages": {
+			"required": "Le champ {{fieldName}} est requis",
+			"email": "Le champ {{fieldName}} n'est pas un email valide",
+			"minlength": "Le champ {{fieldName}} doit contenir au moins {{requiredLength}} caractère(s)",
+			"maxlength": "Le champ {{fieldName}} doit contenir au plus {{requiredLength}} caractère(s)",
+			"blankString": "Le champ {{fieldName}} ne peut pas contenir uniquement des caractères vides",
+			"invalid": "Le champ {{fieldName}} n'est pas valide"
+		}
+	},
 	"organization": {
 		"operations": {
 			"add": "Ajouter une organisation",
@@ -84,7 +94,8 @@
 			"productName": "Nom du produit",
 			"description": "Description",
 			"comment": "Commentaire",
-			"licenseType": "Type de licence"
+			"licenseType": "Type de licence",
+			"organization": "Organisation"
 		},
 		"labels": {
 			"productName": "Nom du produit :",

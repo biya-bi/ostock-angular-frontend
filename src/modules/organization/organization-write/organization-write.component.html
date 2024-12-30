@@ -1,6 +1,6 @@
 <ng-container *ngIf="context">
     <form *ngIf="formGroup" [formGroup]="formGroup"
-        (ngSubmit)="manage.emit({entity:formGroup.value,operation:context.operation})">
+        (ngSubmit)="formGroup.valid && manage.emit({ entity: formGroup.value, operation: context.operation })">
         <h1 class="mb-4 d-flex justify-content-center" id="title" [ngSwitch]="context.operation">
             <ng-container *ngSwitchCase="Operation.Create">{{ 'organization.operations.add' |
                 translate }}</ng-container>
@@ -15,7 +15,7 @@
                 </div>
                 <div class="col">
                     <input type="text" id="name" placeholder="{{'organization.attributes.name' | translate }}"
-                        formControlName="name">
+                        formControlName="name" validationMessage>
                 </div>
             </div>
             <div class="row m-2">
@@ -26,7 +26,7 @@
                 <div class="col">
                     <input type="text" id="contactName"
                         placeholder="{{'organization.attributes.contactName' | translate }}"
-                        formControlName="contactName">
+                        formControlName="contactName" validationMessage>
                 </div>
             </div>
             <div class="row m-2">
@@ -37,7 +37,7 @@
                 <div class="col">
                     <input type="email" id="contactEmail"
                         placeholder="{{'organization.attributes.contactEmail' | translate }}"
-                        formControlName="contactEmail">
+                        formControlName="contactEmail" validationMessage>
                 </div>
             </div>
             <div class="row m-2">
@@ -48,7 +48,7 @@
                 <div class="col">
                     <input type="text" id="contactPhone"
                         placeholder="{{'organization.attributes.contactPhone' | translate }}"
-                        formControlName="contactPhone">
+                        formControlName="contactPhone" validationMessage>
                 </div>
             </div>
         </div>

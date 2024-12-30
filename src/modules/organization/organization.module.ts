@@ -6,6 +6,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateModule } from "@ngx-translate/core";
 import { LicenseModule } from "../license/license.module";
 import { SortModule } from "../sort/sort.module";
+import { ValidationModule } from "../validation/validation.module";
 import { OrganizationContainer } from "./organization-container/organization.container";
 import { OrganizationDeleteComponent } from "./organization-delete/organization-delete.component";
 import { OrganizationDetailsComponent } from "./organization-details/organization-details.component";
@@ -23,6 +24,7 @@ import { ORGANIZATION_ROUTES } from "./organization.routes";
 		RouterModule.forChild(ORGANIZATION_ROUTES),
 		LicenseModule,
 		SortModule,
+		ValidationModule,
 	],
 	declarations: [
 		OrganizationContainer,

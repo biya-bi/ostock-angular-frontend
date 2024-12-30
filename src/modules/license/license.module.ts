@@ -3,15 +3,16 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgSelectModule } from "@ng-select/ng-select";
 import { TranslateModule } from "@ngx-translate/core";
 import { SortModule } from "../sort/sort.module";
+import { ValidationModule } from "../validation/validation.module";
 import { LicenseContainer } from "./license-container/license.container";
 import { LicenseDeleteComponent } from "./license-delete/license-delete.component";
 import { LicenseDetailsComponent } from "./license-details/license-details.component";
 import { LicenseListComponent } from "./license-list/license-list.component";
 import { LicenseWriteComponent } from "./license-write/license-write.component";
 import { LICENSE_ROUTES } from "./license.routes";
-import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
 	imports: [
@@ -23,6 +24,7 @@ import { NgSelectModule } from "@ng-select/ng-select";
 		RouterModule.forChild(LICENSE_ROUTES),
 		SortModule,
 		NgSelectModule,
+		ValidationModule,
 	],
 	declarations: [
 		LicenseContainer,

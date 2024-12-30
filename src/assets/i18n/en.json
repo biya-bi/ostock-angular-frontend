@@ -50,6 +50,16 @@
 		"cancel": "Cancel",
 		"close": "Close"
 	},
+	"validation": {
+		"messages":{
+			"required": "The {{fieldName}} field is required",
+			"email": "The {{fieldName}} field is not a valid email",
+			"minlength": "The {{fieldName}} field should contain at least {{requiredLength}} character(s)",
+			"maxlength": "The {{fieldName}} field should contain at most {{requiredLength}} character(s)",
+			"blankString": "The {{fieldName}} field cannot consist of only blank characters",
+			"invalid": "The {{fieldName}} field is invalid"
+		}
+	},
 	"organization": {
 		"operations": {
 			"add": "Add an organization",
@@ -84,7 +94,8 @@
 			"productName": "Product Name",
 			"description": "Description",
 			"comment": "Comment",
-			"licenseType": "License Type"
+			"licenseType": "License Type",
+			"organization": "Organization"
 		},
 		"labels": {
 			"productName": "Product Name:",

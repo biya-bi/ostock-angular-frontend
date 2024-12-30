@@ -1,0 +1,1 @@
+export const BLANK_STRING_REGEX = /^(?!\s*$).+/;

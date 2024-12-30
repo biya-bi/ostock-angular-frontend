@@ -1,8 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { LicenseContext } from '../../../contexts/license.context';
 import { Organization } from '../../../dtos/organization';
+import { BLANK_STRING_REGEX } from '../../validation/regexs';
 import { LicenseViewComponent } from '../license-view.component';
+import { LicenseLinks } from '../../../dtos/license-links';
 
 @Component({
 	selector: 'app-license-write',
@@ -13,24 +15,22 @@ import { LicenseViewComponent } from '../license-view.component';
 export class LicenseWriteComponent extends LicenseViewComponent {
 	@Input() organizations: Organization[];
 
-	readonly formGroup: FormGroup = this.formBuilder.group({
-		productName: ['', Validators.required],
+	readonly formGroup = this.formBuilder.group({
+		productName: ['', [Validators.required, Validators.pattern(BLANK_STRING_REGEX)]],
 		description: [''],
 		comment: [''],
-		licenseType: ['', Validators.required],
-		_links: [{}],
-		organization: [undefined, Validators.required],
+		licenseType: ['', [Validators.required, Validators.pattern(BLANK_STRING_REGEX)]],
+		_links: [null as LicenseLinks],
+		organization: [null as Organization, Validators.required],
 	});
 
-	constructor(private readonly formBuilder: FormBuilder) {
+	constructor(private readonly formBuilder: NonNullableFormBuilder) {
 		super();
 	}
 
 	protected override onContextChange(context: LicenseContext): void {
 		super.onContextChange(context);
 
-		const entity = context?.selectedEntity || {};
-
-		this.formGroup.patchValue(entity);
+		this.formGroup.patchValue(context?.selectedEntity);
 	}
 }

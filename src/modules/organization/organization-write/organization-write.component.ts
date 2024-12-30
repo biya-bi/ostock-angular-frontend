@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { OrganizationContext } from '../../../contexts/organization.context';
+import { OrganizationLinks } from '../../../dtos/organization-links';
+import { BLANK_STRING_REGEX } from '../../validation/regexs';
 import { OrganizationViewComponent } from '../organization-view.component';
 
 @Component({
@@ -11,24 +13,22 @@ import { OrganizationViewComponent } from '../organization-view.component';
 })
 export class OrganizationWriteComponent extends OrganizationViewComponent {
 
-    readonly formGroup: FormGroup = this.formBuilder.group({
-        name: ['', Validators.required],
-        contactName: ['', Validators.required],
-        contactEmail: ['', Validators.required],
-        contactPhone: ['', Validators.required],
-        _links: [{}],
+    readonly formGroup = this.formBuilder.group({
+        name: ['', [Validators.required, Validators.pattern(BLANK_STRING_REGEX)]],
+        contactName: ['', [Validators.required, Validators.pattern(BLANK_STRING_REGEX)]],
+        contactEmail: ['', [Validators.required, Validators.email]],
+        contactPhone: ['', [Validators.required, Validators.pattern(BLANK_STRING_REGEX)]],
+        _links: [null as OrganizationLinks],
     })
 
-    constructor(private readonly formBuilder: FormBuilder) {
+    constructor(private readonly formBuilder: NonNullableFormBuilder) {
         super();
     }
 
     protected override onContextChange(context: OrganizationContext): void {
         super.onContextChange(context);
 
-        const entity = context?.selectedEntity || {};
-
-        this.formGroup.patchValue(entity);
+        this.formGroup.patchValue(context?.selectedEntity);
     }
 
 }
