@@ -5,7 +5,6 @@ import { OAuthProviderType } from '../../../models/oauth-provider-type';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrl: './login.component.css',
     standalone: false
 })
 export class LoginComponent {

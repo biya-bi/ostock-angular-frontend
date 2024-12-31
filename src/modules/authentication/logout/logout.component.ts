@@ -4,7 +4,6 @@ import { AuthenticationManager } from '../../../managers/authentication.manager'
 @Component({
     selector: 'app-logout',
     templateUrl: './logout.component.html',
-    styleUrl: './logout.component.css',
     standalone: false
 })
 export class LogOutComponent {

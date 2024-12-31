@@ -8,7 +8,6 @@ import { EntityListViewComponent } from "../../../views/entity-list-view.compone
 @Component({
     selector: 'app-organization-list',
     templateUrl: './organization-list.component.html',
-    styleUrl: './organization-list.component.css',
     standalone: false
 })
 export class OrganizationListComponent extends EntityListViewComponent<Organization, OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {

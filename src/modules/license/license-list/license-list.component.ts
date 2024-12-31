@@ -7,7 +7,6 @@ import { EntityListViewComponent } from '../../../views/entity-list-view.compone
 @Component({
 	selector: 'app-license-list',
 	templateUrl: './license-list.component.html',
-	styleUrl: './license-list.component.css',
 	standalone: false
 })
 export class LicenseListComponent extends EntityListViewComponent<License, LicenseContext, LicenseSearchEvent> {

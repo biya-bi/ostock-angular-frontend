@@ -24,7 +24,6 @@ import { OrganizationViewComponent } from '../organization-view.component';
 @Component({
     selector: 'app-organization-container',
     templateUrl: './organization.container.html',
-    styleUrl: './organization.container.css',
     standalone: false
 })
 export class OrganizationContainer extends EntityContainer<OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
