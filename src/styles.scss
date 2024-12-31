@@ -1,5 +1,8 @@
 /* Global Styles */
 
+@import "bootstrap/scss/bootstrap";
+@import "@ng-select/ng-select/scss/default.theme";
+
 router-outlet+* {
     padding: 0 16px;
 }
