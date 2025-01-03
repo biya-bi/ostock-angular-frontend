@@ -46,10 +46,7 @@ export class LicenseContainer extends EntityContainer<LicenseContext, LicenseSea
 		const obs$ = this.organizationService.read({}); // TODO: Improve this
 		return this.run(obs$).pipe(
 			map((page: Page<OrganizationListWrapper>) => page._embedded?.organizationDtoList),
-			tap(organizations => {
-				const context = this.getContext();
-				this.entityContext.set({ ...context, organizations });
-			}));
+			tap(organizations => this.updateContext({ organizations })));
 	}
 
 	protected override subscribeToEntityViewEvents(component: EntityViewComponent<License, LicenseContext>): void {

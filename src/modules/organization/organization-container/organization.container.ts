@@ -91,7 +91,7 @@ export class OrganizationContainer extends EntityContainer<OrganizationContext, 
                 const licenses = page?._embedded?.licenseDtoList;
                 licenseContext.entities = licenses;
                 licenseContext.pagination = PageUtil.getPagination(page);
-                this.entityContext.set({ ...context, licenseContext });
+                this.updateContext({ licenseContext });
             }));
     }
 

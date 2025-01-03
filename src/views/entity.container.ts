@@ -7,6 +7,7 @@ import { Entity } from '../dtos/entity';
 import { EntityLinks } from '../dtos/entity-links';
 import { ListWrapper } from '../dtos/list-wrapper';
 import { Page } from '../dtos/page';
+import { EntityEvent } from '../events/entity.event';
 import { SearchEvent } from '../events/search.event';
 import { SortEvent } from '../events/sort.event';
 import { Operation } from '../models/operation';
@@ -18,7 +19,6 @@ import { BaseComponent } from './base.component';
 import { EntityListViewComponent } from './entity-list-view.component';
 import { EntityViewComponent } from './entity-view.component';
 import { ViewComponent } from './view.component';
-import { EntityEvent } from '../events/entity.event';
 
 export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks>, SearchCriteria>, U extends SearchEvent<SearchCriteria>> extends BaseComponent {
     private readonly busySubject = new Subject<boolean>();
@@ -85,10 +85,8 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
             switchMap(entity => {
                 return entity ? this.onReadEntity(entity) : of(entity);
             }),
-            tap(entity => {
-                const context = this.getContext();
-                this.entityContext.set({ ...context, selectedEntity: entity, operation: this.getOperation() } as T);
-            })).subscribe();
+            tap(entity => this.updateContext({ selectedEntity: entity, operation: this.getOperation() } as Partial<T>)))
+            .subscribe();
     }
 
     private writeEntity(event: EntityEvent<Entity<EntityLinks>>): Observable<void> {
@@ -133,8 +131,7 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
 
     private onPage(page: Page<ListWrapper>, component: EntityListViewComponent<Entity<EntityLinks>, T, U>): void {
         const entities = this.sort(component, null, this.retrieveEntities(page));
-        const context = this.getContext();
-        this.entityContext.set({ ...context, entities, pagination: PageUtil.getPagination(page) } as T);
+        this.updateContext({ entities, pagination: PageUtil.getPagination(page) } as Partial<T>);
     }
 
     private onSort(component: EntityListViewComponent<Entity<EntityLinks>, T, U>, event: SortEvent): void {
@@ -148,9 +145,7 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
             return;
         }
 
-        const context = this.getContext();
-
-        this.entityContext.set({ ...context, entities } as T);
+        this.updateContext({ entities } as Partial<T>);
     }
 
     private sort(component: EntityListViewComponent<Entity<EntityLinks>, T, U>, event: SortEvent, entities: Entity<EntityLinks>[]): Entity<EntityLinks>[] {
@@ -210,6 +205,12 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
         return context;
     }
 
+    protected updateContext(context: Partial<T>): void {
+        const currentContext = this.getContext();
+        const newContext = { ...currentContext, ...context };
+        this.entityContext.set(newContext);
+    }
+
     private onPageChange(pageNumber: number): void {
         const context = this.getContext();
         let { request } = context.pagination;
@@ -227,8 +228,7 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
     }
 
     private onSelect(entity: Entity<EntityLinks>): void {
-        const context = this.getContext();
-        this.entityContext.set({ ...context, selectedEntity: entity } as T);
+        this.updateContext({ selectedEntity: entity } as Partial<T>);
     }
 
     protected getEntityContextSignal(): WritableSignal<T> {
