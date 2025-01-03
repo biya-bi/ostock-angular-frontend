@@ -1,7 +1,3 @@
-<ng-container *ngIf="{userProfile: userProfile$ | async, 
-	isLoginPage: isLoginPage$ | async} as data">
-	<ng-container *ngIf="!data.isLoginPage">
-		<app-authentication-toggle class="d-md-none" [userProfile]="data.userProfile" />
-		<app-authentication-toggle class="ms-2 d-none d-md-inline" [userProfile]="data.userProfile" />
-	</ng-container>
+<ng-container *ngIf="{userProfile: userProfile$ | async, isLoginPage: isLoginPage$ | async} as data">
+	<app-authentication-toggle *ngIf="!data.isLoginPage" [userProfile]="data.userProfile" />
 </ng-container>

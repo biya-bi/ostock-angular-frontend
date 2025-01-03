@@ -1,5 +1,5 @@
 import { Injectable, Injector } from "@angular/core";
-import { Observable, Subject, of, shareReplay, take, tap } from "rxjs";
+import { Observable, ReplaySubject, of, shareReplay, take, tap } from "rxjs";
 import { OAuthProviderType } from "../models/oauth-provider-type";
 import { UserProfile } from "../models/user-profile";
 import { GoogleOAuthProvider } from "../providers/google-oauth.provider";
@@ -12,7 +12,7 @@ const OAUTH_PROVIDER_KEY = 'oAuthProvider';
 })
 export class AuthenticationManager {
 
-    private readonly userProfileSubject = new Subject<UserProfile>();
+    private readonly userProfileSubject = new ReplaySubject<UserProfile>();
 
     readonly userProfile$ = this.userProfileSubject.asObservable();
 

@@ -1,27 +1,24 @@
-<nav class="navbar navbar-expand-md">
-    <div class="container-xxl">
-        <!-- Navigation bar links -->
-        <div class="collapse navbar-collapse justify-content-end align-center" id="main-nav" *ngIf="!isLoginPage">
-            <ul class="navbar-nav flex-column">
-                <li class="nav-item">
-                    <a routerLink="/home" class="nav-link d-flex" [routerLinkActive]="['active']">
-                        <em class="material-icons">home</em>
-                        <span class="">{{ 'general.home'| translate }}</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-					<a routerLink="/organizations" class="nav-link d-flex" [routerLinkActive]="['active']">
-						<em class="material-icons">groupes</em>
-						<span class="ms-1">{{ 'general.organizations' | translate }}</span>
-					</a>
-                </li>
-				<li class="nav-item">
-					<a routerLink="/licenses" class="nav-link d-flex" [routerLinkActive]="['active']">
-						<em class="material-icons">key</em>
-						<span class="ms-1">{{ 'general.licenses' | translate }}</span>
-					</a>
-                </li>
-            </ul>
-        </div>
+<nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse">
+    <div class="position-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a routerLink="/home" class="nav-link d-flex" [routerLinkActive]="['active']" data-bs-target="#sidebarMenu" data-bs-toggle="collapse">
+                    <em class="material-icons">home</em>
+                    <span class="">{{ 'general.home'| translate }}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/organizations" class="nav-link d-flex" [routerLinkActive]="['active']" data-bs-target="#sidebarMenu" data-bs-toggle="collapse">
+                    <em class="material-icons">groupes</em>
+                    <span class="ms-1">{{ 'general.organizations' | translate }}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/licenses" class="nav-link d-flex" [routerLinkActive]="['active']" data-bs-target="#sidebarMenu" data-bs-toggle="collapse">
+                    <em class="material-icons">key</em>
+                    <span class="ms-1">{{ 'general.licenses' | translate }}</span>
+                </a>
+            </li>
+        </ul>
     </div>
 </nav>

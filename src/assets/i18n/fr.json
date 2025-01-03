@@ -23,6 +23,7 @@
 	},
 	"general": {
 		"welcome": "Bienvenue {{userName}}",
+		"toggleNavigation": "Basculer la navigation",
 		"home": "Accueil",
 		"organizations": "Organisations",
 		"licenses": "Licences"
