@@ -1,4 +1,4 @@
-<select class="form-select form-select-sm w-auto mt-2" name="selectLocale" [(ngModel)]="selectedLocale"
+<select class="form-select form-select-sm w-auto mt-2 me-3" name="selectLocale" [(ngModel)]="selectedLocale"
     (change)="localeChange.emit(selectedLocale)">
     <option *ngFor="let locale of supportedLocales" [ngValue]="locale">{{'locales.' + locale | translate }} </option>
 </select>
