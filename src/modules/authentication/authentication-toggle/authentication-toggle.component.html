@@ -1,11 +1,13 @@
-<div class="d-flex justify-content-between justify-content-md-end" *ngIf="userProfile; else loginTemplate">
-    <span class="fw-bold mx-3 navbar-brand">{{ 'general.welcome' | translate : {userName: userProfile.info.name} }}</span>
-    <a routerLink="/logout" class="btn btn-secondary btn-sm me-3 mt-2">
+<div class="d-flex justify-content-between justify-content-md-end align-items-center"
+    *ngIf="userProfile; else loginTemplate">
+    <span class="fw-bold mx-3 navbar-brand">{{ 'general.welcome' | translate : {userName: userProfile.info.name}
+        }}</span>
+    <a routerLink="/logout" class="btn btn-secondary btn-sm me-3">
         <em class="material-icons">logout</em>
     </a>
 </div>
 <ng-template #loginTemplate>
-    <a routerLink="/login" class="btn btn-secondary d-flex btn-sm">
+    <a routerLink="/login" class="btn btn-secondary d-flex btn-sm mx-3">
         <em class="material-icons">login</em>
         <span class="ms-2">{{ 'authentication.login' | translate }}</span>
     </a>
