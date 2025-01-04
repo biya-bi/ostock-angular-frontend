@@ -1,15 +1,15 @@
 import { NgModule } from "@angular/core";
 import { SortableAttributeDirective } from "./sortable-attribute.directive";
-import { SortableListDirective } from "./sortable-list.directive";
+import { SortableHeaderDirective } from "./sortable-header.directive";
 
 @NgModule({
 	declarations: [
 		SortableAttributeDirective,
-		SortableListDirective,
+		SortableHeaderDirective,
 	],
 	exports: [
 		SortableAttributeDirective,
-		SortableListDirective,
+		SortableHeaderDirective,
 	],
 })
 export class SortModule { }

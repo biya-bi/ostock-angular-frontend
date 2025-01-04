@@ -2,13 +2,13 @@ import { ContentChildren, Directive, QueryList } from "@angular/core";
 import { SortableAttributeDirective, SORTABLE_ATTRIBUTE_NAME } from "./sortable-attribute.directive";
 
 @Directive({
-	selector: 'tr[sortableList]',
+	selector: 'tr[sortableHeader]',
 	host: {
 		'(click)': 'onClick($event)'
 	},
 	standalone: false,
 })
-export class SortableListDirective {
+export class SortableHeaderDirective {
 
 	@ContentChildren(SortableAttributeDirective, { descendants: true }) private readonly sortableAttributeDirectives: QueryList<SortableAttributeDirective>;
 
