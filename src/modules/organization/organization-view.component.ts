@@ -6,8 +6,7 @@ import { LicenseEvent } from '../../events/license.event';
 import { EntityViewComponent } from '../../views/entity-view.component';
 
 @Component({
-  template: '',
-  standalone: false
+  template: ''
 })
 export abstract class OrganizationViewComponent extends EntityViewComponent<Organization, OrganizationContext> {
   @Output() writeLicense = new EventEmitter<LicenseEvent>();

@@ -4,8 +4,7 @@ import { License } from '../../dtos/license';
 import { EntityViewComponent } from '../../views/entity-view.component';
 
 @Component({
-    template: '',
-    standalone: false
+    template: ''
 })
 export abstract class LicenseViewComponent extends EntityViewComponent<License, LicenseContext> {
 }
