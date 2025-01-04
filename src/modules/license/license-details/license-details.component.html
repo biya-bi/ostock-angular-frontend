@@ -2,44 +2,44 @@
     <h1 class="mb-4 d-flex justify-content-center">{{ 'license.operations.details' | translate }}</h1>
     <div class="container" *ngIf="context.selectedEntity">
         <div class="row">
-            <div class="col text-end">
-                <span class="fw-bold">{{ 'license.labels.productName' | translate }}</span>
+            <div class="col text-break text-lg-end fw-bold">
+                {{ 'license.labels.productName' | translate }}
             </div>
-            <div class="col">
-                <span>{{context.selectedEntity.productName}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col text-end">
-                <span class="fw-bold">{{ 'license.labels.description' | translate }}</span>
-            </div>
-            <div class="col">
-                <span>{{context.selectedEntity.description}}</span>
+            <div class="col text-break">
+                {{context.selectedEntity.productName}}
             </div>
         </div>
         <div class="row">
-            <div class="col text-end">
-                <span class="fw-bold">{{ 'license.labels.comment' | translate }}</span>
+            <div class="col text-break text-lg-end fw-bold">
+                {{ 'license.labels.description' | translate }}
             </div>
-            <div class="col">
-                <span>{{context.selectedEntity.comment}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col text-end">
-                <span class="fw-bold">{{ 'license.labels.licenseType' | translate }}</span>
-            </div>
-            <div class="col">
-                <span>{{context.selectedEntity.licenseType}}</span>
+            <div class="col text-break">
+                {{context.selectedEntity.description}}
             </div>
         </div>
         <div class="row">
-            <div class="col text-end">
+            <div class="col text-break text-lg-end fw-bold">
+                {{ 'license.labels.comment' | translate }}
+            </div>
+            <div class="col text-break">
+                {{context.selectedEntity.comment}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-break text-lg-end fw-bold">
+                {{ 'license.labels.licenseType' | translate }}
+            </div>
+            <div class="col text-break">
+                {{context.selectedEntity.licenseType}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-break text-lg-end fw-bold">
                 <label for="organization" class="fw-bold">{{ 'license.labels.organization' |
                     translate
                     }}</label>
             </div>
-            <div class="col">
+            <div class="col text-break">
                 <a *ngIf="context.selectedEntity?.organization" routerLink="/organizations/details"
                     [queryParams]="{uri:context.selectedEntity.organization._links.self.href, operation:Operation.Read}">{{context.selectedEntity.organization.name
                     }}
@@ -50,10 +50,10 @@
             <a routerLink="/licenses/edit"
                 [queryParams]="{uri:context.selectedEntity._links.self.href,operation:Operation.Update}">{{
                 'operations.edit' | translate }}</a>
-            <span class="ms-2 me-2">|</span>
+            <span class="mx-2">|</span>
             <a href="#" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal">{{
                 'operations.delete' | translate }}</a>
-            <span class="ms-2 me-2">|</span>
+            <span class="mx-2">|</span>
             <a routerLink="/licenses">{{ 'operations.list' | translate }}</a>
         </div>
     </div>
