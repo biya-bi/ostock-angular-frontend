@@ -74,6 +74,12 @@
 			"contactEmail": "Contact Email",
 			"contactPhone": "Contact Phone"
 		},
+		"labels": {
+			"name": "Name:",
+			"contactName": "Contact Name:",
+			"contactEmail": "Contact Email:",
+			"contactPhone": "Contact Phone :"
+		},
 		"prompts": {
 			"name": "Enter organization name",
 			"contactName": "Enter contact name",
@@ -97,6 +103,13 @@
 			"comment": "Comment",
 			"licenseType": "License Type",
 			"organization": "Organization"
+		},
+		"labels": {
+			"productName": "Product Name:",
+			"description": "Description:",
+			"comment": "Comment:",
+			"licenseType": "License Type:",
+			"organization": "Organization:"
 		},
 		"prompts": {
 			"productName": "Enter product name",

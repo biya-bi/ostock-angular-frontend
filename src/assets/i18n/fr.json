@@ -74,6 +74,12 @@
 			"contactEmail": "Courriel du contact",
 			"contactPhone": "Téléphone du contact"
 		},
+		"labels": {
+			"name": "Nom :",
+			"contactName": "Nom du contact :",
+			"contactEmail": "Courriel du contact :",
+			"contactPhone": "Téléphone du contact :"
+		},
 		"prompts": {
 			"name": "Entrez le nom de l'organisation",
 			"contactName": "Entrez le nom du contact",
@@ -97,6 +103,13 @@
 			"comment": "Commentaire",
 			"licenseType": "Type de licence",
 			"organization": "Organisation"
+		},
+		"labels": {
+			"productName": "Nom du produit :",
+			"description": "Description :",
+			"comment": "Commentaire :",
+			"licenseType": "Type de licence :",
+			"organization": "Organisation :"
 		},
 		"prompts": {
 			"productName": "Entrez le nom du produit",
