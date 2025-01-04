@@ -9,30 +9,32 @@
         </h1>
         <div class="col-lg-6 mx-auto">
             <div>
-                <label for="name" class="fw-bold form-label">{{ 'organization.labels.name' |
+                <label for="name" class="fw-bold form-label">{{ 'organization.attributes.name' |
                     translate }}</label>
-                <input type="text" id="name" placeholder="{{'organization.attributes.name' | translate }}"
-                    formControlName="name" validationMessage class="form-control">
+                <input type="text" id="name" placeholder="{{'organization.prompts.name' | translate }}"
+                    formControlName="name" validationMessage
+                    [validationFieldName]="'organization.attributes.name' | translate" class="form-control">
             </div>
             <div>
-                <label for="contactName" class="fw-bold form-label">{{ 'organization.labels.contactName' |
+                <label for="contactName" class="fw-bold form-label">{{ 'organization.attributes.contactName' |
                     translate }}</label>
-                <input type="text" id="contactName" placeholder="{{'organization.attributes.contactName' | translate }}"
-                    formControlName="contactName" validationMessage class="form-control">
+                <input type="text" id="contactName" placeholder="{{'organization.prompts.contactName' | translate }}"
+                    formControlName="contactName" validationMessage
+                    [validationFieldName]="'organization.attributes.contactName' | translate" class="form-control">
             </div>
             <div>
-                <label for="contactEmail" class="fw-bold form-label">{{ 'organization.labels.contactEmail' |
+                <label for="contactEmail" class="fw-bold form-label">{{ 'organization.attributes.contactEmail' |
                     translate }}</label>
-                <input type="email" id="contactEmail"
-                    placeholder="{{'organization.attributes.contactEmail' | translate }}" formControlName="contactEmail"
-                    validationMessage class="form-control">
+                <input type="email" id="contactEmail" placeholder="{{'organization.prompts.contactEmail' | translate }}"
+                    formControlName="contactEmail" validationMessage
+                    [validationFieldName]="'organization.attributes.contactEmail' | translate" class="form-control">
             </div>
             <div>
-                <label for="contactPhone" class="fw-bold form-label">{{ 'organization.labels.contactPhone' |
+                <label for="contactPhone" class="fw-bold form-label">{{ 'organization.attributes.contactPhone' |
                     translate }}</label>
-                <input type="text" id="contactPhone"
-                    placeholder="{{'organization.attributes.contactPhone' | translate }}" formControlName="contactPhone"
-                    validationMessage class="form-control">
+                <input type="text" id="contactPhone" placeholder="{{'organization.prompts.contactPhone' | translate }}"
+                    formControlName="contactPhone" validationMessage
+                    [validationFieldName]="'organization.attributes.contactPhone' | translate" class="form-control">
             </div>
         </div>
         <div class="mt-4 d-flex justify-content-center">

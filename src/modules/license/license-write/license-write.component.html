@@ -10,37 +10,39 @@
 
 	<div class="col-lg-6 mx-auto">
 		<div>
-			<label for="productName" class="fw-bold form-label">{{ 'license.labels.productName' | translate
+			<label for="productName" class="fw-bold form-label">{{ 'license.attributes.productName' | translate
 				}}</label>
-			<input type="text" id="productName" placeholder="{{'license.attributes.productName' | translate }}"
-				formControlName="productName" validationMessage class="form-control">
+			<input type="text" id="productName" placeholder="{{'license.prompts.productName' | translate }}"
+				formControlName="productName" validationMessage
+				[validationFieldName]="'license.attributes.productName' | translate" class="form-control">
 		</div>
 		<div>
-			<label for="description" class="fw-bold form-label">{{ 'license.labels.description' | translate
+			<label for="description" class="fw-bold form-label">{{ 'license.attributes.description' | translate
 				}}</label>
-			<input type="text" id="description" placeholder="{{'license.attributes.description' | translate }}"
+			<input type="text" id="description" placeholder="{{'license.prompts.description' | translate }}"
 				formControlName="description" class="form-control">
 		</div>
 		<div>
-			<label for="comment" class="fw-bold form-label">{{ 'license.labels.comment' | translate
+			<label for="comment" class="fw-bold form-label">{{ 'license.attributes.comment' | translate
 				}}</label>
-			<input type="email" id="comment" placeholder="{{'license.attributes.comment' | translate }}"
+			<input type="email" id="comment" placeholder="{{'license.prompts.comment' | translate }}"
 				formControlName="comment" class="form-control">
 		</div>
 		<div>
-			<label for="licenseType" class="fw-bold form-label">{{ 'license.labels.licenseType' | translate
+			<label for="licenseType" class="fw-bold form-label">{{ 'license.attributes.licenseType' | translate
 				}}</label>
-			<input type="text" id="licenseType" placeholder="{{'license.attributes.licenseType' | translate }}"
-				formControlName="licenseType" validationMessage class="form-control">
+			<input type="text" id="licenseType" placeholder="{{'license.prompts.licenseType' | translate }}"
+				formControlName="licenseType" validationMessage
+				[validationFieldName]="'license.attributes.licenseType' | translate" class="form-control">
 		</div>
 		<div>
-			<label for="organization" class="fw-bold form-label">{{ 'license.labels.organization' | translate
+			<label for="organization" class="fw-bold form-label">{{ 'license.attributes.organization' | translate
 				}}</label>
 			<ng-select *ngIf="context.operation===Operation.Create"
 				typeToSearchText="{{'data.prompts.typeToSearch' | translate }}" [items]="context.organizations"
-				bindLabel="name" placeholder="{{'license.messages.selectOrganization' | translate }}"
+				bindLabel="name" placeholder="{{'license.prompts.selectOrganization' | translate }}"
 				formControlName="organization" validationMessage
-				validationFieldName="{{'license.attributes.organization' | translate }}" />
+				[validationFieldName]="'license.attributes.organization' | translate" />
 
 			<a *ngIf="context.selectedEntity?.organization && context.operation===Operation.Update"
 				routerLink="/organizations/details"

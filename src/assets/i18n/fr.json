@@ -74,11 +74,11 @@
 			"contactEmail": "Courriel du contact",
 			"contactPhone": "Téléphone du contact"
 		},
-		"labels": {
-			"name": "Nom :",
-			"contactName": "Nom du contact :",
-			"contactEmail": "Courriel du contact :",
-			"contactPhone": "Téléphone du contact :"
+		"prompts": {
+			"name": "Entrez le nom de l'organisation",
+			"contactName": "Entrez le nom du contact",
+			"contactEmail": "Entrez l'email du contact",
+			"contactPhone": "Entrez le téléphone du contact"
 		},
 		"messages": {
 			"delete": "Etes-vous sûr de vouloir supprimer cette organisation?"
@@ -98,18 +98,17 @@
 			"licenseType": "Type de licence",
 			"organization": "Organisation"
 		},
-		"labels": {
-			"productName": "Nom du produit :",
-			"description": "Description :",
-			"comment": "Commentaire :",
-			"licenseType": "Type de licence :",
-			"organization": "Organisation :"
+		"prompts": {
+			"productName": "Entrez le nom du produit",
+			"description": "Entrez une description",
+			"comment": "Entrez un commentaire",
+			"licenseType": "Entrez le type de licence",
+			"selectOrganization": "Sélectionnez une organisation"
 		},
 		"messages": {
 			"notYetAdded": "Vous n'avez encore ajouté aucune licence.",
 			"available": "Ci-dessous la liste des licences disponibles :",
-			"delete": "Etes-vous sûr de vouloir supprimer cette licence?",
-			"selectOrganization": "Sélectionnez une organisation"
+			"delete": "Etes-vous sûr de vouloir supprimer cette licence?"
 		}
 	}
 }

@@ -1,11 +1,9 @@
 .ng-invalid.ng-touched:not(form) {
-    border:1px solid rgb(220, 53, 69);
-    border-radius: 2px;
+    border-color: $form-invalid-border-color;
 }
 
-.ng-invalid.ng-touched .ng-select-container {
-    border: rgb(220, 53, 69);
-    border-radius: 4px;
+.ng-select.ng-invalid.ng-touched .ng-select-container {
+    border-color: $form-invalid-border-color;
 }
 
 .form-control {

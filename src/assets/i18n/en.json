@@ -52,7 +52,7 @@
 		"close": "Close"
 	},
 	"validation": {
-		"messages":{
+		"messages": {
 			"required": "The {{fieldName}} field is required",
 			"email": "The {{fieldName}} field is not a valid email",
 			"minlength": "The {{fieldName}} field should contain at least {{requiredLength}} character(s)",
@@ -74,11 +74,11 @@
 			"contactEmail": "Contact Email",
 			"contactPhone": "Contact Phone"
 		},
-		"labels": {
-			"name": "Name:",
-			"contactName": "Contact Name:",
-			"contactEmail": "Contact Email:",
-			"contactPhone": "Contact Phone :"
+		"prompts": {
+			"name": "Enter organization name",
+			"contactName": "Enter contact name",
+			"contactEmail": "Enter the contact email",
+			"contactPhone": "Enter the contact phone"
 		},
 		"messages": {
 			"delete": "Are you sure you want to delete this organization?"
@@ -98,18 +98,17 @@
 			"licenseType": "License Type",
 			"organization": "Organization"
 		},
-		"labels": {
-			"productName": "Product Name:",
-			"description": "Description:",
-			"comment": "Comment:",
-			"licenseType": "License Type:",
-			"organization": "Organization:"
+		"prompts": {
+			"productName": "Enter product name",
+			"description": "Enter a description",
+			"comment": "Enter a comment",
+			"licenseType": "Enter the license type",
+			"selectOrganization": "Select an organization"
 		},
 		"messages": {
 			"notYetAdded": "You have not yet added any licenses.",
 			"available": "Below is the list of available licenses:",
-			"delete": "Are you sure you want to delete this license?",
-			"selectOrganization": "Select an organization"
+			"delete": "Are you sure you want to delete this license?"
 		}
 	}
 }
