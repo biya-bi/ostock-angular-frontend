@@ -7,53 +7,37 @@
             <ng-container *ngSwitchCase="Operation.Update">{{ 'organization.operations.edit' |
                 translate }}</ng-container>
         </h1>
-        <div class="container">
-            <div class="row m-2">
-                <div class="col text-end">
-                    <label for="name" class="fw-bold">{{ 'organization.labels.name' |
-                        translate }}</label>
-                </div>
-                <div class="col">
-                    <input type="text" id="name" placeholder="{{'organization.attributes.name' | translate }}"
-                        formControlName="name" validationMessage>
-                </div>
+        <div class="col-lg-6 mx-auto">
+            <div>
+                <label for="name" class="fw-bold form-label">{{ 'organization.labels.name' |
+                    translate }}</label>
+                <input type="text" id="name" placeholder="{{'organization.attributes.name' | translate }}"
+                    formControlName="name" validationMessage class="form-control">
             </div>
-            <div class="row m-2">
-                <div class="col text-end">
-                    <label for="contactName" class="fw-bold">{{ 'organization.labels.contactName' |
-                        translate }}</label>
-                </div>
-                <div class="col">
-                    <input type="text" id="contactName"
-                        placeholder="{{'organization.attributes.contactName' | translate }}"
-                        formControlName="contactName" validationMessage>
-                </div>
+            <div>
+                <label for="contactName" class="fw-bold form-label">{{ 'organization.labels.contactName' |
+                    translate }}</label>
+                <input type="text" id="contactName" placeholder="{{'organization.attributes.contactName' | translate }}"
+                    formControlName="contactName" validationMessage class="form-control">
             </div>
-            <div class="row m-2">
-                <div class="col text-end">
-                    <label for="contactEmail" class="fw-bold">{{ 'organization.labels.contactEmail' |
-                        translate }}</label>
-                </div>
-                <div class="col">
-                    <input type="email" id="contactEmail"
-                        placeholder="{{'organization.attributes.contactEmail' | translate }}"
-                        formControlName="contactEmail" validationMessage>
-                </div>
+            <div>
+                <label for="contactEmail" class="fw-bold form-label">{{ 'organization.labels.contactEmail' |
+                    translate }}</label>
+                <input type="email" id="contactEmail"
+                    placeholder="{{'organization.attributes.contactEmail' | translate }}" formControlName="contactEmail"
+                    validationMessage class="form-control">
             </div>
-            <div class="row m-2">
-                <div class="col text-end">
-                    <label for="contactPhone" class="fw-bold">{{ 'organization.labels.contactPhone' |
-                        translate }}</label>
-                </div>
-                <div class="col">
-                    <input type="text" id="contactPhone"
-                        placeholder="{{'organization.attributes.contactPhone' | translate }}"
-                        formControlName="contactPhone" validationMessage>
-                </div>
+            <div>
+                <label for="contactPhone" class="fw-bold form-label">{{ 'organization.labels.contactPhone' |
+                    translate }}</label>
+                <input type="text" id="contactPhone"
+                    placeholder="{{'organization.attributes.contactPhone' | translate }}" formControlName="contactPhone"
+                    validationMessage class="form-control">
             </div>
         </div>
         <div class="mt-4 d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary" [disabled]="!formGroup.valid">{{ 'operations.save' | translate
+            <button type="submit" class="btn btn-primary" [disabled]="!formGroup.valid">{{ 'operations.save' |
+                translate
                 }}</button>
             <span class="m-2">|</span>
             <a routerLink="/organizations" class="btn btn-link ps-0">{{ 'operations.list' |

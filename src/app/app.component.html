@@ -1,7 +1,8 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
 	<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/home">{{ 'application.name' | translate }}</a>
 	<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-		data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" attr.aria-label="{{ 'general.toggleNavigation' | translate }}">
+		data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+		attr.aria-label="{{ 'general.toggleNavigation' | translate }}">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="navbar-nav w-100">
@@ -11,12 +12,12 @@
 		</div>
 	</div>
 </header>
-<div class="container-fluid">
+<div class="container-fluid ps-0">
 	<div class="row">
-		<div class="col-md-3 col-lg-2">
+		<div class="col-auto">
 			<app-navigation-container />
 		</div>
-		<div class="col-md-9 col-lg-10">
+		<div class="col">
 			<router-outlet />
 		</div>
 	</div>
