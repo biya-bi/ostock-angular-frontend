@@ -21,11 +21,13 @@
 						<th scope="col" sortable="productName" (sort)="sort.emit($event)">{{
 							'license.attributes.productName'
 							| translate }}</th>
-						<th scope="col" sortable="description" (sort)="sort.emit($event)">
+						<th scope="col" sortable="description" (sort)="sort.emit($event)"
+							class="d-none d-md-table-cell">
 							{{'license.attributes.description' | translate }}</th>
-						<th scope="col" sortable="comment" (sort)="sort.emit($event)">
+						<th scope="col" sortable="comment" (sort)="sort.emit($event)" class="d-none d-md-table-cell">
 							{{'license.attributes.comment' | translate }}</th>
-						<th scope="col" sortable="licenseType" (sort)="sort.emit($event)">
+						<th scope="col" sortable="licenseType" (sort)="sort.emit($event)"
+							class="d-none d-md-table-cell">
 							{{'license.attributes.licenseType' | translate }}</th>
 						<th></th>
 					</tr>
@@ -37,17 +39,17 @@
 								[(ngModel)]="context.searchCriteria.productName"
 								(keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
 						</td>
-						<td>
+						<td class="d-none d-md-table-cell">
 							<input class="form-control" type="text" name="description"
 								[(ngModel)]="context.searchCriteria.description"
 								(keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
 						</td>
-						<td>
+						<td class="d-none d-md-table-cell">
 							<input class="form-control" type="text" name="comment"
 								[(ngModel)]="context.searchCriteria.comment"
 								(keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
 						</td>
-						<td>
+						<td class="d-none d-md-table-cell">
 							<input class="form-control" type="text" name="licenseType"
 								[(ngModel)]="context.searchCriteria.licenseType"
 								(keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
@@ -56,14 +58,21 @@
 					</tr>
 					<ng-container *ngIf="context.entities?.length">
 						<tr *ngFor="let entity of context.entities">
-							<td><ngb-highlight [result]="entity.productName"
-									[term]="context.searchCriteria.productName"></ngb-highlight></td>
-							<td><ngb-highlight [result]="entity.description"
-									[term]="context.searchCriteria.description"></ngb-highlight></td>
-							<td><ngb-highlight [result]="entity.comment"
-									[term]="context.searchCriteria.comment"></ngb-highlight></td>
-							<td><ngb-highlight [result]="entity.licenseType"
-									[term]="context.searchCriteria.licenseType"></ngb-highlight></td>
+							<td>
+								<ngb-highlight [result]="entity.productName"
+									[term]="context.searchCriteria.productName" />
+							</td>
+							<td class="d-none d-md-table-cell">
+								<ngb-highlight [result]="entity.description"
+									[term]="context.searchCriteria.description" />
+							</td>
+							<td class="d-none d-md-table-cell">
+								<ngb-highlight [result]="entity.comment" [term]="context.searchCriteria.comment" />
+							</td>
+							<td class="d-none d-md-table-cell">
+								<ngb-highlight [result]="entity.licenseType"
+									[term]="context.searchCriteria.licenseType" />
+							</td>
 							<td class="d-flex">
 								<a routerLink="/licenses/details"
 									[queryParams]="{uri:entity._links.self.href, operation:Operation.Read}"

@@ -22,11 +22,14 @@
                         <th scope="col" sortable="name" (sort)="sort.emit($event)">{{
                             'organization.attributes.name'
                             | translate }}</th>
-                        <th scope="col" sortable="contactName" (sort)="sort.emit($event)">
+                        <th scope="col" sortable="contactName" (sort)="sort.emit($event)"
+                            class="d-none d-md-table-cell">
                             {{'organization.attributes.contactName' | translate }}</th>
-                        <th scope="col" sortable="contactEmail" (sort)="sort.emit($event)">
+                        <th scope="col" sortable="contactEmail" (sort)="sort.emit($event)"
+                            class="d-none d-md-table-cell">
                             {{'organization.attributes.contactEmail' | translate }}</th>
-                        <th scope="col" sortable="contactPhone" (sort)="sort.emit($event)">
+                        <th scope="col" sortable="contactPhone" (sort)="sort.emit($event)"
+                            class="d-none d-md-table-cell">
                             {{'organization.attributes.contactPhone' | translate }}</th>
                         <th></th>
                     </tr>
@@ -38,17 +41,17 @@
                                 [(ngModel)]="context.searchCriteria.name"
                                 (keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
                         </td>
-                        <td>
+                        <td class="d-none d-md-table-cell">
                             <input class="form-control" type="text" name="contactName"
                                 [(ngModel)]="context.searchCriteria.contactName"
                                 (keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
                         </td>
-                        <td>
+                        <td class="d-none d-md-table-cell">
                             <input class="form-control" type="text" name="contactEmail"
                                 [(ngModel)]="context.searchCriteria.contactEmail"
                                 (keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
                         </td>
-                        <td>
+                        <td class="d-none d-md-table-cell">
                             <input class="form-control" type="text" name="contactPhone"
                                 [(ngModel)]="context.searchCriteria.contactPhone"
                                 (keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
@@ -57,15 +60,21 @@
                     </tr>
                     <ng-container *ngIf="context?.entities?.length">
                         <tr *ngFor="let entity of context.entities">
-                            <td><ngb-highlight [result]="entity.name"
-                                    [term]="context.searchCriteria.name"></ngb-highlight>
+                            <td>
+                                <ngb-highlight [result]="entity.name" [term]="context.searchCriteria.name" />
                             </td>
-                            <td><ngb-highlight [result]="entity.contactName"
-                                    [term]="context.searchCriteria.contactName"></ngb-highlight></td>
-                            <td><ngb-highlight [result]="entity.contactEmail"
-                                    [term]="context.searchCriteria.contactEmail"></ngb-highlight></td>
-                            <td><ngb-highlight [result]="entity.contactPhone"
-                                    [term]="context.searchCriteria.contactPhone"></ngb-highlight></td>
+                            <td class="d-none d-md-table-cell">
+                                <ngb-highlight [result]="entity.contactName"
+                                    [term]="context.searchCriteria.contactName" />
+                            </td>
+                            <td class="d-none d-md-table-cell">
+                                <ngb-highlight [result]="entity.contactEmail"
+                                    [term]="context.searchCriteria.contactEmail" />
+                            </td>
+                            <td class="d-none d-md-table-cell">
+                                <ngb-highlight [result]="entity.contactPhone"
+                                    [term]="context.searchCriteria.contactPhone" />
+                            </td>
                             <td class="d-flex">
                                 <a routerLink="/organizations/details"
                                     [queryParams]="{uri:entity._links.self.href, operation:Operation.Read}"
