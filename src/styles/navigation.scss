@@ -20,6 +20,15 @@
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   width: 100%;
 
+  .nav-link {
+    font-weight: 500;
+    color: $gray-700;
+  }
+
+  .nav-link.active {
+    color: var(--#{$prefix}nav-link-color);
+  }
+
   @include media-breakpoint-down(md) {
     top: 5rem;
   }
@@ -29,15 +38,6 @@
     padding: .625rem 0 0;
     height: 100vh;
   }
-}
-
-.sidebar .nav-link {
-  font-weight: 500;
-  color: $gray-700;
-}
-
-.sidebar .nav-link.active {
-  color: var(--#{$prefix}nav-link-color);
 }
 
 /*
