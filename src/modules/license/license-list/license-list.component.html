@@ -18,16 +18,16 @@
 			<table class="table table-striped">
 				<thead>
 					<tr sortableList>
-						<th scope="col" sortable="productName" (sort)="sort.emit($event)">
+						<th scope="col" sortableAttribute="productName" (sort)="sort.emit($event)">
 							{{ 'license.attributes.productName' | translate }}
 						</th>
-						<th scope="col" sortable="description" (sort)="sort.emit($event)" class="d-none d-md-table-cell">
+						<th scope="col" sortableAttribute="description" (sort)="sort.emit($event)" class="d-none d-md-table-cell">
 							{{'license.attributes.description' | translate }}
 						</th>
-						<th scope="col" sortable="comment" (sort)="sort.emit($event)" class="d-none d-md-table-cell">
+						<th scope="col" sortableAttribute="comment" (sort)="sort.emit($event)" class="d-none d-md-table-cell">
 							{{'license.attributes.comment' | translate }}
 						</th>
-						<th scope="col" sortable="licenseType" (sort)="sort.emit($event)" class="d-none d-md-table-cell">
+						<th scope="col" sortableAttribute="licenseType" (sort)="sort.emit($event)" class="d-none d-md-table-cell">
 							{{'license.attributes.licenseType' | translate }}
 						</th>
 						<th></th>

@@ -3,7 +3,7 @@ import { EntityContext } from '../contexts/entity.context';
 import { SearchCriteria } from '../criteria/search-criteria';
 import { SearchEvent } from '../events/search.event';
 import { SortEvent } from '../events/sort.event';
-import { NgbdSortableHeader } from '../modules/sort/sortable.directive';
+import { SortableAttributeDirective } from '../modules/sort/sortable-attribute.directive';
 import { EntityComponent } from './entity.component';
 
 @Component({
@@ -17,7 +17,7 @@ export abstract class EntityListViewComponent<T, U extends EntityContext<T, Sear
   @Output() sort = new EventEmitter<SortEvent>();
   @Output() select = new EventEmitter<T>();
 
-  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+  @ViewChildren(SortableAttributeDirective) headers: QueryList<SortableAttributeDirective>;
 
   override busy: boolean = true;
 }

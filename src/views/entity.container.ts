@@ -167,7 +167,7 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
         for (let i = 0; i < component.headers.length; i++) {
             const header = component.headers.get(i);
             if (header.direction !== '') {
-                return { attribute: header.sortable, direction: header.direction };
+                return { attribute: header.sortableAttribute, direction: header.direction };
             }
         }
         return null;

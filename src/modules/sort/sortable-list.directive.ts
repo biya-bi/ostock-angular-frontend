@@ -1,5 +1,5 @@
 import { ContentChildren, Directive, QueryList } from "@angular/core";
-import { NgbdSortableHeader } from "./sortable.directive";
+import { SortableAttributeDirective, SORTABLE_ATTRIBUTE_NAME } from "./sortable-attribute.directive";
 
 @Directive({
 	selector: 'tr[sortableList]',
@@ -10,13 +10,13 @@ import { NgbdSortableHeader } from "./sortable.directive";
 })
 export class SortableListDirective {
 
-	@ContentChildren(NgbdSortableHeader, { descendants: true }) private readonly headers: QueryList<NgbdSortableHeader>;
+	@ContentChildren(SortableAttributeDirective, { descendants: true }) private readonly sortableAttributeDirectives: QueryList<SortableAttributeDirective>;
 
 	protected onClick(event: PointerEvent): void {
-		const attribute = (event.target as HTMLElement).getAttribute('sortable');
+		const attribute = (event.target as HTMLElement).getAttribute(SORTABLE_ATTRIBUTE_NAME);
 		if (!attribute) {
 			return;
 		}
-		this.headers.filter(header => header.sortable != attribute).forEach(header => header.direction = '');
+		this.sortableAttributeDirectives.filter(directive => directive.sortableAttribute != attribute).forEach(directive => directive.direction = '');
 	}
 }

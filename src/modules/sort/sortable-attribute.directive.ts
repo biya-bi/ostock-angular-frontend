@@ -4,8 +4,10 @@ import { SortEvent } from '../../events/sort.event';
 
 const rotate: { [key: string]: SortDirection } = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
+export const SORTABLE_ATTRIBUTE_NAME = 'sortableAttribute';
+
 @Directive({
-    selector: 'th[sortable]',
+    selector: `th[${SORTABLE_ATTRIBUTE_NAME}]`,
     host: {
         '[class.asc]': 'direction === "asc"',
         '[class.desc]': 'direction === "desc"',
@@ -13,14 +15,14 @@ const rotate: { [key: string]: SortDirection } = { 'asc': 'desc', 'desc': '', ''
     },
     standalone: false
 })
-export class NgbdSortableHeader {
+export class SortableAttributeDirective {
 
-  @Input() sortable: string;
+  @Input() sortableAttribute: string;
   @Input() direction: SortDirection = '';
   @Output() sort = new EventEmitter<SortEvent>();
 
   rotate() {
     this.direction = rotate[this.direction];
-    this.sort.emit({ attribute: this.sortable, direction: this.direction });
+    this.sort.emit({ attribute: this.sortableAttribute, direction: this.direction });
   }
 }

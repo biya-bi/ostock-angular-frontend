@@ -1,14 +1,14 @@
 import { NgModule } from "@angular/core";
-import { NgbdSortableHeader } from "../sort/sortable.directive";
+import { SortableAttributeDirective } from "./sortable-attribute.directive";
 import { SortableListDirective } from "./sortable-list.directive";
 
 @NgModule({
 	declarations: [
-		NgbdSortableHeader,
+		SortableAttributeDirective,
 		SortableListDirective,
 	],
 	exports: [
-		NgbdSortableHeader,
+		SortableAttributeDirective,
 		SortableListDirective,
 	],
 })

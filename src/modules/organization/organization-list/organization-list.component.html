@@ -19,18 +19,18 @@
             <table class="table table-striped">
                 <thead>
                     <tr sortableList>
-                        <th scope="col" sortable="name" (sort)="sort.emit($event)">
+                        <th scope="col" sortableAttribute="name" (sort)="sort.emit($event)">
                             {{ 'organization.attributes.name' | translate }}
                         </th>
-                        <th scope="col" sortable="contactName" (sort)="sort.emit($event)"
+                        <th scope="col" sortableAttribute="contactName" (sort)="sort.emit($event)"
                             class="d-none d-md-table-cell">
                             {{'organization.attributes.contactName' | translate }}
                         </th>
-                        <th scope="col" sortable="contactEmail" (sort)="sort.emit($event)"
+                        <th scope="col" sortableAttribute="contactEmail" (sort)="sort.emit($event)"
                             class="d-none d-md-table-cell">
                             {{'organization.attributes.contactEmail' | translate }}
                         </th>
-                        <th scope="col" sortable="contactPhone" (sort)="sort.emit($event)"
+                        <th scope="col" sortableAttribute="contactPhone" (sort)="sort.emit($event)"
                             class="d-none d-md-table-cell">
                             {{'organization.attributes.contactPhone' | translate }}
                         </th>
