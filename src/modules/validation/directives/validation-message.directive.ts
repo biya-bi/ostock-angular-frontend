@@ -11,7 +11,7 @@ import { BLANK_STRING_REGEX } from '../regexs';
 })
 export class ValidationMessageDirective implements OnInit, OnDestroy {
 
-	@Input() cssClasses = 'ms-1 text-danger d-inline-block';
+	@Input() cssClasses = 'text-danger d-inline-block';
 	@Input() validationFieldName: string;
 
 	private errorElementId = '';
