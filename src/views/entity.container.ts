@@ -139,11 +139,9 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
             return;
         }
 
-        const entities = this.sort(component, event, null);
+        const context = this.getContext();
 
-        if (!entities?.length) {
-            return;
-        }
+        const entities = this.sort(component, event, context.entities);
 
         this.updateContext({ entities } as Partial<T>);
     }
@@ -164,9 +162,6 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
             }
         });
 
-        const context = this.getContext();
-
-        entities = entities?.length ? entities : context.entities;
         if (!entities?.length) {
             entities = [];
         }
