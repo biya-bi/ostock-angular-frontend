@@ -21,6 +21,8 @@ import { EntityViewComponent } from './entity-view.component';
 import { ViewComponent } from './view.component';
 
 export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks>, SearchCriteria>, U extends SearchEvent<SearchCriteria>> extends BaseComponent {
+    private sortEvent: SortEvent;
+
     private readonly busySubject = new Subject<boolean>();
     private readonly searchEventSubject = new Subject<U>();
 
@@ -51,11 +53,11 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
     protected abstract getEntityListPath(): string;
 
     protected subscribeToEntityListViewEvents(component: EntityListViewComponent<Entity<EntityLinks>, T, U>) {
-        this.page$.pipe(takeUntil(component.destroy$), tap(page => this.onPage(page, component))).subscribe();
+        this.page$.pipe(takeUntil(component.destroy$), tap(page => this.onPage(page))).subscribe();
         component.manage.pipe(takeUntil(component.destroy$), switchMap(event => this.writeEntity(event)), tap(() => this.search())).subscribe();
         component.search.pipe(takeUntil(component.destroy$), debounceTime(1000), tap(event => this.searchEventSubject.next(event))).subscribe();
         component.pageChange.pipe(takeUntil(component.destroy$), debounceTime(1000), tap(pageNumber => this.onPageChange(pageNumber))).subscribe();
-        component.sort.pipe(takeUntil(component.destroy$), tap(event => this.onSort(component, event))).subscribe();
+        component.sort.pipe(takeUntil(component.destroy$), tap(event => this.onSort(event))).subscribe();
         component.select.pipe(takeUntil(component.destroy$), tap((entity) => this.onSelect(entity))).subscribe();
     }
 
@@ -129,26 +131,28 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
         }
     }
 
-    private onPage(page: Page<ListWrapper>, component: EntityListViewComponent<Entity<EntityLinks>, T, U>): void {
-        const entities = this.sort(component, null, this.retrieveEntities(page));
+    private onPage(page: Page<ListWrapper>): void {
+        const entities = this.sort(this.retrieveEntities(page));
         this.updateContext({ entities, pagination: PageUtil.getPagination(page) } as Partial<T>);
     }
 
-    private onSort(component: EntityListViewComponent<Entity<EntityLinks>, T, U>, event: SortEvent): void {
+    private onSort(event: SortEvent): void {
         if (!event) {
             return;
         }
 
+        this.sortEvent = event;
+
         const context = this.getContext();
 
-        const entities = this.sort(component, event, context.entities);
+        const entities = this.sort(context.entities, event);
 
         this.updateContext({ entities } as Partial<T>);
     }
 
-    private sort(component: EntityListViewComponent<Entity<EntityLinks>, T, U>, event: SortEvent, entities: Entity<EntityLinks>[]): Entity<EntityLinks>[] {
+    private sort(entities: Entity<EntityLinks>[], event?: SortEvent): Entity<EntityLinks>[] {
         if (!event) {
-            event = this.getSortEvent(component);
+            event = this.sortEvent;
             if (!event) {
                 return entities;
             }
@@ -161,16 +165,6 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
         }
 
         return this.sortingService.sort(entities, attribute, direction);
-    }
-
-    private getSortEvent(component: EntityListViewComponent<Entity<EntityLinks>, T, U>): SortEvent {
-        for (let i = 0; i < component.headers.length; i++) {
-            const header = component.headers.get(i);
-            if (header.direction !== '') {
-                return { attribute: header.sortableAttribute, direction: header.direction };
-            }
-        }
-        return null;
     }
 
     private search(): void {
