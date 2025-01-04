@@ -28,7 +28,7 @@ export class LicenseContainer extends EntityContainer<LicenseContext, LicenseSea
 		protected override readonly router: Router,
 		protected override readonly activatedRoute: ActivatedRoute,
 		protected override readonly searchService: SearchService,
-		protected override readonly sortingService: SortingService<License>,
+		protected override readonly sortingService: SortingService,
 		protected override readonly entityService: LicenseService,
 		private readonly organizationService: OrganizationService) {
 		super(router, activatedRoute, searchService, sortingService, entityService);

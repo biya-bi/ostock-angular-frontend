@@ -4,8 +4,8 @@ import { SortDirection } from "../models/sort-direction";
 @Injectable({
     providedIn: 'root'
 })
-export class SortingService<T> {
-    sort(entities: T[], attribute: string, direction: SortDirection): T[] {
+export class SortingService {
+    sort<T>(entities: T[], attribute: string, direction: SortDirection): T[] {
         if (direction === '' || !entities?.length) {
             return entities;
         }

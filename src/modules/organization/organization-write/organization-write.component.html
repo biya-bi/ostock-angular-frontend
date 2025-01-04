@@ -57,7 +57,7 @@
                 <div ngbAccordionBody>
                     <app-license-list [enableManualContext]="true" [context]="context.licenseContext" [busy]="busy"
                         (manage)="writeLicense.emit($event)" (pageChange)="licensePageChange.emit($event)"
-                        (search)="searchLicenses.emit($event)" />
+                        (search)="searchLicenses.emit($event)" (sort)="sortLicenses.emit($event)" />
                 </div>
             </div>
         </div>

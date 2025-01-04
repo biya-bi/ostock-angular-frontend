@@ -33,7 +33,7 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
         protected readonly router: Router,
         protected readonly activatedRoute: ActivatedRoute,
         protected readonly searchService: SearchService,
-        protected readonly sortingService: SortingService<Entity<EntityLinks>>,
+        protected readonly sortingService: SortingService,
         protected readonly entityService: EntityService<Entity<EntityLinks>, SearchCriteria>) {
         super();
     }
@@ -155,12 +155,6 @@ export abstract class EntityContainer<T extends EntityContext<Entity<EntityLinks
         }
 
         const { attribute, direction } = event;
-
-        component.headers.forEach(header => {
-            if (header.sortable !== attribute) {
-                header.direction = '';
-            }
-        });
 
         if (!entities?.length) {
             entities = [];

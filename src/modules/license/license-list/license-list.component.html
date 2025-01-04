@@ -17,18 +17,19 @@
 			</div>
 			<table class="table table-striped">
 				<thead>
-					<tr>
-						<th scope="col" sortable="productName" (sort)="sort.emit($event)">{{
-							'license.attributes.productName'
-							| translate }}</th>
-						<th scope="col" sortable="description" (sort)="sort.emit($event)"
-							class="d-none d-md-table-cell">
-							{{'license.attributes.description' | translate }}</th>
+					<tr sortableList>
+						<th scope="col" sortable="productName" (sort)="sort.emit($event)">
+							{{ 'license.attributes.productName' | translate }}
+						</th>
+						<th scope="col" sortable="description" (sort)="sort.emit($event)" class="d-none d-md-table-cell">
+							{{'license.attributes.description' | translate }}
+						</th>
 						<th scope="col" sortable="comment" (sort)="sort.emit($event)" class="d-none d-md-table-cell">
-							{{'license.attributes.comment' | translate }}</th>
-						<th scope="col" sortable="licenseType" (sort)="sort.emit($event)"
-							class="d-none d-md-table-cell">
-							{{'license.attributes.licenseType' | translate }}</th>
+							{{'license.attributes.comment' | translate }}
+						</th>
+						<th scope="col" sortable="licenseType" (sort)="sort.emit($event)" class="d-none d-md-table-cell">
+							{{'license.attributes.licenseType' | translate }}
+						</th>
 						<th></th>
 					</tr>
 				</thead>

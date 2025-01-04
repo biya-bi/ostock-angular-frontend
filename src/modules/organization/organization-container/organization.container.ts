@@ -20,6 +20,7 @@ import { SortingService } from '../../../services/sorting.service';
 import { PageUtil } from '../../../util/PageUtil';
 import { EntityContainer } from '../../../views/entity.container';
 import { OrganizationViewComponent } from '../organization-view.component';
+import { SortEvent } from '../../../events/sort.event';
 
 @Component({
     selector: 'app-organization-container',
@@ -32,7 +33,7 @@ export class OrganizationContainer extends EntityContainer<OrganizationContext, 
         protected override readonly router: Router,
         protected override readonly activatedRoute: ActivatedRoute,
         protected override readonly searchService: SearchService,
-        protected override readonly sortingService: SortingService<Organization>,
+        protected override readonly sortingService: SortingService,
         protected override readonly entityService: OrganizationService,
         private readonly licenseService: LicenseService) {
         super(router, activatedRoute, searchService, sortingService, entityService);
@@ -63,6 +64,7 @@ export class OrganizationContainer extends EntityContainer<OrganizationContext, 
             debounceTime(1000),
             switchMap(event => this.readLicenses(event.uri, event.pageRequest, event.searchCriteria)))
             .subscribe();
+        component.sortLicenses.pipe(takeUntil(component.destroy$), tap(event => this.sortLicenses(event))).subscribe();
     }
 
     protected override getContext(): OrganizationContext {
@@ -100,7 +102,10 @@ export class OrganizationContainer extends EntityContainer<OrganizationContext, 
         return this.run(obs$).pipe(take(1), switchMap(() => this.readLicenses()), tap(() => event.closeElement.click()));
     }
 
-    private getLicensecontext(context: OrganizationContext): LicenseContext {
+    private getLicensecontext(context?: OrganizationContext): LicenseContext {
+        if (!context) {
+            context = this.getContext();
+        }
         let licenseContext = context.licenseContext;
         if (!licenseContext) {
             licenseContext = { organizations: [], entities: [], pagination: {}, searchCriteria: {} };
@@ -117,5 +122,10 @@ export class OrganizationContainer extends EntityContainer<OrganizationContext, 
         }
         pageRequest.pageNumber = pageNumber;
         return this.readLicenses(uri, pageRequest);
+    }
+
+    private sortLicenses(event: SortEvent): void {
+        const licenseContext = this.getLicensecontext();
+        licenseContext.entities = this.sortingService.sort(licenseContext.entities, event.attribute, event.direction);
     }
 }

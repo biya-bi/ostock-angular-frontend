@@ -3,6 +3,7 @@ import { OrganizationContext } from '../../contexts/organization.context';
 import { Organization } from '../../dtos/organization';
 import { LicenseSearchEvent } from '../../events/license-search.event';
 import { LicenseEvent } from '../../events/license.event';
+import { SortEvent } from '../../events/sort.event';
 import { EntityViewComponent } from '../../views/entity-view.component';
 
 @Component({
@@ -12,4 +13,5 @@ export abstract class OrganizationViewComponent extends EntityViewComponent<Orga
   @Output() writeLicense = new EventEmitter<LicenseEvent>();
   @Output() licensePageChange = new EventEmitter<number>();
   @Output() searchLicenses = new EventEmitter<LicenseSearchEvent>();
+  @Output() sortLicenses = new EventEmitter<SortEvent>();
 }
