@@ -28,8 +28,6 @@
 						<th scope="col" sortable="licenseType" (sort)="sort.emit($event)">
 							{{'license.attributes.licenseType' | translate }}</th>
 						<th></th>
-						<th></th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -55,8 +53,6 @@
 								(keyup)="search.emit({searchCriteria: context.searchCriteria, pageRequest: context.pagination.request})" />
 						</td>
 						<td></td>
-						<td></td>
-						<td></td>
 					</tr>
 					<ng-container *ngIf="context.entities?.length">
 						<tr *ngFor="let entity of context.entities">
@@ -68,21 +64,22 @@
 									[term]="context.searchCriteria.comment"></ngb-highlight></td>
 							<td><ngb-highlight [result]="entity.licenseType"
 									[term]="context.searchCriteria.licenseType"></ngb-highlight></td>
-							<td>
+							<td class="d-flex">
 								<a routerLink="/licenses/details"
 									[queryParams]="{uri:entity._links.self.href, operation:Operation.Read}"
-									(click)="select.emit(entity);">{{ 'operations.details' | translate }}
+									(click)="select.emit(entity);" attr.title="{{ 'operations.details' | translate }}">
+									<em class="material-icons">visibility</em>
 								</a>
-							</td>
-							<td>
 								<a routerLink="/licenses/edit"
 									[queryParams]="{uri:entity._links.self.href, operation:Operation.Update}"
-									(click)="select.emit(entity);">{{ 'operations.edit' | translate }}</a>
-							</td>
-							<td>
+									(click)="select.emit(entity);" attr.title="{{ 'operations.edit' | translate }}"
+									class="mx-2">
+									<em class="material-icons">edit</em>
+								</a>
 								<a href="#" data-bs-toggle="modal" data-bs-target="#deleteLicenseModal"
-									class="link-danger" (click)="context.selectedEntity=entity">{{ 'operations.delete' |
-									translate }}
+									class="link-danger" (click)="context.selectedEntity=entity"
+									attr.title="{{ 'operations.delete' | translate }}">
+									<em class="material-icons">delete</em>
 								</a>
 							</td>
 						</tr>
