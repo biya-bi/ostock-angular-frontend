@@ -40,3 +40,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# NOTE: We are excluding package-lock.json because we are already using yarn.lock.
+#       yarn install should be used to install dependencies. In case npm install is 
+#       accidentally run, the package-lock.json file will be generated. In this case,
+#       we don't want the package-lock.json file to be accidentally committed.
+package-lock.json
