@@ -20,7 +20,7 @@ export class PageUtil {
 		if (!totalElements) {
 			return null;
 		}
-		const start = number * size + 1
+		const start = number * size + 1;
 		const end = Math.min(start + size - 1, totalElements);
 		return { start, end };
 	}
