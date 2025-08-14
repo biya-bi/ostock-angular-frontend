@@ -82,6 +82,17 @@
 									"with": "src/environments/environment.local.ts"
 								}
 							]
+						},
+						"int": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.int.ts"
+								}
+							]
 						}
 					},
 					"defaultConfiguration": "local"
@@ -97,6 +108,9 @@
 						},
 						"local": {
 							"buildTarget": "angular-frontend:build:local"
+						},
+						"int": {
+							"buildTarget": "angular-frontend:build:int"
 						}
 					},
 					"defaultConfiguration": "local"
