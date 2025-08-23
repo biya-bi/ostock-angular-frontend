@@ -5,7 +5,7 @@ export const environment: Environment = {
     vapidPublicKey: '',
     apiConnectorUrl: 'http://gateway-service.ostock/api',
     keycloakConfig: {
-        issuer: 'http://keycloak.infra/realms/ostock',
+        issuer: 'http://keycloak.infra:8080/realms/ostock',
         requireHttps: false
     }
 };
