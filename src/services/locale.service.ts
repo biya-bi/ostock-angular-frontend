@@ -40,17 +40,42 @@ export class LocaleService {
 
     getLocale(): string {
         let selectedLocale = localStorage.getItem(SELECTED_LOCALE);
-        if (!selectedLocale || !this.supportedLocaleIds.includes(selectedLocale)) {
-            let locale = this.translateService.getBrowserCultureLang();
-            if (!this.supportedLocaleIds.includes(locale)) {
-                locale = this.translateService.getBrowserLang();
-                if (!this.supportedLocaleIds.includes(locale)) {
-                    locale = this.defaultLocale;
-                }
-            }
-            selectedLocale = locale;
+        if (this.mustResetLocale(selectedLocale)) {
+            selectedLocale = this.parseLocale(selectedLocale);
             localStorage.setItem(SELECTED_LOCALE, selectedLocale);
         }
         return selectedLocale;
     }
+
+    private mustResetLocale(locale: string): boolean {
+        if (!locale || !this.supportedLocaleIds.includes(locale)) {
+            return true;
+        }
+        const browserCultureLang = this.translateService.getBrowserCultureLang();
+        if (locale === browserCultureLang) {
+            return false;
+        }
+        const browserLang = this.translateService.getBrowserLang();
+        return locale !== browserLang;
+    }
+
+    private parseLocale(locale: string): string {
+        const browserCultureLang = this.translateService.getBrowserCultureLang();
+        if (this.supportedLocaleIds.includes(browserCultureLang)) {
+            return browserCultureLang;
+        }
+        const browserLang = this.translateService.getBrowserLang();
+        if (this.supportedLocaleIds.includes(browserLang)) {
+            return browserLang;
+        }
+        if (!locale) {
+            return this.defaultLocale;
+        }
+        if (this.supportedLocaleIds.includes(locale)) {
+            return locale;
+        }
+        const language = locale.split('-')[0];
+        return this.supportedLocaleIds.includes(language) ? language : this.defaultLocale;
+    }
+
 }
