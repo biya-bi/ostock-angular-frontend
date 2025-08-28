@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { filter, ReplaySubject, takeUntil, tap } from 'rxjs';
 import { LocaleService } from "../../../services/locale.service";
 import { BaseComponent } from '../../../views/base.component';
 
@@ -28,6 +28,11 @@ export class LocaleContainer extends BaseComponent {
 
         this.selectedLocaleSubject.next(selectedLocale);
         this.supportedLocaleSubject.next(supportedLocales);
+
+        this.localeService.browserLocale$.pipe(
+            takeUntil(this.destroy$),
+            filter(locale => locale != null),
+            tap(locale => this.selectedLocaleSubject.next(locale))).subscribe();
     }
 
     onChange(language: string): void {
