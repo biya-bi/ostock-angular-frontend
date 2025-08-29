@@ -1,8 +1,8 @@
-import { KeycloakConfig } from "./keycloak-config";
+import { AuthConfig } from "angular-oauth2-oidc";
 
 export interface Environment {
     production: boolean;
     vapidPublicKey: string;
     apiConnectorUrl: string;
-    keycloakConfig: KeycloakConfig;
+    keycloakConfig: AuthConfig;
 };
