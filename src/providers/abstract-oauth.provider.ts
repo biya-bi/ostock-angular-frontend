@@ -41,7 +41,7 @@ export abstract class AbstractOAuthProvider implements OAuthProvider {
 
   protected abstract getAuthConfig(): AuthConfig;
 
-  protected getInitFlowParams() {
+  protected getInitFlowParams(): { [key: string]: unknown } {
     return {};
   }
 

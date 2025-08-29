@@ -1,1 +1,3 @@
-export interface ListWrapper {}
+export interface ListWrapper {
+  [key: string]: unknown;
+}

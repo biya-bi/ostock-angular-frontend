@@ -20,7 +20,7 @@ export class GoogleOAuthProvider extends AbstractOAuthProvider {
     return environment.oAuthProviders[OAuthProviderType.google];
   }
 
-  protected override getInitFlowParams(): {} {
+  protected override getInitFlowParams(): { [key: string]: unknown } {
     return { prompt: 'select_account' };
   }
 }

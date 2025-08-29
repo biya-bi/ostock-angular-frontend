@@ -45,7 +45,7 @@ export class ValidationMessageDirective implements OnInit, OnDestroy {
   }
 
   @HostListener('blur', ['$event'])
-  handleBlurEvent(_: FocusEvent) {
+  handleBlurEvent() {
     this.toggleError();
   }
 

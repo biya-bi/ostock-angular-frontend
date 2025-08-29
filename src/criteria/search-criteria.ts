@@ -1,1 +1,3 @@
-export interface SearchCriteria {}
+export interface SearchCriteria {
+  [key: string]: unknown;
+}

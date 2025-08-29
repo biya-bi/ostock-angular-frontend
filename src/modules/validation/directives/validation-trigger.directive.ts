@@ -9,7 +9,7 @@ export class ValidationTriggerDirective {
   @Input() validationControl: ParentControl;
 
   @HostListener('click', ['$event'])
-  handleClickEvent(_: PointerEvent) {
+  handleClickEvent() {
     this.markAsTouched(this.validationControl);
   }
 

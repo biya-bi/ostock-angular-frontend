@@ -17,7 +17,6 @@ import { LicenseListWrapper } from '../../../dtos/license-list-wrapper';
 import { Organization } from '../../../dtos/organization';
 import { OrganizationListWrapper } from '../../../dtos/organization-list-wrapper';
 import { Page } from '../../../dtos/page';
-import { LicenseEvent } from '../../../events/license.event';
 import { SearchEvent } from '../../../events/search.event';
 import { Operation } from '../../../models/operation';
 import { PageRequest } from '../../../models/page-request';
@@ -30,6 +29,7 @@ import { EntityContainer } from '../../../views/entity.container';
 import { OrganizationViewComponent } from '../organization-view.component';
 import { SortEvent } from '../../../events/sort.event';
 import { License } from '../../../dtos/license';
+import { EntityEvent } from '../../../events/entity.event';
 
 @Component({
   selector: 'app-organization-container',
@@ -140,7 +140,7 @@ export class OrganizationContainer extends EntityContainer<
   }
 
   private deleteLicense(
-    event: LicenseEvent,
+    event: EntityEvent<License>,
   ): Observable<Page<LicenseListWrapper>> {
     const obs$: Observable<void> = this.licenseService.delete(
       event.entity._links.delete.href,
