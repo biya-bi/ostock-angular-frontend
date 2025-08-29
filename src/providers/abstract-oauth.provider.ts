@@ -3,13 +3,14 @@ import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { Observable, from, map, of, switchMap, take } from 'rxjs';
 import { UserProfile } from '../models/user-profile';
 import { OAuthProvider } from './oauth.provider';
+import { LocaleService } from '../services/locale.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export abstract class AbstractOAuthProvider implements OAuthProvider {
 
-  constructor(protected readonly oAuthService: OAuthService) {
+  constructor(protected readonly oAuthService: OAuthService, protected readonly localeService: LocaleService) {
     this.oAuthService.configure(this.getAuthConfig());
   }
 

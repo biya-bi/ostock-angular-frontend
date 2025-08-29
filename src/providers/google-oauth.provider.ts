@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { AbstractOAuthProvider } from './abstract-oauth.provider';
+import { LocaleService } from '../services/locale.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleOAuthProvider extends AbstractOAuthProvider {
 
-  constructor(protected override readonly oAuthService: OAuthService) {
-    super(oAuthService);
+  constructor(protected override readonly oAuthService: OAuthService, protected override readonly localeService: LocaleService) {
+    super(oAuthService, localeService);
   }
 
   protected override getAuthConfig(): AuthConfig {
