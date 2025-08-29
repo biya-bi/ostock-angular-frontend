@@ -8,10 +8,9 @@ describe('OrganizationDeleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OrganizationDeleteComponent]
-    })
-    .compileComponents();
-    
+      imports: [OrganizationDeleteComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(OrganizationDeleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

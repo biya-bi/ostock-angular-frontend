@@ -1,21 +1,19 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Subject } from "rxjs";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
-    template: '',
-    standalone: false
+  template: '',
+  standalone: false,
 })
 export abstract class BaseComponent implements OnInit, OnDestroy {
-    private readonly destroySubject = new Subject<void>();
+  private readonly destroySubject = new Subject<void>();
 
-    readonly destroy$ = this.destroySubject.asObservable();
+  readonly destroy$ = this.destroySubject.asObservable();
 
-    ngOnInit(): void {
-    }
+  ngOnInit(): void {}
 
-    ngOnDestroy(): void {
-        this.destroySubject.next();
-        this.destroySubject.complete();
-    }
-
+  ngOnDestroy(): void {
+    this.destroySubject.next();
+    this.destroySubject.complete();
+  }
 }

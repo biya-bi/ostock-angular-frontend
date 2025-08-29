@@ -3,11 +3,9 @@ import { Params } from '@angular/router';
 import { BaseComponent } from './base.component';
 
 @Component({
-    template: '',
-    standalone: false
+  template: '',
+  standalone: false,
 })
 export abstract class ViewComponent extends BaseComponent {
-
-    @Input() queryParams: Params;
-
+  @Input() queryParams: Params;
 }

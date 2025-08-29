@@ -1,2 +1,1 @@
-export interface SearchCriteria {
-}
+export interface SearchCriteria {}

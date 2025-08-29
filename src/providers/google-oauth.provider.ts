@@ -6,11 +6,13 @@ import { environment } from '../environments/environment';
 import { OAuthProviderType } from '../models/oauth-provider-type';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GoogleOAuthProvider extends AbstractOAuthProvider {
-
-  constructor(protected override readonly oAuthService: OAuthService, protected override readonly localeService: LocaleService) {
+  constructor(
+    protected override readonly oAuthService: OAuthService,
+    protected override readonly localeService: LocaleService,
+  ) {
     super(oAuthService, localeService);
   }
 
@@ -21,5 +23,4 @@ export class GoogleOAuthProvider extends AbstractOAuthProvider {
   protected override getInitFlowParams(): {} {
     return { prompt: 'select_account' };
   }
-
 }

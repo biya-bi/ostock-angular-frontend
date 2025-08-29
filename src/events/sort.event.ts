@@ -1,6 +1,6 @@
-import { SortDirection } from "../models/sort-direction";
+import { SortDirection } from '../models/sort-direction';
 
 export interface SortEvent {
-    attribute: string;
-    direction: SortDirection;
+  attribute: string;
+  direction: SortDirection;
 }

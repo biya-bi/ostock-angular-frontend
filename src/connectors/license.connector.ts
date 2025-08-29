@@ -7,22 +7,27 @@ import { LicenseListWrapper } from '../dtos/license-list-wrapper';
 import { CrudConnector } from './crud.connector';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root',
 })
-export class LicenseConnector extends CrudConnector<License, LicenseSearchCriteria, LicenseListWrapper> {
+export class LicenseConnector extends CrudConnector<
+  License,
+  LicenseSearchCriteria,
+  LicenseListWrapper
+> {
+  private readonly licenseUrl = `${this.getUrl()}/v1/license`;
 
-	private readonly licenseUrl = `${this.getUrl()}/v1/license`;
+  constructor(
+    protected override readonly oAuthService: OAuthService,
+    protected override readonly httpClient: HttpClient,
+  ) {
+    super(oAuthService, httpClient);
+  }
 
-	constructor(protected override readonly oAuthService: OAuthService, protected override readonly httpClient: HttpClient) {
-		super(oAuthService, httpClient);
-	}
+  protected override getCreateUrl(): string {
+    return this.licenseUrl;
+  }
 
-	protected override getCreateUrl(): string {
-		return this.licenseUrl;
-	}
-
-	protected override getReadUrl(): string {
-		return `${this.licenseUrl}/search`;
-	}
-
+  protected override getReadUrl(): string {
+    return `${this.licenseUrl}/search`;
+  }
 }

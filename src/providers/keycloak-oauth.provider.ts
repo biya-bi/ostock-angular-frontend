@@ -6,11 +6,13 @@ import { LocaleService } from '../services/locale.service';
 import { OAuthProviderType } from '../models/oauth-provider-type';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class KeycloakOAuthProvider extends AbstractOAuthProvider {
-
-  constructor(protected override readonly oAuthService: OAuthService, protected override readonly localeService: LocaleService) {
+  constructor(
+    protected override readonly oAuthService: OAuthService,
+    protected override readonly localeService: LocaleService,
+  ) {
     super(oAuthService, localeService);
   }
 
@@ -34,5 +36,4 @@ export class KeycloakOAuthProvider extends AbstractOAuthProvider {
     params.set('kc_locale', this.localeService.getLocale());
     return url.href;
   }
-
 }

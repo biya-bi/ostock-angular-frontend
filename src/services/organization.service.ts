@@ -6,11 +6,16 @@ import { EntityService } from './entity.service';
 import { SearchService } from './search.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
-export class OrganizationService extends EntityService<Organization, OrganizationSearchCriteria> {
-
-    constructor(protected override readonly searchService: SearchService, protected override readonly connector: OrganizationConnector) {
-        super(searchService, connector);
-    }
+export class OrganizationService extends EntityService<
+  Organization,
+  OrganizationSearchCriteria
+> {
+  constructor(
+    protected override readonly searchService: SearchService,
+    protected override readonly connector: OrganizationConnector,
+  ) {
+    super(searchService, connector);
+  }
 }

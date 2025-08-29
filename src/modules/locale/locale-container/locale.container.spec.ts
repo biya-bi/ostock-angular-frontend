@@ -7,10 +7,9 @@ describe('LocaleContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LocaleContainer]
-    })
-    .compileComponents();
-    
+      imports: [LocaleContainer],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LocaleContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,3 +1,1 @@
-
-export interface ListWrapper {
-}
+export interface ListWrapper {}

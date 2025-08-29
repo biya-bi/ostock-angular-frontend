@@ -1,4 +1,11 @@
-import { Component, EventEmitter, inject, Input, Output, Signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  Signal,
+} from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { ROUTER_OUTLET_DATA } from '@angular/router';
 import { takeUntil, tap } from 'rxjs';
@@ -10,9 +17,12 @@ import { ViewComponent } from './view.component';
 
 @Component({
   template: '',
-  standalone: false
+  standalone: false,
 })
-export abstract class EntityComponent<T, U extends EntityContext<T, SearchCriteria>> extends ViewComponent {
+export abstract class EntityComponent<
+  T,
+  U extends EntityContext<T, SearchCriteria>,
+> extends ViewComponent {
   @Output() manage = new EventEmitter<EntityEvent<T>>();
 
   Operation = Operation;
@@ -26,7 +36,12 @@ export abstract class EntityComponent<T, U extends EntityContext<T, SearchCriter
 
   override ngOnInit(): void {
     super.ngOnInit();
-    this.context$.pipe(takeUntil(this.destroy$), tap(context => this.onContextChange(context))).subscribe();
+    this.context$
+      .pipe(
+        takeUntil(this.destroy$),
+        tap((context) => this.onContextChange(context)),
+      )
+      .subscribe();
   }
 
   protected onContextChange(context: U): void {

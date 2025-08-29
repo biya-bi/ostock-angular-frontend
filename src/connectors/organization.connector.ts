@@ -7,22 +7,27 @@ import { OrganizationListWrapper } from '../dtos/organization-list-wrapper';
 import { CrudConnector } from './crud.connector';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root',
 })
-export class OrganizationConnector extends CrudConnector<Organization, OrganizationSearchCriteria, OrganizationListWrapper> {
+export class OrganizationConnector extends CrudConnector<
+  Organization,
+  OrganizationSearchCriteria,
+  OrganizationListWrapper
+> {
+  private readonly organizationUrl = `${this.getUrl()}/v1/organization`;
 
-	private readonly organizationUrl = `${this.getUrl()}/v1/organization`;
+  constructor(
+    protected override readonly oAuthService: OAuthService,
+    protected override readonly httpClient: HttpClient,
+  ) {
+    super(oAuthService, httpClient);
+  }
 
-	constructor(protected override readonly oAuthService: OAuthService, protected override readonly httpClient: HttpClient) {
-		super(oAuthService, httpClient);
-	}
+  protected override getCreateUrl(): string {
+    return this.organizationUrl;
+  }
 
-	protected override getCreateUrl(): string {
-		return this.organizationUrl;
-	}
-
-	protected override getReadUrl(): string {
-		return `${this.organizationUrl}/search`;
-	}
-
+  protected override getReadUrl(): string {
+    return `${this.organizationUrl}/search`;
+  }
 }

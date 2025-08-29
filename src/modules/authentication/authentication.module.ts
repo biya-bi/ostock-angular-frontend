@@ -10,21 +10,19 @@ import { LogOutComponent } from './logout/logout.component';
 import { AUTHENTICATION_ROUTES } from './authentication.routes';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		TranslateModule,
-		RouterModule,
-		NgbModule,
-		RouterModule.forChild(AUTHENTICATION_ROUTES),
-	],
-	declarations: [
-		AuthenticationToggleComponent,
-		AuthenticationContainer,
-		LoginComponent,
-		LogOutComponent,
-	],
-	exports: [
-		AuthenticationContainer,
-	],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    RouterModule,
+    NgbModule,
+    RouterModule.forChild(AUTHENTICATION_ROUTES),
+  ],
+  declarations: [
+    AuthenticationToggleComponent,
+    AuthenticationContainer,
+    LoginComponent,
+    LogOutComponent,
+  ],
+  exports: [AuthenticationContainer],
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {}

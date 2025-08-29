@@ -6,7 +6,7 @@ import { environment } from '../environments/environment';
 import { AuthenticationManager } from '../managers/authentication.manager';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationService {
   readonly subscriptionRequest$: Observable<boolean>;
@@ -14,18 +14,27 @@ export class NotificationService {
   constructor(
     private readonly swPush: SwPush,
     private readonly connector: NotificationConnector,
-    private readonly authenticationManager: AuthenticationManager) {
-
+    private readonly authenticationManager: AuthenticationManager,
+  ) {
     this.subscriptionRequest$ = this.authenticationManager.userProfile$.pipe(
-      switchMap((userProfile) => userProfile ? this.requestSubscription() : of(undefined)));
+      switchMap((userProfile) =>
+        userProfile ? this.requestSubscription() : of(undefined),
+      ),
+    );
   }
 
   private requestSubscription(): Observable<boolean> {
     if (!environment.production) {
       return of(null);
     }
-    return from(this.swPush.requestSubscription({ serverPublicKey: environment.vapidPublicKey }))
-      .pipe(switchMap((subscription) => this.connector.subscribe(subscription.toJSON())));
+    return from(
+      this.swPush.requestSubscription({
+        serverPublicKey: environment.vapidPublicKey,
+      }),
+    ).pipe(
+      switchMap((subscription) =>
+        this.connector.subscribe(subscription.toJSON()),
+      ),
+    );
   }
-
 }

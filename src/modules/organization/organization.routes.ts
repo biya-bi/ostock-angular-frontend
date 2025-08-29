@@ -6,27 +6,27 @@ import { OrganizationWriteComponent } from './organization-write/organization-wr
 import { OrganizationDetailsComponent } from './organization-details/organization-details.component';
 
 export const ORGANIZATION_ROUTES: Routes = [
-	{
-		path: 'organizations',
-		component: OrganizationContainer,
-		canActivate: [authenticationGuard],
-		children: [
-			{
-				path: '',
-				component: OrganizationListComponent
-			},
-			{
-				path: 'add',
-				component: OrganizationWriteComponent
-			},
-			{
-				path: 'details',
-				component: OrganizationDetailsComponent
-			},
-			{
-				path: 'edit',
-				component: OrganizationWriteComponent
-			},
-		]
-	},
+  {
+    path: 'organizations',
+    component: OrganizationContainer,
+    canActivate: [authenticationGuard],
+    children: [
+      {
+        path: '',
+        component: OrganizationListComponent,
+      },
+      {
+        path: 'add',
+        component: OrganizationWriteComponent,
+      },
+      {
+        path: 'details',
+        component: OrganizationDetailsComponent,
+      },
+      {
+        path: 'edit',
+        component: OrganizationWriteComponent,
+      },
+    ],
+  },
 ];

@@ -1,8 +1,8 @@
-import { SearchCriteria } from "./search-criteria";
+import { SearchCriteria } from './search-criteria';
 
 export interface OrganizationSearchCriteria extends SearchCriteria {
-    name?: string;
-    contactName?: string;
-    contactEmail?: string;
-    contactPhone?: string;
+  name?: string;
+  contactName?: string;
+  contactEmail?: string;
+  contactPhone?: string;
 }

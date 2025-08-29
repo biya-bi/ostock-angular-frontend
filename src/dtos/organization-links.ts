@@ -1,7 +1,7 @@
-import { EntityLinks } from "./entity-links";
-import { Link } from "./link";
+import { EntityLinks } from './entity-links';
+import { Link } from './link';
 
 export interface OrganizationLinks extends EntityLinks {
-    licenses: Link;
-    addLicense: Link;
+  licenses: Link;
+  addLicense: Link;
 }

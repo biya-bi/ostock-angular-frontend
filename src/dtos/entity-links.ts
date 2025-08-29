@@ -1,7 +1,7 @@
-import { Link } from "./link";
+import { Link } from './link';
 
 export interface EntityLinks {
-    self: Link;
-    update: Link;
-    delete: Link
+  self: Link;
+  update: Link;
+  delete: Link;
 }

@@ -7,21 +7,26 @@ import { EntityService } from './entity.service';
 import { SearchService } from './search.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
-export class LicenseService extends EntityService<License, LicenseSearchCriteria> {
+export class LicenseService extends EntityService<
+  License,
+  LicenseSearchCriteria
+> {
+  constructor(
+    protected override readonly searchService: SearchService,
+    protected override readonly connector: LicenseConnector,
+  ) {
+    super(searchService, connector);
+  }
 
-    constructor(protected override readonly searchService: SearchService, protected override readonly connector: LicenseConnector) {
-        super(searchService, connector);
-    }
+  override create(entity: License): Observable<License> {
+    const url = entity.organization._links.addLicense.href;
+    const payload = this.serialize(entity);
+    return this.connector.create(payload, url);
+  }
 
-    override create(entity: License): Observable<License> {
-        const url = entity.organization._links.addLicense.href;
-        const payload = this.serialize(entity);
-        return this.connector.create(payload, url);
-    }
-
-    protected override getTransientFields(): string[] {
-        return ['_links', 'organization'];
-    }
+  protected override getTransientFields(): string[] {
+    return ['_links', 'organization'];
+  }
 }

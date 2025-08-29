@@ -7,9 +7,12 @@ import { SortEvent } from '../../events/sort.event';
 import { EntityViewComponent } from '../../views/entity-view.component';
 
 @Component({
-  template: ''
+  template: '',
 })
-export abstract class OrganizationViewComponent extends EntityViewComponent<Organization, OrganizationContext> {
+export abstract class OrganizationViewComponent extends EntityViewComponent<
+  Organization,
+  OrganizationContext
+> {
   @Output() writeLicense = new EventEmitter<LicenseEvent>();
   @Output() licensePageChange = new EventEmitter<number>();
   @Output() searchLicenses = new EventEmitter<LicenseSearchEvent>();

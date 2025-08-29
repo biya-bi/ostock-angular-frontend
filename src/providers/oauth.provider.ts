@@ -1,7 +1,7 @@
-import { Observable } from "rxjs";
-import { UserProfile } from "../models/user-profile";
+import { Observable } from 'rxjs';
+import { UserProfile } from '../models/user-profile';
 
 export interface OAuthProvider {
-    logIn(): Observable<UserProfile>;
-    logOut(): void;
+  logIn(): Observable<UserProfile>;
+  logOut(): void;
 }

@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, filter, Observable, switchMap, take, takeUntil, tap } from 'rxjs';
+import {
+  debounceTime,
+  filter,
+  Observable,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs';
 import { LicenseContext } from '../../../contexts/license.context';
 import { OrganizationContext } from '../../../contexts/organization.context';
 import { LicenseSearchCriteria } from '../../../criteria/license-search-criteria';
@@ -24,121 +32,164 @@ import { SortEvent } from '../../../events/sort.event';
 import { License } from '../../../dtos/license';
 
 @Component({
-    selector: 'app-organization-container',
-    templateUrl: './organization.container.html',
-    standalone: false
+  selector: 'app-organization-container',
+  templateUrl: './organization.container.html',
+  standalone: false,
 })
-export class OrganizationContainer extends EntityContainer<OrganizationContext, SearchEvent<OrganizationSearchCriteria>> {
+export class OrganizationContainer extends EntityContainer<
+  OrganizationContext,
+  SearchEvent<OrganizationSearchCriteria>
+> {
+  private licenseSortEvent: SortEvent;
 
-    private licenseSortEvent: SortEvent;
+  constructor(
+    protected override readonly router: Router,
+    protected override readonly activatedRoute: ActivatedRoute,
+    protected override readonly searchService: SearchService,
+    protected override readonly sortingService: SortingService,
+    protected override readonly entityService: OrganizationService,
+    private readonly licenseService: LicenseService,
+  ) {
+    super(router, activatedRoute, searchService, sortingService, entityService);
+  }
 
-    constructor(
-        protected override readonly router: Router,
-        protected override readonly activatedRoute: ActivatedRoute,
-        protected override readonly searchService: SearchService,
-        protected override readonly sortingService: SortingService,
-        protected override readonly entityService: OrganizationService,
-        private readonly licenseService: LicenseService) {
-        super(router, activatedRoute, searchService, sortingService, entityService);
+  protected override retrieveEntities(
+    page: Page<OrganizationListWrapper>,
+  ): Organization[] {
+    return page?._embedded?.organizationDtoList;
+  }
+
+  protected override getEntityListPath(): string {
+    return '/organizations';
+  }
+
+  protected override subscribeToEntityViewEvents(
+    component: OrganizationViewComponent,
+  ): void {
+    super.subscribeToEntityViewEvents(component);
+    component.writeLicense
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((event) => event.operation === Operation.Delete),
+        switchMap((event) => this.deleteLicense(event)),
+      )
+      .subscribe();
+    component.licensePageChange
+      .pipe(
+        takeUntil(component.destroy$),
+        debounceTime(1000),
+        switchMap((pageNumber) => this.onLicensePageChange(pageNumber)),
+      )
+      .subscribe();
+    component.searchLicenses
+      .pipe(
+        takeUntil(component.destroy$),
+        debounceTime(1000),
+        switchMap((event) =>
+          this.readLicenses(event.uri, event.pageRequest, event.searchCriteria),
+        ),
+      )
+      .subscribe();
+    component.sortLicenses
+      .pipe(
+        takeUntil(component.destroy$),
+        tap(
+          (event) =>
+            (this.getLicensecontext().entities = this.sortLicenses(event)),
+        ),
+      )
+      .subscribe();
+  }
+
+  protected override getContext(): OrganizationContext {
+    const context = super.getContext();
+    const licenseContext = this.getLicensecontext(context);
+    context.licenseContext = licenseContext;
+    return context;
+  }
+
+  private readLicenses(
+    uri?: string,
+    pageRequest?: PageRequest,
+    searchCriteria?: LicenseSearchCriteria,
+  ): Observable<Page<LicenseListWrapper>> {
+    const context = this.getContext();
+    const licenseContext = this.getLicensecontext(context);
+    if (!uri) {
+      uri = context.selectedEntity?._links.licenses.href;
     }
-
-    protected override retrieveEntities(page: Page<OrganizationListWrapper>): Organization[] {
-        return page?._embedded?.organizationDtoList;
+    if (!pageRequest) {
+      pageRequest = licenseContext.pagination.request;
     }
-
-    protected override getEntityListPath(): string {
-        return '/organizations';
+    if (!searchCriteria) {
+      searchCriteria = licenseContext.searchCriteria;
     }
+    const obs$ = this.licenseService.read({ searchCriteria, pageRequest }, uri);
+    return this.run(obs$).pipe(
+      take(1),
+      tap((page: Page<LicenseListWrapper>) => {
+        const licenses = page?._embedded?.licenseDtoList;
+        licenseContext.entities = this.sortLicenses(
+          this.licenseSortEvent,
+          licenses,
+        );
+        licenseContext.pagination = PageUtil.getPagination(page);
+        this.updateContext({ licenseContext });
+      }),
+    );
+  }
 
-    protected override subscribeToEntityViewEvents(component: OrganizationViewComponent): void {
-        super.subscribeToEntityViewEvents(component);
-        component.writeLicense.pipe(
-            takeUntil(this.destroy$),
-            filter(event => event.operation === Operation.Delete),
-            switchMap(event => this.deleteLicense(event)))
-            .subscribe();
-        component.licensePageChange.pipe(
-            takeUntil(component.destroy$),
-            debounceTime(1000),
-            switchMap((pageNumber) => this.onLicensePageChange(pageNumber)))
-            .subscribe();
-        component.searchLicenses.pipe(
-            takeUntil(component.destroy$),
-            debounceTime(1000),
-            switchMap(event => this.readLicenses(event.uri, event.pageRequest, event.searchCriteria)))
-            .subscribe();
-        component.sortLicenses.pipe(
-            takeUntil(component.destroy$),
-            tap(event => this.getLicensecontext().entities = this.sortLicenses(event)))
-            .subscribe();
-    }
+  private deleteLicense(
+    event: LicenseEvent,
+  ): Observable<Page<LicenseListWrapper>> {
+    const obs$: Observable<void> = this.licenseService.delete(
+      event.entity._links.delete.href,
+    );
+    return this.run(obs$).pipe(
+      take(1),
+      switchMap(() => this.readLicenses()),
+      tap(() => event.closeElement.click()),
+    );
+  }
 
-    protected override getContext(): OrganizationContext {
-        const context = super.getContext();
-        const licenseContext = this.getLicensecontext(context);
-        context.licenseContext = licenseContext;
-        return context;
+  private getLicensecontext(context?: OrganizationContext): LicenseContext {
+    if (!context) {
+      context = this.getContext();
     }
+    let licenseContext = context.licenseContext;
+    if (!licenseContext) {
+      licenseContext = {
+        organizations: [],
+        entities: [],
+        pagination: {},
+        searchCriteria: {},
+      };
+    }
+    return licenseContext;
+  }
 
-    private readLicenses(uri?: string, pageRequest?: PageRequest, searchCriteria?: LicenseSearchCriteria): Observable<Page<LicenseListWrapper>> {
-        const context = this.getContext();
-        const licenseContext = this.getLicensecontext(context);
-        if (!uri) {
-            uri = context.selectedEntity?._links.licenses.href;
-        }
-        if (!pageRequest) {
-            pageRequest = licenseContext.pagination.request;
-        }
-        if (!searchCriteria) {
-            searchCriteria = licenseContext.searchCriteria;
-        }
-        const obs$ = this.licenseService.read({ searchCriteria, pageRequest }, uri);
-        return this.run(obs$).pipe(
-            take(1),
-            tap((page: Page<LicenseListWrapper>) => {
-                const licenses = page?._embedded?.licenseDtoList;
-                licenseContext.entities = this.sortLicenses(this.licenseSortEvent, licenses);
-                licenseContext.pagination = PageUtil.getPagination(page);
-                this.updateContext({ licenseContext });
-            }));
+  private onLicensePageChange(
+    pageNumber: number,
+  ): Observable<Page<LicenseListWrapper>> {
+    const context = this.getContext();
+    const uri = context.selectedEntity._links.licenses.href;
+    let pageRequest = context.licenseContext.pagination?.request;
+    if (!pageRequest) {
+      pageRequest = {};
     }
+    pageRequest.pageNumber = pageNumber;
+    return this.readLicenses(uri, pageRequest);
+  }
 
-    private deleteLicense(event: LicenseEvent): Observable<Page<LicenseListWrapper>> {
-        const obs$: Observable<void> = this.licenseService.delete(event.entity._links.delete.href);
-        return this.run(obs$).pipe(take(1), switchMap(() => this.readLicenses()), tap(() => event.closeElement.click()));
+  private sortLicenses(event: SortEvent, licenses?: License[]): License[] {
+    if (!event) {
+      return licenses;
     }
-
-    private getLicensecontext(context?: OrganizationContext): LicenseContext {
-        if (!context) {
-            context = this.getContext();
-        }
-        let licenseContext = context.licenseContext;
-        if (!licenseContext) {
-            licenseContext = { organizations: [], entities: [], pagination: {}, searchCriteria: {} };
-        }
-        return licenseContext;
+    if (!licenses) {
+      const licenseContext = this.getLicensecontext();
+      licenses = licenseContext.entities;
     }
-
-    private onLicensePageChange(pageNumber: number): Observable<Page<LicenseListWrapper>> {
-        const context = this.getContext();
-        const uri = context.selectedEntity._links.licenses.href;
-        let pageRequest = context.licenseContext.pagination?.request;
-        if (!pageRequest) {
-            pageRequest = {};
-        }
-        pageRequest.pageNumber = pageNumber;
-        return this.readLicenses(uri, pageRequest);
-    }
-
-    private sortLicenses(event: SortEvent, licenses?: License[]): License[] {
-        if (!event) {
-            return licenses;
-        }
-        if (!licenses) {
-            const licenseContext = this.getLicensecontext();
-            licenses = licenseContext.entities;
-        }
-        this.licenseSortEvent = event;
-        return this.sortingService.sort(licenses, event.attribute, event.direction);
-    }
+    this.licenseSortEvent = event;
+    return this.sortingService.sort(licenses, event.attribute, event.direction);
+  }
 }

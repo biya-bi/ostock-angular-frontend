@@ -7,24 +7,15 @@ import { LocaleContainer } from './locale-container/locale.container';
 import { LocaleListComponent } from './locale-list/locale-list.component';
 
 @NgModule({
-	declarations: [
-		LocaleContainer,
-		LocaleListComponent,
-	],
-	imports: [
-		CommonModule,
-		FormsModule,
-		TranslateModule
-	],
-	exports: [
-		LocaleContainer,
-	],
-	providers: [
-		{
-			provide: LOCALE_ID,
-			useFactory: (localeService: LocaleService) => localeService.getLocale(),
-			deps: [LocaleService]
-		}
-	]
+  declarations: [LocaleContainer, LocaleListComponent],
+  imports: [CommonModule, FormsModule, TranslateModule],
+  exports: [LocaleContainer],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useFactory: (localeService: LocaleService) => localeService.getLocale(),
+      deps: [LocaleService],
+    },
+  ],
 })
-export class LocaleModule { }
+export class LocaleModule {}

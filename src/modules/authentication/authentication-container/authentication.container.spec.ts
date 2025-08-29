@@ -8,10 +8,9 @@ describe('BannerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AuthenticationContainer]
-    })
-    .compileComponents();
-    
+      imports: [AuthenticationContainer],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(AuthenticationContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -18,52 +18,74 @@ import { EntityContainer } from '../../../views/entity.container';
 import { LicenseWriteComponent } from '../license-write/license-write.component';
 
 @Component({
-	selector: 'app-license-container',
-	templateUrl: './license.container.html',
-	standalone: false
+  selector: 'app-license-container',
+  templateUrl: './license.container.html',
+  standalone: false,
 })
-export class LicenseContainer extends EntityContainer<LicenseContext, LicenseSearchEvent> {
+export class LicenseContainer extends EntityContainer<
+  LicenseContext,
+  LicenseSearchEvent
+> {
+  constructor(
+    protected override readonly router: Router,
+    protected override readonly activatedRoute: ActivatedRoute,
+    protected override readonly searchService: SearchService,
+    protected override readonly sortingService: SortingService,
+    protected override readonly entityService: LicenseService,
+    private readonly organizationService: OrganizationService,
+  ) {
+    super(router, activatedRoute, searchService, sortingService, entityService);
+  }
 
-	constructor(
-		protected override readonly router: Router,
-		protected override readonly activatedRoute: ActivatedRoute,
-		protected override readonly searchService: SearchService,
-		protected override readonly sortingService: SortingService,
-		protected override readonly entityService: LicenseService,
-		private readonly organizationService: OrganizationService) {
-		super(router, activatedRoute, searchService, sortingService, entityService);
-	}
+  protected override retrieveEntities(
+    page: Page<LicenseListWrapper>,
+  ): License[] {
+    return page._embedded?.licenseDtoList;
+  }
 
-	protected override retrieveEntities(page: Page<LicenseListWrapper>): License[] {
-		return page._embedded?.licenseDtoList;
-	}
+  protected override getEntityListPath(): string {
+    return '/licenses';
+  }
 
-	protected override getEntityListPath(): string {
-		return '/licenses';
-	}
+  private initOrganizations(): Observable<Organization[]> {
+    const obs$ = this.organizationService.read({}); // TODO: Improve this
+    return this.run(obs$).pipe(
+      map(
+        (page: Page<OrganizationListWrapper>) =>
+          page._embedded?.organizationDtoList,
+      ),
+      tap((organizations) => this.updateContext({ organizations })),
+    );
+  }
 
-	private initOrganizations(): Observable<Organization[]> {
-		const obs$ = this.organizationService.read({}); // TODO: Improve this
-		return this.run(obs$).pipe(
-			map((page: Page<OrganizationListWrapper>) => page._embedded?.organizationDtoList),
-			tap(organizations => this.updateContext({ organizations })));
-	}
+  protected override subscribeToEntityViewEvents(
+    component: EntityViewComponent<License, LicenseContext>,
+  ): void {
+    super.subscribeToEntityViewEvents(component);
+    if (
+      component instanceof LicenseWriteComponent &&
+      this.isOperation(Operation.Create)
+    ) {
+      this.initOrganizations().pipe(takeUntil(this.destroy$)).subscribe();
+    }
+  }
 
-	protected override subscribeToEntityViewEvents(component: EntityViewComponent<License, LicenseContext>): void {
-		super.subscribeToEntityViewEvents(component);
-		if (component instanceof LicenseWriteComponent && this.isOperation(Operation.Create)) {
-			this.initOrganizations().pipe(takeUntil(this.destroy$)).subscribe();
-		}
-	}
+  protected override getEntityContextSignal(): WritableSignal<LicenseContext> {
+    return signal({
+      entities: [],
+      pagination: {},
+      searchCriteria: {},
+      organizations: [],
+    });
+  }
 
-	protected override getEntityContextSignal(): WritableSignal<LicenseContext> {
-		return signal({ entities: [], pagination: {}, searchCriteria: {}, organizations: [] });
-	}
-
-	protected override onReadEntity(entity: License): Observable<License> {
-		return this.organizationService.readByUrl(entity._links.organization.href).pipe(
-			take(1),
-			tap(organization => entity.organization = organization),
-			map(() => entity));
-	}
+  protected override onReadEntity(entity: License): Observable<License> {
+    return this.organizationService
+      .readByUrl(entity._links.organization.href)
+      .pipe(
+        take(1),
+        tap((organization) => (entity.organization = organization)),
+        map(() => entity),
+      );
+  }
 }

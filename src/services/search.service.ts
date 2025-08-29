@@ -3,7 +3,7 @@ import { SearchCriteria } from '../criteria/search-criteria';
 import { PageRequest } from '../models/page-request';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SearchService {
   parseCriteria<T extends SearchCriteria>(searchCriteria: T): T {
@@ -12,8 +12,8 @@ export class SearchService {
       criteria = {};
     }
     const clone = JSON.parse(JSON.stringify(criteria));
-    for (let key in clone) {
-      let value = clone[key];
+    for (const key in clone) {
+      const value = clone[key];
       if (typeof value === 'string' && value.trim().length === 0) {
         delete clone[key];
       }

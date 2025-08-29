@@ -3,10 +3,10 @@ import { AuthenticationAwareComponent } from '../../authentication-aware/authent
 import { DeviceType } from '../../../models/breakpoints';
 
 @Component({
-    selector: 'app-navigation-menu',
-    templateUrl: './navigation-menu.component.html',
-    standalone: false
+  selector: 'app-navigation-menu',
+  templateUrl: './navigation-menu.component.html',
+  standalone: false,
 })
 export class NavigationMenuComponent extends AuthenticationAwareComponent {
-    @Input() deviceType: DeviceType;
+  @Input() deviceType: DeviceType;
 }

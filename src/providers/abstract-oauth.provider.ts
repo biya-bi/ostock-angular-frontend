@@ -6,11 +6,13 @@ import { OAuthProvider } from './oauth.provider';
 import { LocaleService } from '../services/locale.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export abstract class AbstractOAuthProvider implements OAuthProvider {
-
-  constructor(protected readonly oAuthService: OAuthService, protected readonly localeService: LocaleService) {
+  constructor(
+    protected readonly oAuthService: OAuthService,
+    protected readonly localeService: LocaleService,
+  ) {
     this.oAuthService.configure(this.getAuthConfig());
   }
 
@@ -25,7 +27,8 @@ export abstract class AbstractOAuthProvider implements OAuthProvider {
         }
         return from(this.oAuthService.loadUserProfile());
       }),
-      map((result) => result as UserProfile));
+      map((result) => result as UserProfile),
+    );
   }
 
   logOut() {
@@ -45,5 +48,4 @@ export abstract class AbstractOAuthProvider implements OAuthProvider {
   protected tokenExpired() {
     return Date.now() - this.oAuthService.getIdTokenExpiration() > 0;
   }
-
 }

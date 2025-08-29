@@ -1,4 +1,4 @@
 export enum OAuthProviderType {
-    google = 1,
-    keycloak = 2
-};
+  google = 1,
+  keycloak = 2,
+}

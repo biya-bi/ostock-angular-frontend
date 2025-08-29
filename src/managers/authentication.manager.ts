@@ -1,79 +1,85 @@
-import { Injectable, Injector } from "@angular/core";
-import { Observable, ReplaySubject, of, shareReplay, take, tap } from "rxjs";
-import { OAuthProviderType } from "../models/oauth-provider-type";
-import { UserProfile } from "../models/user-profile";
-import { GoogleOAuthProvider } from "../providers/google-oauth.provider";
-import { KeycloakOAuthProvider } from "../providers/keycloak-oauth.provider";
+import { Injectable, Injector } from '@angular/core';
+import { Observable, ReplaySubject, of, shareReplay, take, tap } from 'rxjs';
+import { OAuthProviderType } from '../models/oauth-provider-type';
+import { UserProfile } from '../models/user-profile';
+import { GoogleOAuthProvider } from '../providers/google-oauth.provider';
+import { KeycloakOAuthProvider } from '../providers/keycloak-oauth.provider';
 
 const OAUTH_PROVIDER_KEY = 'oAuthProvider';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationManager {
+  private readonly userProfileSubject = new ReplaySubject<UserProfile>();
 
-    private readonly userProfileSubject = new ReplaySubject<UserProfile>();
+  readonly userProfile$ = this.userProfileSubject.asObservable();
 
-    readonly userProfile$ = this.userProfileSubject.asObservable();
+  private tryLogin$: Observable<UserProfile>;
 
-    private tryLogin$: Observable<UserProfile>;
+  constructor(private readonly injector: Injector) {
+    this.autoLogin();
+  }
 
-    constructor(private readonly injector: Injector) {
-        this.autoLogin();
+  logIn(providerType: OAuthProviderType) {
+    this.setProvider(providerType);
+    this.getAuthenticationService(providerType)
+      .logIn()
+      .pipe(
+        take(1),
+        tap((userProfile) => this.userProfileSubject.next(userProfile)),
+      )
+      .subscribe();
+  }
+
+  logOut() {
+    const providerType = this.getProviderType();
+    if (providerType) {
+      localStorage.removeItem(OAUTH_PROVIDER_KEY);
+      this.userProfileSubject.next(undefined);
+      this.getAuthenticationService(providerType).logOut();
     }
+  }
 
-    logIn(providerType: OAuthProviderType) {
-        this.setProvider(providerType);
-        this.getAuthenticationService(providerType).logIn().pipe(
-            take(1),
-            tap(userProfile => this.userProfileSubject.next(userProfile))).subscribe();
+  tryLogIn(): Observable<UserProfile> {
+    if (!this.tryLogin$) {
+      const provider = this.getProviderType();
+      this.tryLogin$ = provider
+        ? this.getAuthenticationService(provider).logIn().pipe(shareReplay(1))
+        : of(undefined);
     }
+    return this.tryLogin$;
+  }
 
-    logOut() {
-        const providerType = this.getProviderType();
-        if (providerType) {
-            localStorage.removeItem(OAUTH_PROVIDER_KEY);
-            this.userProfileSubject.next(undefined);
-            this.getAuthenticationService(providerType).logOut();
-        }
+  private getAuthenticationService(providerType: OAuthProviderType) {
+    if (providerType === OAuthProviderType.google) {
+      return this.injector.get(GoogleOAuthProvider);
     }
-
-    tryLogIn(): Observable<UserProfile> {
-        if (!this.tryLogin$) {
-            const provider = this.getProviderType();
-            this.tryLogin$ = provider ? this.getAuthenticationService(provider).logIn().pipe(shareReplay(1)) : of(undefined);
-        }
-        return this.tryLogin$;
+    if (providerType === OAuthProviderType.keycloak) {
+      return this.injector.get(KeycloakOAuthProvider);
     }
+    return undefined;
+  }
 
-    private getAuthenticationService(providerType: OAuthProviderType) {
-        if (providerType === OAuthProviderType.google) {
-            return this.injector.get(GoogleOAuthProvider);
-        }
-        if (providerType === OAuthProviderType.keycloak) {
-            return this.injector.get(KeycloakOAuthProvider);
-        }
-        return undefined;
+  private autoLogin() {
+    const providerType = this.getProviderType();
+    if (providerType) {
+      this.logIn(providerType);
     }
+  }
 
-    private autoLogin() {
-        const providerType = this.getProviderType();
-        if (providerType) {
-            this.logIn(providerType);
-        }
+  private setProvider(providerType: OAuthProviderType) {
+    if (providerType) {
+      localStorage.setItem(OAUTH_PROVIDER_KEY, OAuthProviderType[providerType]);
+    } else {
+      localStorage.removeItem(OAUTH_PROVIDER_KEY);
     }
+  }
 
-    private setProvider(providerType: OAuthProviderType) {
-        if (providerType) {
-            localStorage.setItem(OAUTH_PROVIDER_KEY, OAuthProviderType[providerType]);
-        } else {
-            localStorage.removeItem(OAUTH_PROVIDER_KEY);
-        }
-    }
-
-    private getProviderType(): OAuthProviderType | undefined {
-        const item = localStorage.getItem(OAUTH_PROVIDER_KEY);
-        return item ? OAuthProviderType[item.toLowerCase() as keyof typeof OAuthProviderType] : undefined;
-    }
-
+  private getProviderType(): OAuthProviderType | undefined {
+    const item = localStorage.getItem(OAUTH_PROVIDER_KEY);
+    return item
+      ? OAuthProviderType[item.toLowerCase() as keyof typeof OAuthProviderType]
+      : undefined;
+  }
 }

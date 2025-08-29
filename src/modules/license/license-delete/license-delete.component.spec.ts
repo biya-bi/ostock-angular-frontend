@@ -8,10 +8,9 @@ describe('LicenseDeleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LicenseDeleteComponent]
-    })
-    .compileComponents();
-    
+      imports: [LicenseDeleteComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LicenseDeleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
