@@ -29,10 +29,11 @@ export abstract class AbstractOAuthProvider implements OAuthProvider {
   }
 
   logOut() {
-    // For Keycloak, for some reason, logoutUrl is lost on oAuthService and requires 
-    // reconfiguration before logging out.
-    this.oAuthService.configure(this.getAuthConfig());
     this.oAuthService.logOut();
+  }
+
+  protected getLogoutUrl(): string {
+    return new URL('/logout', document.location.origin).toString();
   }
 
   protected abstract getAuthConfig(): AuthConfig;

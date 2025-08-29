@@ -14,6 +14,7 @@ export class KeycloakOAuthProvider extends AbstractOAuthProvider {
   }
 
   protected override getAuthConfig(): AuthConfig {
+    const logoutUrl = this.getLogoutUrl();
     return {
       issuer: environment.keycloakConfig.issuer,
       strictDiscoveryDocumentValidation: false,
@@ -22,7 +23,8 @@ export class KeycloakOAuthProvider extends AbstractOAuthProvider {
       scope: 'openid profile email',
       requireHttps: environment.keycloakConfig.requireHttps,
       loginUrl: this.getLoginUrl(),
-      logoutUrl: document.location.origin + '/logout'
+      logoutUrl: logoutUrl,
+      postLogoutRedirectUri: logoutUrl
     };
   }
 
