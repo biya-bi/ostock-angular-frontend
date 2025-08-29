@@ -3,6 +3,7 @@ import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { AbstractOAuthProvider } from './abstract-oauth.provider';
 import { LocaleService } from '../services/locale.service';
 import { environment } from '../environments/environment';
+import { OAuthProviderType } from '../models/oauth-provider-type';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class GoogleOAuthProvider extends AbstractOAuthProvider {
   }
 
   protected override getAuthConfig(): AuthConfig {
-    return environment.googleConfig;
+    return environment.oAuthProviders[OAuthProviderType.google];
   }
 
   protected override getInitFlowParams(): {} {

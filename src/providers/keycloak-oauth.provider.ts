@@ -3,6 +3,7 @@ import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { AbstractOAuthProvider } from './abstract-oauth.provider';
 import { environment } from '../environments/environment';
 import { LocaleService } from '../services/locale.service';
+import { OAuthProviderType } from '../models/oauth-provider-type';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class KeycloakOAuthProvider extends AbstractOAuthProvider {
     const loginUrl = this.getLoginUrl();
     const logoutUrl = this.getLogoutUrl();
 
-    const config = environment.keycloakConfig;
+    const config = environment.oAuthProviders[OAuthProviderType.keycloak];
 
     config.loginUrl = loginUrl;
     config.logoutUrl = logoutUrl;
@@ -27,7 +28,8 @@ export class KeycloakOAuthProvider extends AbstractOAuthProvider {
   }
 
   private getLoginUrl(): string {
-    const url = new URL(environment.keycloakConfig.issuer);
+    const config = environment.oAuthProviders[OAuthProviderType.keycloak];
+    const url = new URL(config.issuer);
     const params = url.searchParams;
     params.set('kc_locale', this.localeService.getLocale());
     return url.href;
