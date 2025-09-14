@@ -13,7 +13,7 @@ export abstract class ApiConnector {
   protected getOptions(params?: any) {
     return {
       headers: {
-        Authorization: `Bearer ${this.oAuthService.getAccessToken()}`,
+        Authorization: `Bearer ${this.oAuthService.getIdToken()}`,
       },
       params,
     };
