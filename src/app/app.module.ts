@@ -12,7 +12,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { environment } from '../environments/environment';
 import { AuthenticationModule } from '../modules/authentication/authentication.module';
 import { LicenseModule } from '../modules/license/license.module';
@@ -56,6 +56,9 @@ import { routes } from './app.routes';
     OrganizationModule,
     LicenseModule,
   ],
-  providers: [provideHttpClient(withInterceptorsFromDi())],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: OAuthStorage, useValue: localStorage },
+  ],
 })
 export class AppModule {}
